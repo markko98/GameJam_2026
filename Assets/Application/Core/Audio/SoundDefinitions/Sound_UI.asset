@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bb373aca0ae4446f8b3c0df7a5210375, type: 3}
-  m_Name: Sound_Test
+  m_Name: Sound_UI
   m_EditorClassIdentifier: 
   clips:
-  - {fileID: 8300000, guid: ddbd98225ba2b934aa4f8958d2c30879, type: 3}
-  mixerGroup: {fileID: -4557929014893226497, guid: 54fe4eae7dd064a408a95aef459de5e4, type: 2}
-  channel: 0
+  - {fileID: 8300000, guid: 9cd8c1ecb69a0304eb45453d18a78d39, type: 3}
+  mixerGroup: {fileID: -8446966372871857862, guid: 54fe4eae7dd064a408a95aef459de5e4, type: 2}
+  channel: 1
   volume: 1
   pitch: 1
   volumeGain: 0

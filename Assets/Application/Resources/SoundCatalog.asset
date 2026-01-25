@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SoundCatalog
   entries:
   - id: test_01
-    definition: {fileID: 11400000, guid: 5acf1898b9a824b32991d68601f483b4, type: 2}
+    definition: {fileID: 11400000, guid: c7860ed72c10c4e81a64a5ddf40b707a, type: 2}
   - id: ui_tab_switch
     definition: {fileID: 11400000, guid: 5acf1898b9a824b32991d68601f483b4, type: 2}
