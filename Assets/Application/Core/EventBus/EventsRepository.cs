@@ -10,6 +10,11 @@ public class TestEvent : IEvent
     }
 }
 
+public class MaskTriggerAttemptEvent : IEvent
+{
+    public MaskType maskType;
+}
+
 public class MaskTriggeredEvent : IEvent
 {
     public MaskType maskType;

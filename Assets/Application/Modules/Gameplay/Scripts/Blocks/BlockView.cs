@@ -1,67 +1,56 @@
 using System;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class BlockView : MonoBehaviour
 {
-    [Serializable]
-    private class BlockStateData
-    {
-        public MaskType mask;
-        public GameObject blockVisual;
-    }
-
     public PlayerSide Side;
-    public Vector2Int Cell;
     public BlockType Type;
-    public BlockState State;
-
-    public bool isDeadly;
     
     [SerializeField] private List<BlockStateData> stateDatas = new ();
     private Renderer rend;
+    private Sequence _activeSequence;
 
-    public void Initialize(PlayerSide side, Vector2Int cell, BlockType type, BlockState startState)
+    public void Initialize(PlayerSide side, BlockType type)
     {
         Side = side;
-        Cell = cell;
         Type = type;
         
-        ApplyState(startState);
-        ChangeVisuals(MaskType.None);
-    }
-
-    public void ApplyState(BlockState newState)
-    {
-        State = newState;
-
-        switch (State)
+        foreach (var stateData in stateDatas)
         {
-            case BlockState.Active:
-                break;
-
-            case BlockState.Inactive:
-                break;
-
-            case BlockState.Deadly:
-                break;
-            
-            case BlockState.Life:
-                break;
+           stateData.SetFadeColor(GetColorForMaskType(stateData.mask));
         }
+        ChangeVisuals(MaskType.None);
     }
 
     public void ChangeVisuals(MaskType maskType)
     {
+        _activeSequence?.Kill();
+        _activeSequence = DOTween.Sequence();
         foreach (var stateData in stateDatas)
         {
-            stateData.blockVisual.gameObject.SetActive(false);
+            _activeSequence.Join(stateData.FadeOut());
         }
 
         var dataToActivate = stateDatas.Find(x => x.mask == maskType);
-        if (dataToActivate != null)
+        _activeSequence.AppendCallback(() =>
         {
-            dataToActivate.blockVisual.gameObject.SetActive(true);
-        }
+            stateDatas.ForEach(x => x.GetCollider().enabled = x.mask == maskType);
+        });
+        _activeSequence.Append(dataToActivate?.FadeIn());
+    }
+
+    private Color GetColorForMaskType(MaskType maskType)
+    {
+        return maskType switch
+        {
+            MaskType.None => Color.black,
+            MaskType.Trap => Color.blue,
+            MaskType.Obstacle => Color.yellow,
+            MaskType.Nature => Color.green,
+            MaskType.Lava => Color.red,
+            _ => Color.black
+        };
     }
 }

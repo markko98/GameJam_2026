@@ -12,7 +12,6 @@ public class LevelSODefinitionWindow : EditorWindow
     private PlayerSide editingSide = PlayerSide.Left;
 
     private BlockType paintType = BlockType.Floor;
-    private BlockState paintState = BlockState.Active;
 
     private enum PaintMode { TypeOnly, StateOnly, TypeAndState }
     private PaintMode paintMode = PaintMode.TypeAndState;
@@ -202,9 +201,7 @@ public class LevelSODefinitionWindow : EditorWindow
                 // For Serializable classes in arrays, Unity typically creates default instances.
                 // We'll still try to set defaults defensively:
                 var bt = cell.FindPropertyRelative("blockType");
-                var st = cell.FindPropertyRelative("startState");
                 if (bt != null) bt.enumValueIndex = (int)BlockType.Floor;
-                if (st != null) st.enumValueIndex = (int)BlockState.Active;
             }
         }
     }
@@ -216,7 +213,6 @@ public class LevelSODefinitionWindow : EditorWindow
 
         paintMode = (PaintMode)EditorGUILayout.EnumPopup("Mode", paintMode);
         paintType = (BlockType)EditorGUILayout.EnumPopup("Block Type", paintType);
-        paintState = (BlockState)EditorGUILayout.EnumPopup("Block State", paintState);
 
         EditorGUILayout.BeginHorizontal();
         if (GUILayout.Button("Pick From Cell (Alt+Click)"))
@@ -279,14 +275,13 @@ public class LevelSODefinitionWindow : EditorWindow
                 var stProp = cellProp.FindPropertyRelative("startState");
 
                 BlockType bt = (BlockType)(btProp?.enumValueIndex ?? 0);
-                BlockState st = (BlockState)(stProp?.enumValueIndex ?? 0);
 
                 Rect r = GUILayoutUtility.GetRect(cellPx, cellPx, GUILayout.Width(cellPx), GUILayout.Height(cellPx));
                 r = new Rect(r.x + cellPad * 0.5f, r.y + cellPad * 0.5f, r.width - cellPad, r.height - cellPad);
 
                 // background color based on type/state
                 Color prev = GUI.color;
-                GUI.color = GetCellColor(bt, st);
+                GUI.color = GetCellColor(bt);
 
                 GUI.Box(r, GUIContent.none);
 
@@ -300,7 +295,7 @@ public class LevelSODefinitionWindow : EditorWindow
                     fontStyle = FontStyle.Bold
                 };
 
-                GUI.Label(r, $"{Short(bt)}\n{Short(st)}", labelStyle);
+                GUI.Label(r, $"{Short(bt)}", labelStyle);
 
                 // Start/Target markers
                 var start = playerProp.FindPropertyRelative("playerStartCell").vector2IntValue;
@@ -341,10 +336,8 @@ public class LevelSODefinitionWindow : EditorWindow
         {
             var cell = cellsProp.GetArrayElementAtIndex(index);
             var bt = cell.FindPropertyRelative("blockType");
-            var st = cell.FindPropertyRelative("startState");
 
             if (bt != null) paintType = (BlockType)bt.enumValueIndex;
-            if (st != null) paintState = (BlockState)st.enumValueIndex;
 
             e.Use();
             Repaint();
@@ -401,7 +394,6 @@ public class LevelSODefinitionWindow : EditorWindow
 
         var cell = cellsProp.GetArrayElementAtIndex(index);
         var bt = cell.FindPropertyRelative("blockType");
-        var st = cell.FindPropertyRelative("startState");
 
         switch (paintMode)
         {
@@ -409,11 +401,9 @@ public class LevelSODefinitionWindow : EditorWindow
                 if (bt != null) bt.enumValueIndex = (int)paintType;
                 break;
             case PaintMode.StateOnly:
-                if (st != null) st.enumValueIndex = (int)paintState;
                 break;
             case PaintMode.TypeAndState:
                 if (bt != null) bt.enumValueIndex = (int)paintType;
-                if (st != null) st.enumValueIndex = (int)paintState;
                 break;
         }
 
@@ -443,9 +433,7 @@ public class LevelSODefinitionWindow : EditorWindow
                 {
                     var cell = cellsProp.GetArrayElementAtIndex(i);
                     var bt = cell.FindPropertyRelative("blockType");
-                    var st = cell.FindPropertyRelative("startState");
                     if (bt != null) bt.enumValueIndex = (int)BlockType.Floor;
-                    if (st != null) st.enumValueIndex = (int)BlockState.Active;
                 }
 
                 EditorUtility.SetDirty(level);
@@ -493,18 +481,7 @@ public class LevelSODefinitionWindow : EditorWindow
         };
     }
 
-    private static string Short(BlockState s)
-    {
-        return s switch
-        {
-            BlockState.Active => "ON",
-            BlockState.Inactive => "OFF",
-            BlockState.Deadly => "DMG",
-            _ => s.ToString().Substring(0, Mathf.Min(3, s.ToString().Length)).ToUpperInvariant()
-        };
-    }
-
-    private static Color GetCellColor(BlockType t, BlockState s)
+    private static Color GetCellColor(BlockType t)
     {
         // Simple readable palette (no fancy styling)
         // type influences hue, state influences brightness
@@ -518,15 +495,7 @@ public class LevelSODefinitionWindow : EditorWindow
             _ => new Color(0.7f, 0.7f, 0.7f)
         };
 
-        float mult = s switch
-        {
-            BlockState.Active => 1.00f,
-            BlockState.Inactive => 0.45f,
-            BlockState.Deadly => 0.85f,
-            _ => 1.0f
-        };
-
-        return new Color(c.r * mult, c.g * mult, c.b * mult);
+        return new Color(c.r, c.g, c.b);
     }
 
     private static void DrawCornerTag(Rect r, string text, bool rightCorner = false)
