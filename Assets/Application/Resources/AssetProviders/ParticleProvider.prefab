@@ -44,4 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e6aa5acb8474659a53a042c85820cdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ParticleProvider
-  testParticle: {fileID: 1931712872360893524, guid: ffd322a4ae114074090b0343882fde1c, type: 3}
+  trapDeathParticle: {fileID: 142478, guid: 120d855bc18f7fa4f8c46575d5629105, type: 3}
+  fallDeathParticle: {fileID: 1889919486439536, guid: 35ad08272de78064cbd645a70f31f454, type: 3}
+  arrowDeathParticle: {fileID: 119212, guid: 67a02ea392505844bab240611d904cc0, type: 3}
+  obstacleDeathParticle: {fileID: 1477782971762948, guid: 8e2edb2a8a19e674f80d0fb19fe5c051, type: 3}

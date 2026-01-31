@@ -3,7 +3,10 @@ using UnityEngine;
 
 public class ParticleProvider : AssetBaseProvider
 {
-    public GameObject testParticle;
+    public GameObject trapDeathParticle;
+    public GameObject fallDeathParticle;
+    public GameObject arrowDeathParticle;
+    public GameObject obstacleDeathParticle;
 
     private static ParticleProvider _instance;
     public DisposeBag disposeBag;
@@ -54,7 +57,10 @@ public class ParticleProvider : AssetBaseProvider
     {
         return type switch
         {
-            ParticleType.Test => Instance.testParticle,
+            ParticleType.TrapDeathParticle => Instance.trapDeathParticle,
+            ParticleType.FallDeathParticle => Instance.fallDeathParticle,
+            ParticleType.ArrowDeathParticle => Instance.arrowDeathParticle,
+            ParticleType.ObstacleDeathParticle => Instance.obstacleDeathParticle,
             _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
         };
     }
@@ -63,8 +69,11 @@ public class ParticleProvider : AssetBaseProvider
     {
         return type switch
         {
-            ParticleType.Test => 3,
-            _ => 0
+            ParticleType.TrapDeathParticle => 3,
+            ParticleType.FallDeathParticle => 3,
+            ParticleType.ArrowDeathParticle => 3,
+            ParticleType.ObstacleDeathParticle => 3,
+            _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
         };
     }
     public override void ReturnAllToPool()
@@ -77,5 +86,8 @@ public class ParticleProvider : AssetBaseProvider
 
 public enum ParticleType
 {
-    Test, 
+    TrapDeathParticle,
+    FallDeathParticle,
+    ArrowDeathParticle,
+    ObstacleDeathParticle, 
 }

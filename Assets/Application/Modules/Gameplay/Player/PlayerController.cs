@@ -33,6 +33,7 @@ public class PlayerController : MonoBehaviour
     private bool isMoving;
     private bool isFrozen;
     private bool isDead;
+    private DisposeBag disposeBag = new DisposeBag();
 
     private void Update()
     {
@@ -158,11 +159,56 @@ public class PlayerController : MonoBehaviour
     {
         isDead = true;
         animator.SetBool(die, true);
+        ShowParticle(reason);
         
         if (reason == DeathReason.Trap) return;
         
         transform.DOMoveY(transform.position.y - fallDistance, fallDuration)
             .SetEase(Ease.InQuad);
     }
-    
+
+    private void ShowParticle(DeathReason reason)
+    {
+        switch (reason)
+        {
+            case DeathReason.Trap:
+                PlayParticle(ParticleType.ObstacleDeathParticle);
+                DecreaseSize(0.5f);
+                break;
+            case DeathReason.Fall:
+                PlayParticle(ParticleType.FallDeathParticle);
+                DecreaseSize(0.5f);
+                break;
+            case DeathReason.Spike:
+                PlayParticle(ParticleType.TrapDeathParticle);
+                DecreaseSize(0.5f);
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(reason), reason, null);
+        }
+    }
+
+    private void DecreaseSize(float duration)
+    {
+        transform.DOScale(0, duration);
+    }
+
+    private void PlayParticle(ParticleType particleType)
+    {
+        var particle = ParticleProvider.GetParticle(particleType);
+        if (particle == null) return;
+        var pc = particle.GetComponent<ParticleSystem>();
+        
+        particle.transform.position = transform.position;
+        particle.transform.localScale = Vector3.one;
+        pc.Play();
+        if (!Mathf.Approximately(3000, 0))
+        {
+            DelayedExecutionManager.ExecuteActionAfterDelay(2000,
+                () =>
+                {
+                    particle.GetComponent<PoolableObject>().ReturnToPool();
+                }).disposeBy(disposeBag);
+        }
+    }
 }
