@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 063a3f5f514b4603a04d20b39ad2680b, type: 3}
+  m_Name: UIEffectCatalogue
+  m_EditorClassIdentifier: Assembly-CSharp::UIEffectCatalogue
+  buttonActive: {fileID: 11400000, guid: 6ee329f6cc14af849bd74ab8a9cd2c73, type: 2}
+  buttonInactive: {fileID: 11400000, guid: fe7be184a5b11ed489527b9ded76bef8, type: 2}
+  buttonPressed: {fileID: 11400000, guid: 6ee329f6cc14af849bd74ab8a9cd2c73, type: 2}
+  grayscale: {fileID: 11400000, guid: fe7be184a5b11ed489527b9ded76bef8, type: 2}
+  normal: {fileID: 11400000, guid: 6ee329f6cc14af849bd74ab8a9cd2c73, type: 2}

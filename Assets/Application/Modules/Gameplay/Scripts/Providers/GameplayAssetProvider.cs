@@ -13,6 +13,11 @@ public class GameplayAssetProvider : MonoBehaviour
 
     public GameObject player1;
     public GameObject player2;
+    
+    public Material level1Skybox;
+    public Material level2Skybox;
+    public Material level3Skybox;
+    public Material level4Skybox;
 
     public static GameplayAssetProvider Instance
     {
@@ -60,6 +65,16 @@ public class GameplayAssetProvider : MonoBehaviour
             PlayerType.Player1 => Instance.player1,
             PlayerType.Player2 => Instance.player2,
             _ => throw new ArgumentOutOfRangeException(nameof(playerType), playerType, null)
+        };
+    }
+
+    public static Material GetSkybox(LevelType levelType)
+    {
+        return levelType switch
+        {
+            LevelType.Level1 => Instance.level1Skybox,
+            LevelType.Level2 => Instance.level2Skybox,
+            _ => Instance.level1Skybox
         };
     }
 }

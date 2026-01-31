@@ -1,3 +1,4 @@
+using System;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -21,14 +22,23 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private PlayerType playerType;
 
-    private string jumpTrigger = "Jump";
     private string dash = "Dash";
+    private string die = "Die";
+
+    [Header("Fall")]
+    [SerializeField] private float fallDistance = 2f;
+    [SerializeField] private float fallDuration = 0.5f;
+    [SerializeField] private float groundCheckDistance = 2f;
 
     private bool isMoving;
+    private bool isFrozen;
+    private bool isDead;
 
     private void Update()
     {
-        if (isMoving) return;
+        if (isMoving || isDead) return;
+        
+        CheckGround();
 
         var direction = ReadDirection();
         if (direction != Vector2.zero)
@@ -82,6 +92,29 @@ public class PlayerController : MonoBehaviour
             : new Vector2(0f, Mathf.Sign(input.y));
     }
 
+    private void CheckGround()
+    {
+        var fallTrap = LayerMask.GetMask("Trap") | LayerMask.GetMask("FallTrap") | LayerMask.GetMask("SpikeTrap");
+        if (!Physics.Raycast(transform.position + Vector3.up, Vector3.down, out var hit, groundCheckDistance, fallTrap)) return;
+
+        DeathReason reason;
+
+        if (hit.transform.gameObject.layer == LayerMask.NameToLayer("FallTrap"))
+        {
+            reason = DeathReason.Fall;
+        }
+        else if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Trap"))
+        {
+            reason = DeathReason.Trap;
+        } 
+        else
+        {
+            reason = DeathReason.Spike;
+        }
+
+        Die(reason);
+    }
+
     private void Move(Vector2 direction)
     {
         if (isMoving) return;
@@ -90,7 +123,7 @@ public class PlayerController : MonoBehaviour
         if (moveDir.sqrMagnitude < 0.001f) return;
 
         // Wall check
-        if (Physics.Raycast(transform.position, moveDir.normalized, out RaycastHit hit, gridSize))
+        if (Physics.Raycast(transform.position + Vector3.up, moveDir.normalized, out RaycastHit hit, gridSize))
         {
             if (hit.collider.CompareTag("Wall")) return;
         }
@@ -117,7 +150,19 @@ public class PlayerController : MonoBehaviour
             {
                 isMoving = false;
                 animator.SetBool(dash, false);
+                CheckGround();
             });
     }
-
+    
+    private void Die(DeathReason reason)
+    {
+        isDead = true;
+        animator.SetBool(die, true);
+        
+        if (reason == DeathReason.Trap) return;
+        
+        transform.DOMoveY(transform.position.y - fallDistance, fallDuration)
+            .SetEase(Ease.InQuad);
+    }
+    
 }
