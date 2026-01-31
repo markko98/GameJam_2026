@@ -3,4 +3,5 @@ public static class SoundIds
 {
     public const string test_01 = "test_01";
     public const string ui_tab_switch = "ui_tab_switch";
+    public const string ui_button_click = "ui_button_click";
 }

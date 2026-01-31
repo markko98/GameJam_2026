@@ -15,12 +15,18 @@ public class SettingsView : UIViewController
     {
         base.ViewDidLoad();
         outlet = view.GetComponentInChildren<SettingsViewOutlet>();
+        
+    }
+
+    public override void ViewWillAppear()
+    {
         outlet.sfxSlider.SetValueWithoutNotify(ServiceProvider.audioService.GetMixerValue(SoundMixerType.SFX));
         outlet.musicSlider.SetValueWithoutNotify(ServiceProvider.audioService.GetMixerValue(SoundMixerType.Music));
         outlet.sfxSlider.onValueChanged.AddListener(OnSFXChange);
         outlet.musicSlider.onValueChanged.AddListener(OnMusicChange);
         outlet.backButton.button.onClick.AddListener(ExitSettings);
     }
+
     private void ExitSettings()
     {
         RemoveView(0f, null, AnimationType.SlideOutRight);
