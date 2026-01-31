@@ -35,9 +35,9 @@ public class GridManager
         maskTriggeredEvent = new EventBinding<MaskTriggeredEvent>(OnMaskChanged);
         UEventBus<MaskTriggeredEvent>.Register(maskTriggeredEvent);
 
-        maskExpiredEvent = new EventBinding<MaskExpiredEvent>(() =>
+        maskExpiredEvent = new EventBinding<MaskExpiredEvent>((e) =>
         {
-            OnMaskChanged(new MaskTriggeredEvent() { maskType = MaskType.None });
+            OnMaskChanged(new MaskTriggeredEvent() { maskType = e.maskType });
         });
         
         UEventBus<MaskExpiredEvent>.Register(maskExpiredEvent);

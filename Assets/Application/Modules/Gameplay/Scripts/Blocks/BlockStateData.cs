@@ -5,7 +5,7 @@ using UnityEngine;
 [Serializable]
 public class BlockStateData
 {
-    public MaskType mask;
+    public BlockState state;
     public GameObject blockVisual;
 
     private Material _material;
@@ -17,9 +17,11 @@ public class BlockStateData
 
     public Collider GetCollider()
     {
+        if (blockVisual == null) return null;
+
         if (_collider == null)
         {
-            _collider = blockVisual.GetComponent<Collider>();
+            _collider = blockVisual?.GetComponent<Collider>();
         }
             
         return _collider;
@@ -27,9 +29,11 @@ public class BlockStateData
 
     public Material GetMaterial()
     {
+        if (blockVisual == null) return null;
+        
         if (_material == null)
         {
-            _material = blockVisual.GetComponent<Renderer>().material;
+            _material = blockVisual?.GetComponent<Renderer>()?.material;
         }
             
         return _material;
@@ -37,21 +41,22 @@ public class BlockStateData
 
     private Tween Fade(float endValue, float duration)
     {
-        return GetMaterial().DOFloat(endValue, fadeProperty, duration);
+        return GetMaterial()?.DOFloat(endValue, fadeProperty, duration);
     }
 
-    public Tween FadeIn()
+    public Tween FadeIn(bool instant = false)
     {
-        return Fade(0, fadeDuration);
+        blockVisual.SetActive(true);
+        return Fade(0, instant ? 0 :fadeDuration);
     }
         
-    public Tween FadeOut()
+    public Tween FadeOut(bool instant = false)
     {
-        return Fade(1, fadeDuration);
+        return Fade(1, instant ? 0 :fadeDuration).OnComplete(() => blockVisual.SetActive(false));
     }
 
     public void SetFadeColor(Color fadeColor)
     {
-        GetMaterial().SetColor(fadeBurnColorProperty, fadeColor);
+        GetMaterial()?.SetColor(fadeBurnColorProperty, fadeColor);
     }
 }

@@ -46,10 +46,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameplayAssetProvider
   emptyBlock: {fileID: 3834396108301582109, guid: ce1c4c1dd8fb941a2a0fbb74841e47d1, type: 3}
   floorBlock: {fileID: 3834396108301582109, guid: 0faa782053988475cb9404ccb9fb16d9, type: 3}
+  floor1Block: {fileID: 3834396108301582109, guid: 39d077038d90e41a2b8d038ec0e5107b, type: 3}
   trapBlock: {fileID: 7216127156916089820, guid: d1ba56f60dd24464f871937c7b3a1248, type: 3}
   obstacleBlock: {fileID: 7216127156916089820, guid: d9d818b8712964517ab82294f0467895, type: 3}
   goalBlock: {fileID: 7216127156916089820, guid: d9d818b8712964517ab82294f0467895, type: 3}
   startBlock: {fileID: 7216127156916089820, guid: d9d818b8712964517ab82294f0467895, type: 3}
+  bridgeBlock: {fileID: 3834396108301582109, guid: 477bb79e1a18c41c6855db7c4fdb0a52, type: 3}
   player1: {fileID: 8585032940491824722, guid: daf6669f32eec47af92cd540f3417f43, type: 3}
   player2: {fileID: 8585032940491824722, guid: f2eb452cef7b24efc9f4bc1cc5586044, type: 3}
   level1Skybox: {fileID: 2100000, guid: 2a157eb2cc18f449498e1069b534d8b0, type: 2}

@@ -22,6 +22,8 @@ public enum BlockType
     Obstacle = 3,
     Goal = 4,
     Start = 5,
+    Floor1 = 6,
+    Bridge = 7
 }
 
 public enum MaskType

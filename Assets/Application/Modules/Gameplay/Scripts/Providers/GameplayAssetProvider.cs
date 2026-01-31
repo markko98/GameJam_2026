@@ -6,11 +6,13 @@ public class GameplayAssetProvider : MonoBehaviour
     private static GameplayAssetProvider _instance;
     public GameObject emptyBlock;
     public GameObject floorBlock;
+    public GameObject floor1Block;
     public GameObject trapBlock;
     public GameObject obstacleBlock;
     public GameObject goalBlock;
     public GameObject startBlock;
-
+    public GameObject bridgeBlock;
+    
     public GameObject player1;
     public GameObject player2;
     
@@ -50,10 +52,12 @@ public class GameplayAssetProvider : MonoBehaviour
         {
             BlockType.Empty => Instance.emptyBlock,
             BlockType.Floor => Instance.floorBlock,
+            BlockType.Floor1 => Instance.floor1Block,
             BlockType.Trap => Instance.trapBlock,
             BlockType.Obstacle => Instance.obstacleBlock,
             BlockType.Goal => Instance.goalBlock,
             BlockType.Start => Instance.startBlock,
+            BlockType.Bridge => Instance.bridgeBlock,
             _ => throw new ArgumentOutOfRangeException(nameof(blockType), blockType, null)
         };
     }

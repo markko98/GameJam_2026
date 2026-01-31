@@ -7,8 +7,12 @@ public class BlockView : MonoBehaviour
 {
     public PlayerSide Side;
     public BlockType Type;
-    
-    [SerializeField] private List<BlockStateData> stateDatas = new ();
+    public MaskType maskType;
+
+    public BlockState state = BlockState.Inactive;
+
+    [SerializeField] private BlockStateData inactiveStateData;
+    [SerializeField] private BlockStateData activeStateData;
     private Renderer rend;
     private Sequence _activeSequence;
 
@@ -17,28 +21,39 @@ public class BlockView : MonoBehaviour
         Side = side;
         Type = type;
         
-        foreach (var stateData in stateDatas)
+        inactiveStateData?.SetFadeColor(GetColorForMaskType(maskType));
+        activeStateData?.SetFadeColor(GetColorForMaskType(maskType));
+
+        switch (state)
         {
-           stateData.SetFadeColor(GetColorForMaskType(stateData.mask));
+            case BlockState.Inactive:
+                activeStateData?.FadeOut(true);
+                break;
+            case BlockState.Active:
+                inactiveStateData?.FadeOut(true);
+                break;
         }
-        ChangeVisuals(MaskType.None);
     }
 
     public void ChangeVisuals(MaskType maskType)
     {
+        if (this.maskType != maskType) return;
+
         _activeSequence?.Kill();
         _activeSequence = DOTween.Sequence();
-        foreach (var stateData in stateDatas)
-        {
-            _activeSequence.Join(stateData.FadeOut());
-        }
+        
+        state = state == BlockState.Inactive ? BlockState.Active: BlockState.Inactive;
 
-        var dataToActivate = stateDatas.Find(x => x.mask == maskType);
-        _activeSequence.AppendCallback(() =>
+        if (state == BlockState.Active)
+        { 
+            _activeSequence.Append(inactiveStateData.FadeOut());
+            _activeSequence.Append(activeStateData.FadeIn());
+        }
+        else
         {
-            stateDatas.ForEach(x => x.GetCollider().enabled = x.mask == maskType);
-        });
-        _activeSequence.Append(dataToActivate?.FadeIn());
+            _activeSequence.Append(activeStateData.FadeOut());
+            _activeSequence.Append(inactiveStateData.FadeIn());
+        }
     }
 
     private Color GetColorForMaskType(MaskType maskType)
