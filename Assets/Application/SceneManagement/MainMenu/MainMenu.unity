@@ -512,6 +512,10 @@ MonoBehaviour:
   continueButton: {fileID: 1381337967}
   settingsButton: {fileID: 415018763}
   exitButton: {fileID: 2002428411}
+  backgroundImage: {fileID: 20152743}
+  morningBackgroundSprite: {fileID: 21300000, guid: 2290b27b0e95d8744bc1f4ee0e0aae20, type: 3}
+  dayBackgroundSprite: {fileID: 21300000, guid: 34c89c8c9debb9e4fae69d4bc362014f, type: 3}
+  nightBackgroundSprite: {fileID: 21300000, guid: e5b8355c810858349ae459599544f3ff, type: 3}
 --- !u!1 &275804422
 GameObject:
   m_ObjectHideFlags: 0
