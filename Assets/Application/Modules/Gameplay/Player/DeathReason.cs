@@ -1,4 +1,4 @@
 public enum DeathReason
 {
-    Trap, Fall, Spike    
+    Trap, Fall, Spike, Arrow
 }

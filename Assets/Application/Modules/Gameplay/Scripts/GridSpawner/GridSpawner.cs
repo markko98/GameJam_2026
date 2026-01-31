@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using DG.Tweening;
+using Object = UnityEngine.Object;
 
 public class GridSpawner
 {
@@ -11,8 +12,7 @@ public class GridSpawner
     private float gridPlaneY = 0f;
 
     // Layout
-    private const float DEFAULT_GAP_WORLD = 1.0f;
-    private const float PADDING_WORLD = 0.75f;
+    private const float PADDING_WORLD = 0.1f;
     private const float MIN_ORTHO = 1f;
     private const float MAX_ORTHO = 200f;
 
@@ -78,9 +78,21 @@ public class GridSpawner
             Debug.LogError("GridSpawner: Camera.main missing.");
             return;
         }
-        
-        leftGridRoot.position  = ViewportToPlanePoint(new Vector2(0.25f, 0.6f), gridPlaneY);
-        rightGridRoot.position = ViewportToPlanePoint(new Vector2(0.75f, 0.6f), gridPlaneY);
+
+        var center = ViewportToPlanePoint(new Vector2(0.5f, 0.6f), gridPlaneY);
+
+        var leftDef = level.GetPlayerDefinition(PlayerSide.Left);
+        var rightDef = level.GetPlayerDefinition(PlayerSide.Right);
+
+        // Distance from grid root to its outermost perimeter wall/gate center
+        float leftHalfW = (leftDef.gridSize.x + 1) * leftDef.cellSize * 0.5f;
+        float rightHalfW = (rightDef.gridSize.x + 1) * rightDef.cellSize * 0.5f;
+
+        // 1 tile gap between the inner gates
+        float gap = leftDef.cellSize;
+
+        leftGridRoot.position = new Vector3(center.x - leftHalfW - gap * 0.5f, center.y, center.z);
+        rightGridRoot.position = new Vector3(center.x + rightHalfW + gap * 0.5f, center.y, center.z);
     }
 
     private Vector3 ViewportToPlanePoint(Vector2 viewport01, float planeY)
@@ -106,13 +118,13 @@ public class GridSpawner
         var leftDef  = level.GetPlayerDefinition(PlayerSide.Left);
         var rightDef = level.GetPlayerDefinition(PlayerSide.Right);
 
-        float leftW  = leftDef.gridSize.x * leftDef.cellSize;
-        float leftH  = leftDef.gridSize.y * leftDef.cellSize;
-
-        float rightW = rightDef.gridSize.x * rightDef.cellSize;
+        // Full width including perimeter walls + 1 tile gap between grids
+        float leftFullW = (leftDef.gridSize.x + 2) * leftDef.cellSize;
+        float rightFullW = (rightDef.gridSize.x + 2) * rightDef.cellSize;
+        float leftH = leftDef.gridSize.y * leftDef.cellSize;
         float rightH = rightDef.gridSize.y * rightDef.cellSize;
-
-        float totalW = leftW + DEFAULT_GAP_WORLD + rightW + PADDING_WORLD * 2f;
+        float gap = leftDef.cellSize;
+        float totalW = leftFullW + gap + rightFullW + PADDING_WORLD * 2f;
         float maxH   = Mathf.Max(leftH, rightH) + PADDING_WORLD * 2f;
 
         float lo = MIN_ORTHO;
@@ -137,12 +149,12 @@ public class GridSpawner
     {
         float y = gridPlaneY;
 
-        var left  = ViewportToPlanePoint(new Vector2(0.05f, 0.6f), y);
-        var right = ViewportToPlanePoint(new Vector2(0.95f, 0.6f), y);
+        var left  = ViewportToPlanePoint(new Vector2(0.0f, 0.6f), y);
+        var right = ViewportToPlanePoint(new Vector2(1f, 0.6f), y);
         planeWidth = Vector3.Distance(left, right);
 
-        var bottom = ViewportToPlanePoint(new Vector2(0.6f, 0.05f), y);
-        var top    = ViewportToPlanePoint(new Vector2(0.6f, 0.95f), y);
+        var bottom = ViewportToPlanePoint(new Vector2(0.6f, 0f), y);
+        var top    = ViewportToPlanePoint(new Vector2(0.6f, 1f), y);
         planeHeight = Vector3.Distance(bottom, top);
     }
 
@@ -201,7 +213,112 @@ public class GridSpawner
             grid[x, y] = view;
         }
 
+        SpawnPerimeterWalls(parent, def, halfExtents, side);
+
         return grid;
+    }
+
+    private void SpawnPerimeterWalls(Transform parent, PlayerGridDefinition def, Vector2 halfExtents, PlayerSide side)
+    {
+        int w = def.gridSize.x;
+        int h = def.gridSize.y;
+        float cell = def.cellSize;
+        float wallHeight = 1f;
+
+        var topRot = Quaternion.Euler(0f, 0f, 0f);
+        var bottomRot = Quaternion.Euler(0f, 180f, 0f);
+        var leftRot = Quaternion.Euler(0f, -90f, 0f);
+        var rightRot = Quaternion.Euler(0f, 90f, 0f);
+
+        // Start gate: one cell outside the grid behind the start cell
+        var start = def.playerStartCell;
+        Vector2Int startGate;
+        Quaternion startGateRot;
+
+        if (start.y == 0)          { startGate = new Vector2Int(start.x, -1);  startGateRot = bottomRot; }
+        else if (start.y == h - 1) { startGate = new Vector2Int(start.x, h);   startGateRot = topRot; }
+        else if (start.x == 0)     { startGate = new Vector2Int(-1, start.y);   startGateRot = leftRot; }
+        else                        { startGate = new Vector2Int(w, start.y);    startGateRot = rightRot; }
+
+        // Goal gate: one cell outside the grid behind the goal cell, facing towards screen middle
+        var goal = def.targetCell;
+        // Goal gate always on the inner edge (facing towards screen middle)
+        Quaternion goalGateRot = side == PlayerSide.Left ? rightRot : leftRot;
+        Vector2Int goalGate = side == PlayerSide.Left
+            ? new Vector2Int(w, goal.y)
+            : new Vector2Int(-1, goal.y);
+
+        // Bottom and top edges (no corners)
+        for (int x = 0; x < w; x++)
+        {
+            bool isStartGate = startGate.x == x && startGate.y == -1;
+            bool isGoalGate = goalGate.x == x && goalGate.y == -1;
+            if (!isStartGate && !isGoalGate)
+                SpawnWall(parent, x, -1, cell, halfExtents, wallHeight, bottomRot);
+
+            isStartGate = startGate.x == x && startGate.y == h;
+            isGoalGate = goalGate.x == x && goalGate.y == h;
+            if (!isStartGate && !isGoalGate)
+                SpawnWall(parent, x, h, cell, halfExtents, wallHeight, topRot);
+        }
+
+        // Left and right edges (no corners)
+        for (int y = 0; y < h; y++)
+        {
+            bool isStartGate = startGate.x == -1 && startGate.y == y;
+            bool isGoalGate = goalGate.x == -1 && goalGate.y == y;
+            if (!isStartGate && !isGoalGate)
+                SpawnWall(parent, -1, y, cell, halfExtents, wallHeight, leftRot);
+
+            isStartGate = startGate.x == w && startGate.y == y;
+            isGoalGate = goalGate.x == w && goalGate.y == y;
+            if (!isStartGate && !isGoalGate)
+                SpawnWall(parent, w, y, cell, halfExtents, wallHeight, rightRot);
+        }
+
+        // Spawn gates
+        SpawnGate(parent, startGate.x, startGate.y, cell, halfExtents, startGateRot);
+        SpawnGate(parent, goalGate.x, goalGate.y, cell, halfExtents, goalGateRot);
+
+        // Walls flanking the goal gate (top and bottom)
+        SpawnWall(parent, goalGate.x, goalGate.y + 1, cell, halfExtents, wallHeight, topRot);
+        SpawnWall(parent, goalGate.x, goalGate.y - 1, cell, halfExtents, wallHeight, bottomRot);
+    }
+
+    private void SpawnGate(Transform parent, int x, int y, float cellSize, Vector2 halfExtents, Quaternion rotation)
+    {
+        if (level.gatePrefab == null) return;
+
+        var worldPos = parent.position + new Vector3(
+            x * cellSize - halfExtents.x,
+            0f,
+            y * cellSize - halfExtents.y
+        );
+
+        var floor = Object.Instantiate(GameplayAssetProvider.GetBlock(BlockType.Floor), worldPos, Quaternion.identity);
+        floor.transform.parent = parent;
+
+        var gate = Object.Instantiate(level.gatePrefab, worldPos, rotation);
+        gate.transform.parent = parent;
+        gate.tag = "Wall";
+    }
+
+    private void SpawnWall(Transform parent, int x, int y, float cellSize, Vector2 halfExtents, float wallHeight, Quaternion? rotation = null)
+    {
+        var worldPos = parent.position + new Vector3(
+            x * cellSize - halfExtents.x,
+            0f,
+            y * cellSize - halfExtents.y
+        );
+
+        var rot = rotation ?? Quaternion.identity;
+        var wall = Object.Instantiate(level.wallPrefab, worldPos, rot);
+        wall.transform.parent = parent;
+        wall.tag = "Wall";
+
+        var col = wall.AddComponent<BoxCollider>();
+        col.size = new Vector3(cellSize, wallHeight, cellSize);
+        col.center = new Vector3(0f, wallHeight * 0.5f, 0f);
     }
 
     /// <summary>

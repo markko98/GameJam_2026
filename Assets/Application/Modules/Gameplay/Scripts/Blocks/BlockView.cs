@@ -54,6 +54,16 @@ public class BlockView : MonoBehaviour
             _activeSequence.Append(activeStateData.FadeOut());
             _activeSequence.Append(inactiveStateData.FadeIn());
         }
+
+        //only for arrow dispenser
+        var dispenser = GetComponentInChildren<ArrowDispenser>();
+        if (dispenser != null)
+        {
+            if (state == BlockState.Active)
+                dispenser.Stop();
+            else
+                dispenser.Restart();
+        }
     }
 
     private Color GetColorForMaskType(MaskType maskType)

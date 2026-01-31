@@ -12,6 +12,8 @@ public class GameplayAssetProvider : MonoBehaviour
     public GameObject goalBlock;
     public GameObject startBlock;
     public GameObject bridgeBlock;
+    public GameObject arrowDispenserBlock;
+
     
     public GameObject player1;
     public GameObject player2;
@@ -58,6 +60,7 @@ public class GameplayAssetProvider : MonoBehaviour
             BlockType.Goal => Instance.goalBlock,
             BlockType.Start => Instance.startBlock,
             BlockType.Bridge => Instance.bridgeBlock,
+            BlockType.ArrowDispenser => Instance.arrowDispenserBlock,
             _ => throw new ArgumentOutOfRangeException(nameof(blockType), blockType, null)
         };
     }

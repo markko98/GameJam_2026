@@ -23,7 +23,8 @@ public enum BlockType
     Goal = 4,
     Start = 5,
     Floor1 = 6,
-    Bridge = 7
+    Bridge = 7,
+    ArrowDispenser = 8
 }
 
 public enum MaskType

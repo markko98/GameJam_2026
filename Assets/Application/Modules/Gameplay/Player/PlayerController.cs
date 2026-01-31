@@ -155,13 +155,18 @@ public class PlayerController : MonoBehaviour
             });
     }
     
+    public void Kill(DeathReason reason)
+    {
+        Die(reason);
+    }
+
     private void Die(DeathReason reason)
     {
         isDead = true;
         animator.SetBool(die, true);
         ShowParticle(reason);
         
-        if (reason == DeathReason.Trap) return;
+        if (reason == DeathReason.Trap || reason == DeathReason.Arrow) return;
         
         transform.DOMoveY(transform.position.y - fallDistance, fallDuration)
             .SetEase(Ease.InQuad);
@@ -180,6 +185,10 @@ public class PlayerController : MonoBehaviour
                 DecreaseSize(0.5f);
                 break;
             case DeathReason.Spike:
+                PlayParticle(ParticleType.TrapDeathParticle);
+                DecreaseSize(0.5f);
+                break;
+            case DeathReason.Arrow:
                 PlayParticle(ParticleType.TrapDeathParticle);
                 DecreaseSize(0.5f);
                 break;
