@@ -87,6 +87,7 @@ public class GridManager
 
                 // Determine target state for this mask (fallback to startState)
                 var newState = cell.GetStateForMask(mask, cell.startState);
+                view.ChangeVisuals(mask);
                 view.ApplyState(newState);
             }
 
@@ -107,8 +108,6 @@ public class GridManager
         if (!def.IsInside(playerCell))
             return;
 
-        // Basic rule: if player stands on a "Deadly" state after mask update -> death.
-        // You can change this rule to your needs.
         var cell = def.GetCell(playerCell.x, playerCell.y);
         if (cell == null) return;
 

@@ -18,18 +18,18 @@ public enum BlockType
 {
     Empty = 0,
     Floor = 1,
-    Wall = 2,
-    Trap = 3,
-    Obstacle = 4,
-    Goal = 5
+    Trap = 2,
+    Obstacle = 3,
+    Goal = 4,
+    Start = 5,
 }
 
 public enum BlockState
 {
-    // Keep it simple; expand as needed
     Active = 0,
     Inactive = 1,
-    Deadly = 2
+    Deadly = 2,
+    Life = 3,
 }
 
 public enum MaskType
@@ -37,5 +37,4 @@ public enum MaskType
     None = 0,
     Trap = 1,
     Obstacle = 2,
-    // add more as needed
 }

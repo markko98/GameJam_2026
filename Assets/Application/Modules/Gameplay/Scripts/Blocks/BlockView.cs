@@ -1,14 +1,24 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BlockView : MonoBehaviour
 {
-    public PlayerSide Side { get; private set; }
-    public Vector2Int Cell { get; private set; }
-    public BlockType Type { get; private set; }
-    public BlockState State { get; private set; }
+    [Serializable]
+    private class BlockStateData
+    {
+        public MaskType mask;
+        public GameObject blockVisual;
+    }
 
-    // Optional visuals (e.g. disable renderer/collider)
-    private Collider col;
+    public PlayerSide Side;
+    public Vector2Int Cell;
+    public BlockType Type;
+    public BlockState State;
+
+    public bool isDeadly;
+    
+    [SerializeField] private List<BlockStateData> stateDatas = new ();
     private Renderer rend;
 
     public void Initialize(PlayerSide side, Vector2Int cell, BlockType type, BlockState startState)
@@ -16,37 +26,42 @@ public class BlockView : MonoBehaviour
         Side = side;
         Cell = cell;
         Type = type;
-
-        col = GetComponent<Collider>();
-        rend = GetComponentInChildren<Renderer>();
-
+        
         ApplyState(startState);
+        ChangeVisuals(MaskType.None);
     }
 
     public void ApplyState(BlockState newState)
     {
         State = newState;
 
-        // Basic behavior:
-        // Active: solid + visible
-        // Inactive: non-solid + maybe invisible
-        // Deadly: solid + visible (but special flag)
         switch (State)
         {
             case BlockState.Active:
-                if (col) col.enabled = true;
-                if (rend) rend.enabled = true;
                 break;
 
             case BlockState.Inactive:
-                if (col) col.enabled = false;
-                if (rend) rend.enabled = false;
                 break;
 
             case BlockState.Deadly:
-                if (col) col.enabled = true;
-                if (rend) rend.enabled = true;
                 break;
+            
+            case BlockState.Life:
+                break;
+        }
+    }
+
+    public void ChangeVisuals(MaskType maskType)
+    {
+        foreach (var stateData in stateDatas)
+        {
+            stateData.blockVisual.gameObject.SetActive(false);
+        }
+
+        var dataToActivate = stateDatas.Find(x => x.mask == maskType);
+        if (dataToActivate != null)
+        {
+            dataToActivate.blockVisual.gameObject.SetActive(true);
         }
     }
 }

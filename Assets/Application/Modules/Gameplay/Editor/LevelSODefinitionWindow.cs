@@ -476,9 +476,7 @@ public class LevelSODefinitionWindow : EditorWindow
     private static void SwapPlayers(LevelSO lvl)
     {
         // Reflection-free swap for known fields (leftPlayer/rightPlayer)
-        var tmp = lvl.leftPlayer;
-        lvl.leftPlayer = lvl.rightPlayer;
-        lvl.rightPlayer = tmp;
+        (lvl.leftPlayer, lvl.rightPlayer) = (lvl.rightPlayer, lvl.leftPlayer);
     }
 
     // Visual helpers
@@ -488,7 +486,6 @@ public class LevelSODefinitionWindow : EditorWindow
         {
             BlockType.Empty => "EMP",
             BlockType.Floor => "FLR",
-            BlockType.Wall => "WAL",
             BlockType.Trap => "TRP",
             BlockType.Obstacle => "OBS",
             BlockType.Goal => "GOL",
@@ -515,7 +512,6 @@ public class LevelSODefinitionWindow : EditorWindow
         {
             BlockType.Empty => new Color(0.25f, 0.25f, 0.25f),
             BlockType.Floor => new Color(0.75f, 0.75f, 0.75f),
-            BlockType.Wall => new Color(0.55f, 0.55f, 0.65f),
             BlockType.Trap => new Color(0.95f, 0.55f, 0.55f),
             BlockType.Obstacle => new Color(0.95f, 0.75f, 0.45f),
             BlockType.Goal => new Color(0.55f, 0.95f, 0.65f),
