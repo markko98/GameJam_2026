@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LevelSO
   spawnAnimDelayPerBlock: 0.005
   leftPlayer:
-    gridSize: {x: 3, y: 3}
+    gridSize: {x: 4, y: 4}
     cellSize: 2.1
     playerStartCell: {x: 0, y: 0}
-    targetCell: {x: 2, y: 2}
+    targetCell: {x: 3, y: 3}
     availableMasks: 01000000
-    cells: 010000000600000001000000010000000900000006000000010000000600000004000000
+    cells: 01000000060000000100000001000000090000000600000001000000060000000600000002000000010000000100000006000000020000000300000004000000
   rightPlayer:
     gridSize: {x: 3, y: 3}
     cellSize: 2.1

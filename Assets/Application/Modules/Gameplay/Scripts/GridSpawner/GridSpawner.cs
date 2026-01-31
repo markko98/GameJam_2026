@@ -12,7 +12,7 @@ public class GridSpawner
     private float gridPlaneY = 0f;
 
     // Layout
-    private const float PADDING_WORLD = 0.1f;
+    private const float PADDING_WORLD = 0f;
     private const float MIN_ORTHO = 1f;
     private const float MAX_ORTHO = 200f;
 
@@ -81,7 +81,7 @@ public class GridSpawner
             return;
         }
 
-        var center = ViewportToPlanePoint(new Vector2(0.5f, 0.6f), gridPlaneY);
+        var center = ViewportToPlanePoint(new Vector2(0.5f, 0.5f), gridPlaneY);
 
         var leftDef = level.GetPlayerDefinition(PlayerSide.Left);
         var rightDef = level.GetPlayerDefinition(PlayerSide.Right);
