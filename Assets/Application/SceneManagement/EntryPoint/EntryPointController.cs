@@ -42,7 +42,7 @@ public class EntryPointController : AppDelegate
     private void LoadDefaultSceneAsync()
     {
         USceneController sceneController = DetermineSceneController();
-        UNavigationController.SetRootViewController(sceneController,false);
+        UNavigationController.SetRootViewController(sceneController);
     }
 
     private USceneController DetermineSceneController()

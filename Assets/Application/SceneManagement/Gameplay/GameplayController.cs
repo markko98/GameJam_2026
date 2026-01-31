@@ -28,7 +28,7 @@ public class GameplayController : USceneController
     private void SetupSkyBox()
     {
         RenderSettings.defaultReflectionMode = UnityEngine.Rendering.DefaultReflectionMode.Skybox;
-        RenderSettings.skybox = outlet.skybox;
+        RenderSettings.skybox = GameplayAssetProvider.GetSkybox(levelType);
     }
 
     private void SetupGrid()
