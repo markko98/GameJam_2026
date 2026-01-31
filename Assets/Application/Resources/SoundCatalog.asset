@@ -17,3 +17,5 @@ MonoBehaviour:
     definition: {fileID: 11400000, guid: c7860ed72c10c4e81a64a5ddf40b707a, type: 2}
   - id: ui_tab_switch
     definition: {fileID: 11400000, guid: 5acf1898b9a824b32991d68601f483b4, type: 2}
+  - id: ui_button_click
+    definition: {fileID: 11400000, guid: e4770ae20e59dd84592efdbd24c7bade, type: 2}
