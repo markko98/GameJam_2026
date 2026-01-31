@@ -1,12 +1,18 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 public class PauseView : UIViewController
 {
     private PauseViewOutlet outlet;
+    private readonly Action onResumeAction;
+    private readonly Action onExitAction;
 
-    public PauseView(Transform viewport, UIStackNavigationController controller) : base(controller)
+    public PauseView(Action onResumeAction, Action onExitAction, Transform viewport, UIStackNavigationController controller) : base(controller)
     {
+        this.onResumeAction = onResumeAction;
+        this.onExitAction = onExitAction;
         var prefab = Resources.Load<GameObject>(Strings.UIViewsResourcesPath + "PauseView");
         view = Object.Instantiate(prefab, viewport, false);
     }
@@ -15,29 +21,24 @@ public class PauseView : UIViewController
     {
         base.ViewDidLoad();
         outlet = view.GetComponentInChildren<PauseViewOutlet>();
-        
     }
 
     public override void ViewWillAppear()
     {
         outlet.mainMenuButton.button.onClick.AddListener(OpenMainMenu);
         outlet.closeButton.button.onClick.AddListener(ExitPause);
-        outlet.exitButton.button.onClick.AddListener(ExitGame);
+        outlet.continueButton.button.onClick.AddListener(ExitPause);
     }
 
     private void ExitPause()
     {
-        RemoveView(0f, null, AnimationType.SlideOutRight);
-    }
-
-    private void ExitGame()
-    {
-        Application.Quit();
+        onResumeAction?.Invoke();
+        RemoveView(0f, null, AnimationType.SlideOutDown);
     }
 
     private void OpenMainMenu()
     {
-        var mainMenu = new MainMenuController();
+        onExitAction?.Invoke();
     }
 
     public override void ViewWillDisappear()
@@ -51,6 +52,6 @@ public class PauseView : UIViewController
         base.Cleanup();
         outlet.mainMenuButton.button.onClick.RemoveListener(OpenMainMenu);
         outlet.closeButton.button.onClick.RemoveListener(ExitPause);
-        outlet.exitButton.button.onClick.RemoveListener(ExitGame);
+        outlet.continueButton.button.onClick.RemoveListener(ExitPause);
     }
 }
