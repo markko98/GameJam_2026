@@ -266,7 +266,7 @@ Material:
     - _EmissionSelfGlow: 1
     - _EnvironmentReflections: 1
     - _FaceDownCutoff: 0.25
-    - _FadeAmount: 0.41
+    - _FadeAmount: 0
     - _FadeBurnOn: 1
     - _FadeBurnWidth: 0.1
     - _FadeByCamDistanceOn: 0
