@@ -10,7 +10,6 @@ public class ButtonView : UIViewComponent
     public TextMeshProUGUI text;
     public Button button;
     public UIEffect buttonEffect;
-    [SerializeField] private bool applyGrayscalePreset = false;
 
     private void OnValidate()
     {

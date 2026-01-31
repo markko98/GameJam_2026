@@ -31,7 +31,6 @@ public class EntryPointController : AppDelegate
 
     private void InitializeServices()
     {
-        
         ServiceProvider.audioService = new AudioService();
         ServiceProvider.modalService = new ModalService();
         ServiceProvider.currencyService = new CurrencyService();
