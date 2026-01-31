@@ -16,7 +16,7 @@ public class MainMenuController : USceneController
 
     private void OpenGameplay()
     {
-        var gameplay = new GameplayController();
+        var gameplay = new GameplayController(LevelType.Level1);
         PushSceneController(gameplay);
     }
 }

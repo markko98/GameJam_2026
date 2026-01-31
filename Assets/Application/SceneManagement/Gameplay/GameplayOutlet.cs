@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class GameplayOutlet : SceneControllerOutlet
 {
-    public RectTransform dummyImage;
-    public Transform particleTarget;
+    public Transform leftGridRoot;
+    public Transform rightGridRoot;
+    public float gridPlaneY = 0f;
 }
