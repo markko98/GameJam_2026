@@ -5,5 +5,5 @@ public class SettingsViewOutlet : MonoBehaviour
 {
     public Slider sfxSlider;
     public Slider musicSlider;
-    public ButtonView backButton;
+    public ButtonView closeButton;
 }
