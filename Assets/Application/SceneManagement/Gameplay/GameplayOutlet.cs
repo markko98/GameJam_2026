@@ -2,5 +2,6 @@ using UnityEngine;
 
 public class GameplayOutlet : SceneControllerOutlet
 {
-    public GameObject wall;
+    public RectTransform dummyImage;
+    public Transform particleTarget;
 }
