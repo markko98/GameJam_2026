@@ -38,6 +38,6 @@ MonoBehaviour:
   shStandardNoShadowCaster: {fileID: 4800000, guid: 3bc39c06ce1e4fb44bc21dcf24dde7fe, type: 3}
   shOutline: {fileID: 4800000, guid: a4c8f68acf7c9844e97a36914026acb1, type: 3}
   shOutlineNoShadowCaster: {fileID: 4800000, guid: 7fd6f68952c76af4c8005466df606651, type: 3}
-  effectsProfileCollection: {fileID: 11400000, guid: 1c2504d2b8fb640ca82e6566798af17f, type: 2}
-  shaderPassCollection: {fileID: 0}
-  urpSettingsUserPref: {fileID: 11400000, guid: 85a7650733e514d099fa950d742c5b3a, type: 2}
+  effectsProfileCollection: {fileID: 11400000, guid: 0130e29854d8e4db9aa5746f21eec44d, type: 2}
+  shaderPassCollection: {fileID: 11400000, guid: 02697d53e5a592b43b0b78710cd1fd60, type: 2}
+  urpSettingsUserPref: {fileID: 11400000, guid: a54dc710510854d5387d76a4a5efb729, type: 2}

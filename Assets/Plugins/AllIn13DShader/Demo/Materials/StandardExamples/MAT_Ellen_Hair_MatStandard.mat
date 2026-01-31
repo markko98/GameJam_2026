@@ -8,7 +8,9 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: MAT_Ellen_Hair_MatStandard
-  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
+  m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _NORMALMAP
   m_InvalidKeywords: []
@@ -16,9 +18,11 @@ Material:
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
-  stringTagMap: {}
+  stringTagMap:
+    RenderType: Opaque
   disabledShaderPasses:
   - MOTIONVECTORS
+  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -150,13 +154,14 @@ Material:
     - _value: 0
     m_Colors:
     - _BaseColor: {r: 0.55294114, g: 0.13333318, b: 0.13333318, a: 1}
-    - _Color: {r: 0.55294114, g: 0.1333332, b: 0.1333332, a: 1}
+    - _Color: {r: 0.55294114, g: 0.13333315, b: 0.13333315, a: 1}
     - _Color2: {r: 1, g: 0.45588237, b: 0.45588237, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _HighlightColor: {r: 0.8018868, g: 0.094562106, b: 0.21537162, a: 1}
     - _HighlightColor2: {r: 0.9150943, g: 0.15970986, b: 0.29221818, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
+  m_AllowLocking: 1
 --- !u!114 &106230321821400740
 MonoBehaviour:
   m_ObjectHideFlags: 11

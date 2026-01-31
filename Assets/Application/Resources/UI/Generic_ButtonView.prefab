@@ -66,7 +66,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: b3ce7161d4f8acd408f150d83ff0f85b, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -91,8 +91,8 @@ MonoBehaviour:
   m_ToneFilter: 0
   m_ToneIntensity: 1
   m_ColorFilter: 0
-  m_ColorIntensity: 1
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_ColorIntensity: 0.5
+  m_Color: {r: 0.12578613, g: 0.12578613, b: 0.12578613, a: 1}
   m_ColorGlow: 0
   m_SamplingFilter: 0
   m_SamplingIntensity: 0.5
@@ -163,7 +163,7 @@ MonoBehaviour:
   m_ShadowColorFilter: 4
   m_ShadowColor: {r: 1, g: 1, b: 1, a: 1}
   m_ShadowColorGlow: 0
-  m_GradationMode: 7
+  m_GradationMode: 0
   m_GradationIntensity: 1
   m_GradationColorFilter: 1
   m_GradationColor1: {r: 1, g: 1, b: 1, a: 1}
@@ -294,15 +294,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: Gameplay
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 2d69d7c6b7300c44ba9ed201d32183a9, type: 2}
+  m_sharedMaterial: {fileID: 6168036974056028755, guid: 2d69d7c6b7300c44ba9ed201d32183a9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281479730
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+    rgba: 4290297802
+  m_fontColor: {r: 0.7924528, g: 0.74909216, b: 0.72018504, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -319,13 +319,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 32
-  m_fontSizeBase: 32
+  m_fontSize: 52
+  m_fontSizeBase: 52
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 16
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -428,11 +428,11 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 0
+  m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_HighlightedColor: {r: 0.6792453, g: 0.6792453, b: 0.6792453, a: 1}
+    m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -506,9 +506,5 @@ MonoBehaviour:
   root: {fileID: 9149153596362903931}
   text: {fileID: 1714561947206404401}
   button: {fileID: 4501760259327479951}
-  buttonBorder: {fileID: 7226116868972060823}
   buttonEffect: {fileID: 6658790735160398488}
   applyGrayscalePreset: 0
-  gradientColor:
-    color1: {r: 1, g: 1, b: 1, a: 1}
-    color2: {r: 0, g: 0.27541065, b: 1, a: 1}
