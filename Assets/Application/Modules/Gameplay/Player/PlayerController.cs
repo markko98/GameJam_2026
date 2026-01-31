@@ -34,9 +34,29 @@ public class PlayerController : MonoBehaviour
     private bool isFrozen;
     private bool isDead;
     private DisposeBag disposeBag = new DisposeBag();
+    private bool isPaused;
+    private EventBinding<PauseEvent> pauseBinding;
 
-    private void Update()
+    private void OnEnable()
     {
+        pauseBinding = new EventBinding<PauseEvent>(OnPauseChanged);
+        UEventBus<PauseEvent>.Register(pauseBinding);
+        GameTicker.SharedInstance.Update += CustomUpdate;
+    }
+    
+    private void OnDisable()
+    {
+        UEventBus<PauseEvent>.Deregister(pauseBinding);
+        GameTicker.SharedInstance.Update -= CustomUpdate;
+    }
+    private void OnPauseChanged(PauseEvent args)
+    {
+        isPaused = args.isPaused;
+    }
+
+    private void CustomUpdate()
+    {
+        if(isPaused) return;
         if (isMoving || isDead) return;
         
         CheckGround();

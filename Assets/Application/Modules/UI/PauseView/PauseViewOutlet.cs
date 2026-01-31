@@ -5,5 +5,5 @@ public class PauseViewOutlet : MonoBehaviour
 {
     public ButtonView mainMenuButton;
     public ButtonView closeButton;
-    public ButtonView exitButton;
+    public ButtonView continueButton;
 }

@@ -21,7 +21,6 @@ public class MaskInteractionView: UIViewController
     {
         base.ViewDidLoad();
         outlet = view.GetComponent<MaskInteractionViewOutlet>();
-
         
         SetupMasks();
     }

@@ -3,7 +3,9 @@ public class MaskView
 {
     private readonly MaskType maskType;
     private readonly MaskViewOutlet outlet;
-    
+    private EventBinding<PauseEvent> pauseBinding;
+    private bool isPaused;
+
     public MaskView(MaskType maskType, MaskViewOutlet outlet)
     {
         this.maskType = maskType;
@@ -14,17 +16,27 @@ public class MaskView
 
     private void Initialize()
     {
-        outlet.button.onClick.AddListener(() =>
-        {
-            UEventBus<MaskTriggerAttemptEvent>.Raise(new MaskTriggerAttemptEvent() {maskType = maskType});
-        });
-        
+        pauseBinding = new EventBinding<PauseEvent>(OnPauseChanged);
+        UEventBus<PauseEvent>.Register(pauseBinding);
+        outlet.button.onClick.AddListener(MaskTriggerAttempt);
         outlet.nameText.text = maskType.ToString();
         outlet.image.sprite = SpriteProvider.GetMaskSprite(maskType);
     }
 
-    public void CleanUp()
+    private void OnPauseChanged(PauseEvent args)
     {
+        isPaused = args.isPaused;
+    }
+
+    private void MaskTriggerAttempt()
+    {
+        if (isPaused) return;
+        UEventBus<MaskTriggerAttemptEvent>.Raise(new MaskTriggerAttemptEvent() {maskType = maskType});
+    }
+
+    public void CleanUp()
+    {        
+        UEventBus<PauseEvent>.Deregister(pauseBinding);
         outlet.button.onClick.RemoveAllListeners();
     }
 }

@@ -24,3 +24,13 @@ public class MaskExpiredEvent : IEvent
 {
     public MaskType maskType;
 }
+
+public class PauseEvent : IEvent
+{
+    public bool isPaused;
+
+    public PauseEvent(bool isPaused)
+    {
+        this.isPaused = isPaused;
+    }
+}

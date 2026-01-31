@@ -198,7 +198,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PauseViewOutlet
   mainMenuButton: {fileID: 2238123586661816053}
   closeButton: {fileID: 8860727933708783048}
-  exitButton: {fileID: 3820390733716057210}
+  continueButton: {fileID: 3820390733716057210}
 --- !u!1 &4485269405514683723
 GameObject:
   m_ObjectHideFlags: 0
@@ -311,7 +311,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1750, y: 1040}
+  m_SizeDelta: {x: 1200, y: 800}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &5623250770025338514
 GameObject:
@@ -414,8 +414,8 @@ RectTransform:
   m_GameObject: {fileID: 8943162341840015745}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.4054568, y: 1.4054568, z: 1.4054568}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3584419380608560458}
   - {fileID: 3310231924137170680}
@@ -440,7 +440,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 826644611508111459, guid: 578f389ee1f3340289f05120ec30b44c, type: 3}
       propertyPath: m_Pivot.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 826644611508111459, guid: 578f389ee1f3340289f05120ec30b44c, type: 3}
       propertyPath: m_AnchorMax.x
@@ -448,7 +448,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 826644611508111459, guid: 578f389ee1f3340289f05120ec30b44c, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 826644611508111459, guid: 578f389ee1f3340289f05120ec30b44c, type: 3}
       propertyPath: m_AnchorMin.x
@@ -456,7 +456,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 826644611508111459, guid: 578f389ee1f3340289f05120ec30b44c, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 826644611508111459, guid: 578f389ee1f3340289f05120ec30b44c, type: 3}
       propertyPath: m_SizeDelta.x
@@ -496,11 +496,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 826644611508111459, guid: 578f389ee1f3340289f05120ec30b44c, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -130
+      value: -100
       objectReference: {fileID: 0}
     - target: {fileID: 826644611508111459, guid: 578f389ee1f3340289f05120ec30b44c, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 81
+      value: -64
       objectReference: {fileID: 0}
     - target: {fileID: 826644611508111459, guid: 578f389ee1f3340289f05120ec30b44c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -522,7 +522,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1994656738969846083, guid: 578f389ee1f3340289f05120ec30b44c, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -6.799988
+      value: -6.800049
       objectReference: {fileID: 0}
     - target: {fileID: 4501760259327479951, guid: 578f389ee1f3340289f05120ec30b44c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -877,9 +877,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1714561947206404401, guid: 578f389ee1f3340289f05120ec30b44c, type: 3}
       propertyPath: m_text
-      value: 'Exit
-
-'
+      value: Resume
       objectReference: {fileID: 0}
     - target: {fileID: 1994656738969846083, guid: 578f389ee1f3340289f05120ec30b44c, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -887,7 +885,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9149153596362903931, guid: 578f389ee1f3340289f05120ec30b44c, type: 3}
       propertyPath: m_Name
-      value: ExitButton
+      value: ContinueButton
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
