@@ -19,10 +19,6 @@ public class GridManager
     public GridSpawner gridSpawner;
 
     private readonly Dictionary<PlayerSide, BlockView[,]> spawnedGrids = new();
-
-    public Func<PlayerSide, Vector2Int> GetPlayerCell;
-
-    public Action<PlayerSide> OnPlayerDeath;
     
     private EventBinding<MaskTriggeredEvent> maskTriggeredEvent;
     private EventBinding<MaskExpiredEvent> maskExpiredEvent;

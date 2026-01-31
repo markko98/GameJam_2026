@@ -48,10 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BlockView
   Side: 0
-  Cell: {x: 0, y: 0}
   Type: 3
-  State: 0
-  isDeadly: 0
   stateDatas:
   - mask: 0
     blockVisual: {fileID: 7664568361771873957}
@@ -67,6 +64,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8400082912232406761}
     m_Modifications:
+    - target: {fileID: 6622413021833882211, guid: d989fe9b75dea4df5ba80f5cda09e55b, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7467947233166578537, guid: d989fe9b75dea4df5ba80f5cda09e55b, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -209,6 +210,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 35bf6ecad8b1c4d6ebfa7d70f0beb35b, type: 2}
+    - target: {fileID: 7874108546267063460, guid: 65c35e8f884d64730ad0f8dd49788d86, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8197840594632492971, guid: 65c35e8f884d64730ad0f8dd49788d86, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
