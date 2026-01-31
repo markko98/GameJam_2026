@@ -25,6 +25,10 @@ public class GridManager
 
     // - Trigger player death (or forward to your own event bus)
     public Action<PlayerSide> OnPlayerDeath;
+    
+    private EventBinding<MaskTriggeredEvent> maskTriggeredEvent;
+    private EventBinding<MaskExpiredEvent> maskExpiredEvent;
+
 
     public GridManager(LevelSO levelData, Transform rightGridRoot, Transform leftGridRoot)
     {
@@ -33,6 +37,16 @@ public class GridManager
         this.rightGridRoot = rightGridRoot;
         this.leftGridRoot = leftGridRoot;
         gridSpawner = new GridSpawner();
+
+        maskTriggeredEvent = new EventBinding<MaskTriggeredEvent>(OnMaskChanged);
+        UEventBus<MaskTriggeredEvent>.Register(maskTriggeredEvent);
+
+        maskExpiredEvent = new EventBinding<MaskExpiredEvent>(() =>
+        {
+            OnMaskChanged(new MaskTriggeredEvent() { maskType = MaskType.None });
+        });
+        
+        UEventBus<MaskExpiredEvent>.Register(maskExpiredEvent);
     }
 
     public void SpawnAndAnimateGrid()
@@ -65,7 +79,7 @@ public class GridManager
     /// Call this when a mask changes (shared mask list for both players, or per-player – you decide).
     /// This will update all blocks according to each block’s target state for that mask.
     /// </summary>
-    public void OnMaskChanged(MaskType mask)
+    public void OnMaskChanged(MaskTriggeredEvent e)
     {
         foreach (var kvp in spawnedGrids)
         {
@@ -86,8 +100,8 @@ public class GridManager
                 if (view == null) continue;
 
                 // Determine target state for this mask (fallback to startState)
-                var newState = cell.GetStateForMask(mask, cell.startState);
-                view.ChangeVisuals(mask);
+                var newState = cell.GetStateForMask(e.maskType, cell.startState);
+                view.ChangeVisuals(e.maskType);
                 view.ApplyState(newState);
             }
 
@@ -120,5 +134,11 @@ public class GridManager
     public BlockView[,] GetSpawnedGrid(PlayerSide side)
     {
         return spawnedGrids.TryGetValue(side, out var grid) ? grid : null;
+    }
+
+    public void CleanUp()
+    {
+        UEventBus<MaskTriggeredEvent>.Deregister(maskTriggeredEvent);
+        UEventBus<MaskExpiredEvent>.Deregister(maskExpiredEvent);
     }
 }

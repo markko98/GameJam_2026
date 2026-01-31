@@ -22,6 +22,7 @@ public class EntryPointController : AppDelegate
     {
         GameTicker.Initialize();
         AudioProvider.Prewarm();
+        SpriteProvider.Prewarm();
         
         InitializeServices();
         

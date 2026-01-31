@@ -9,7 +9,7 @@ public class GameplayController : USceneController
 
     private UIStackNavigationController navigationController;
     private MaskInteractionView maskInteractionView;
-
+    
     public GameplayController(LevelType levelType) : base(SceneNames.Gameplay)
     {
         this.levelType = levelType;
@@ -37,5 +37,13 @@ public class GameplayController : USceneController
         maskInteractionView ??= new MaskInteractionView(outlet.canvas.transform, navigationController);
         
         maskInteractionView?.PresentView();
+    }
+
+    public override void SceneWillDisappear()
+    {
+        base.SceneWillDisappear();
+        
+        gridManager.CleanUp();
+        maskInteractionView.Cleanup();
     }
 }
