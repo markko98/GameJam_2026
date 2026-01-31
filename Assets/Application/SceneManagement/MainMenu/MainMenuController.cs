@@ -19,10 +19,24 @@ public class MainMenuController : USceneController
         outlet.continueButton.Toggle(false);
         outlet.settingsButton.button.onClick.AddListener(OpenSettings);
         outlet.exitButton.button.onClick.AddListener(ExitGame);
+
+        UpdateTimeBasedBackground();
     }
 
     private void ContinueGameplay()
     {
+    }
+
+    private void UpdateTimeBasedBackground()
+    {
+        int hour = DateTime.Now.Hour;
+
+        if (hour >= 6 && hour < 12)
+            outlet.backgroundImage.sprite = outlet.morningBackgroundSprite;
+        else if (hour >= 12 && hour < 18)
+            outlet.backgroundImage.sprite = outlet.dayBackgroundSprite;
+        else
+            outlet.backgroundImage.sprite = outlet.nightBackgroundSprite;
     }
 
     private void OpenGameplay()
