@@ -44,9 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 441a4ffbbcb9440cad69c0130f4d4e60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameplayAssetProvider
-  emptyBlock: {fileID: 5515162348452646889, guid: e298d29b727d44e27862dfcbc307f454, type: 3}
-  floorBlock: {fileID: 6968278039276188268, guid: bcd8f4879b4304767b34f30bc876dea8, type: 3}
-  wallBlock: {fileID: 8680625386513330178, guid: ab641a4f5eae94026acd750ec117e554, type: 3}
-  trapBlock: {fileID: 6968278039276188268, guid: bcd8f4879b4304767b34f30bc876dea8, type: 3}
-  obstacleBlock: {fileID: 6968278039276188268, guid: bcd8f4879b4304767b34f30bc876dea8, type: 3}
-  goalBlock: {fileID: 8680625386513330178, guid: ab641a4f5eae94026acd750ec117e554, type: 3}
+  emptyBlock: {fileID: 8981169421379629756, guid: d989fe9b75dea4df5ba80f5cda09e55b, type: 3}
+  floorBlock: {fileID: 8981169421379629756, guid: d989fe9b75dea4df5ba80f5cda09e55b, type: 3}
+  wallBlock: {fileID: 8981169421379629756, guid: d989fe9b75dea4df5ba80f5cda09e55b, type: 3}
+  trapBlock: {fileID: 8981169421379629756, guid: d989fe9b75dea4df5ba80f5cda09e55b, type: 3}
+  obstacleBlock: {fileID: 8981169421379629756, guid: d989fe9b75dea4df5ba80f5cda09e55b, type: 3}
+  goalBlock: {fileID: 8981169421379629756, guid: d989fe9b75dea4df5ba80f5cda09e55b, type: 3}

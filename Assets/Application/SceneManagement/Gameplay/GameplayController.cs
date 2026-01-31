@@ -21,7 +21,7 @@ public class GameplayController : USceneController
     private void SetupGrid()
     {
         var levelData = LevelDataProvider.GetLevelData(levelType);
-        gridManager = new GridManager(levelData, outlet);
+        gridManager = new GridManager(levelData, outlet.rightGridRoot, outlet.leftGridRoot);
         gridManager.SpawnAndAnimateGrid();
     }
 }

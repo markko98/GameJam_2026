@@ -10,8 +10,10 @@ public class GridManager
     // check where is the player when the mask changes - if death condition raise an event for PlayerDeathTrigger
 
     private readonly LevelSO levelData;
-    private readonly GameplayOutlet outlet;
 
+    private Transform rightGridRoot;
+    private Transform leftGridRoot;
+    
     public GridSpawner gridSpawner;
 
     // Cache: per player -> spawned block views [x,y]
@@ -24,10 +26,12 @@ public class GridManager
     // - Trigger player death (or forward to your own event bus)
     public Action<PlayerSide> OnPlayerDeath;
 
-    public GridManager(LevelSO levelData, GameplayOutlet outlet)
+    public GridManager(LevelSO levelData, Transform rightGridRoot, Transform leftGridRoot)
     {
         this.levelData = levelData;
-        this.outlet = outlet;
+
+        this.rightGridRoot = rightGridRoot;
+        this.leftGridRoot = leftGridRoot;
         gridSpawner = new GridSpawner();
     }
 
@@ -39,16 +43,10 @@ public class GridManager
             return;
         }
 
-        if (outlet == null)
-        {
-            Debug.LogError("GridManager: outlet is null.");
-            return;
-        }
-
-        gridSpawner.Initialize(outlet, levelData);
+        gridSpawner.Initialize(rightGridRoot, leftGridRoot, levelData);
 
         // Spawn both grids and animate
-        CoroutineExecutor.Instance.StartCoroutine(gridSpawner.SpawnBothGridsAnimated(
+        gridSpawner.SpawnBothGridsAnimated(
             onSpawned: (side, grid) =>
             {
                 spawnedGrids[side] = grid;
@@ -60,7 +58,7 @@ public class GridManager
                 // For now, just log:
                 Debug.Log("Grids spawned & animated. Ready to spawn players.");
             }
-        ));
+        );
     }
 
     /// <summary>
