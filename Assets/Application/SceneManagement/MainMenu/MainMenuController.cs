@@ -11,7 +11,9 @@ public class MainMenuController : USceneController
     {
         base.SceneDidLoad();
         outlet = GameObject.Find(OutletNames.MainMenu).GetComponent<MainMenuOutlet>();
-        outlet.button.button.onClick.AddListener(OpenGameplay);
+        outlet.playButton.button.onClick.AddListener(OpenGameplay);
+
+        var settings = new SettingsView();
     }
 
     private void OpenGameplay()
