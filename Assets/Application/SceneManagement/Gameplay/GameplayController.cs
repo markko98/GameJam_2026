@@ -21,7 +21,14 @@ public class GameplayController : USceneController
         outlet = GameObject.Find(OutletNames.Gameplay).GetComponent<GameplayOutlet>();
         SetupGrid();
         
+        SetupSkyBox();
         SetupMaskInteractionView();
+    }
+
+    private void SetupSkyBox()
+    {
+        RenderSettings.defaultReflectionMode = UnityEngine.Rendering.DefaultReflectionMode.Skybox;
+        RenderSettings.skybox = outlet.skybox;
     }
 
     private void SetupGrid()
