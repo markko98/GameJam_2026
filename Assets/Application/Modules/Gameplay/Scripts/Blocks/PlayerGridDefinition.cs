@@ -16,22 +16,22 @@ public class PlayerGridDefinition
     public MaskType[] availableMasks;
 
     [Header("Cells (size must be width*height)")]
-    public BlockCellData[] cells;
+    public BlockType[] cells;
 
     public bool IsInside(Vector2Int c)
     {
         return c.x >= 0 && c.y >= 0 && c.x < gridSize.x && c.y < gridSize.y;
     }
 
-    public BlockCellData GetCell(int x, int y)
+    public BlockType GetCell(int x, int y)
     {
-        if (cells == null) return null;
+        if (cells == null) return BlockType.Empty;
         int w = gridSize.x;
         int h = gridSize.y;
-        if (x < 0 || y < 0 || x >= w || y >= h) return null;
+        if (x < 0 || y < 0 || x >= w || y >= h)  return BlockType.Empty;
 
         int index = y * w + x;
-        if (index < 0 || index >= cells.Length) return null;
+        if (index < 0 || index >= cells.Length) return BlockType.Empty;
 
         return cells[index];
     }
@@ -42,17 +42,11 @@ public class PlayerGridDefinition
         int required = Mathf.Max(1, gridSize.x * gridSize.y);
         if (cells == null || cells.Length != required)
         {
-            var newArr = new BlockCellData[required];
+            var newArr = new BlockType[required];
             if (cells != null)
             {
                 int copy = Mathf.Min(cells.Length, required);
                 Array.Copy(cells, newArr, copy);
-            }
-
-            for (int i = 0; i < required; i++)
-            {
-                if (newArr[i] == null)
-                    newArr[i] = new BlockCellData();
             }
 
             cells = newArr;

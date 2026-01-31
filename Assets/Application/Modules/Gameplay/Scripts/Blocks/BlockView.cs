@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class BlockView : MonoBehaviour
@@ -9,59 +10,84 @@ public class BlockView : MonoBehaviour
     {
         public MaskType mask;
         public GameObject blockVisual;
+
+        private Material _material;
+        private readonly string fadeProperty = "_FadeAmount";
+        public readonly string fadeBurnColorProperty = "_FadeBurnColor";
+        
+        private float fadeDuration = 1f;
+
+        public Material GetMaterial()
+        {
+            if (_material == null)
+            {
+                _material = blockVisual.GetComponent<Renderer>().material;
+            }
+            
+            return _material;
+        }
+
+        private Tween Fade(float endValue, float duration)
+        {
+            return GetMaterial().DOFloat(endValue, fadeProperty, duration);
+        }
+
+        public Tween FadeIn()
+        {
+            return Fade(0, fadeDuration);
+        }
+        
+        public Tween FadeOut()
+        {
+            return Fade(1, fadeDuration);
+        }
+
+        public void ChangeFadeColor(Color fadeColor)
+        {
+            GetMaterial().SetColor(fadeBurnColorProperty, fadeColor);
+        }
     }
 
     public PlayerSide Side;
-    public Vector2Int Cell;
     public BlockType Type;
-    public BlockState State;
-
-    public bool isDeadly;
     
     [SerializeField] private List<BlockStateData> stateDatas = new ();
     private Renderer rend;
 
-    public void Initialize(PlayerSide side, Vector2Int cell, BlockType type, BlockState startState)
+    public void Initialize(PlayerSide side, BlockType type)
     {
         Side = side;
-        Cell = cell;
         Type = type;
         
-        ApplyState(startState);
-        ChangeVisuals(MaskType.None);
-    }
-
-    public void ApplyState(BlockState newState)
-    {
-        State = newState;
-
-        switch (State)
+        foreach (var stateData in stateDatas)
         {
-            case BlockState.Active:
-                break;
-
-            case BlockState.Inactive:
-                break;
-
-            case BlockState.Deadly:
-                break;
-            
-            case BlockState.Life:
-                break;
+           stateData.ChangeFadeColor(GetColorForMaskType(stateData.mask));
         }
+        ChangeVisuals(MaskType.None);
     }
 
     public void ChangeVisuals(MaskType maskType)
     {
+        var sequence = DOTween.Sequence();
         foreach (var stateData in stateDatas)
         {
-            stateData.blockVisual.gameObject.SetActive(false);
+            sequence.Join(stateData.FadeOut());
         }
 
         var dataToActivate = stateDatas.Find(x => x.mask == maskType);
-        if (dataToActivate != null)
+        sequence.Append(dataToActivate?.FadeIn());
+    }
+
+    private Color GetColorForMaskType(MaskType maskType)
+    {
+        return maskType switch
         {
-            dataToActivate.blockVisual.gameObject.SetActive(true);
-        }
+            MaskType.None => Color.black,
+            MaskType.Trap => Color.blue,
+            MaskType.Obstacle => Color.yellow,
+            MaskType.Nature => Color.green,
+            MaskType.Lava => Color.red,
+            _ => Color.white
+        };
     }
 }

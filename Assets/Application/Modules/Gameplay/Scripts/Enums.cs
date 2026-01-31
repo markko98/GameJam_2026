@@ -24,14 +24,6 @@ public enum BlockType
     Start = 5,
 }
 
-public enum BlockState
-{
-    Active = 0,
-    Inactive = 1,
-    Deadly = 2,
-    Life = 3,
-}
-
 public enum MaskType
 {
     None = 0,

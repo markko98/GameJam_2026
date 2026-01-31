@@ -508,8 +508,8 @@ MonoBehaviour:
   canvas: {fileID: 1280087199}
   canvasGroup: {fileID: 1280087201}
   shouldResetApp: 1
-  button: {fileID: 0}
-  playButton: {fileID: 0}
+  button: {fileID: 1554047949}
+  playButton: {fileID: 1554047949}
 --- !u!1 &275804422
 GameObject:
   m_ObjectHideFlags: 0
@@ -1372,6 +1372,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1537151866}
   m_CullTransparentMesh: 1
+--- !u!114 &1554047949 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4917763963274018993, guid: 578f389ee1f3340289f05120ec30b44c, type: 3}
+  m_PrefabInstance: {fileID: 1077964687}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75bf8de9fa6c4822b97381b5e5a48e66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonView
 --- !u!1001 &2837928756951408921
 PrefabInstance:
   m_ObjectHideFlags: 0

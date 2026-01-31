@@ -52,6 +52,8 @@ public class MaskInteractionView: UIViewController
     public override void Cleanup()
     {
         base.Cleanup();
+        
+        manager.CleanUp();
         foreach (var maskView in maskViews)
         {
            maskView.CleanUp(); 

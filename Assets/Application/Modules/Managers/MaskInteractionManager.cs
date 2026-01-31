@@ -2,67 +2,64 @@ using UnityEngine;
 
 public class MaskInteractionManager
 {
-    private readonly EventBinding<MaskTriggeredEvent> maskTriggeredEvent;
+    private readonly EventBinding<MaskTriggerAttemptEvent> maskTriggeredAttemptEvent;
     
     private MaskType activeMaskType = MaskType.None;
     
     private float currentMaskTimer;
-    private const float maxMaskTimer = 10f;
+    private const float maxMaskTimer = 5f;
 
     private float maskCooldownTimer;
-    private const float maxCooldownTimer = 1f;
+    private const float maxCooldownTimer = 2f;
 
     private bool isMaskCooldownActive => maskCooldownTimer > 0;
 
     public MaskInteractionManager()
     {
-        maskTriggeredEvent = new EventBinding<MaskTriggeredEvent>(OnMaskTriggered);
-        UEventBus<MaskTriggeredEvent>.Register(maskTriggeredEvent);
+        maskTriggeredAttemptEvent = new EventBinding<MaskTriggerAttemptEvent>(OnMaskTriggerAttempt);
+        UEventBus<MaskTriggerAttemptEvent>.Register(maskTriggeredAttemptEvent);
         
         GameTicker.SharedInstance.Update += Update;
     }
 
     private void Update()
     {
+        if (isMaskCooldownActive)
+            maskCooldownTimer -= GameTicker.DeltaTime;
+
         if (activeMaskType == MaskType.None) return;
-        
+
         currentMaskTimer += GameTicker.DeltaTime;
 
         if (currentMaskTimer >= maxMaskTimer)
         {
             OnMaskExpired();
         }
-
-        if (maskCooldownTimer <= 0 ) return;
-        maskCooldownTimer -= GameTicker.DeltaTime;
     }
 
-    private void OnMaskTriggered(MaskTriggeredEvent e)
+    private void OnMaskTriggerAttempt(MaskTriggerAttemptEvent e)
     {
         if (isMaskCooldownActive) return; // maybe play some sound or ui
-
+        
         activeMaskType = e.maskType;
+        currentMaskTimer = 0f;
         maskCooldownTimer = maxCooldownTimer;
-        
-        Debug.Log(activeMaskType);
-        
+        UEventBus<MaskTriggeredEvent>.Raise(new MaskTriggeredEvent {maskType = activeMaskType});
     }
-
+    
     private void OnMaskExpired()
     {
         if (activeMaskType == MaskType.None) return;
         
-        Debug.Log("Mask expired" + activeMaskType);
-
         UEventBus<MaskExpiredEvent>.Raise(new MaskExpiredEvent {maskType = activeMaskType});
         
         activeMaskType = MaskType.None;
         currentMaskTimer = 0f;
     }
 
-    private void CleanUp()
+    public void CleanUp()
     {
-        UEventBus<MaskTriggeredEvent>.Deregister(maskTriggeredEvent);
+        UEventBus<MaskTriggerAttemptEvent>.Deregister(maskTriggeredAttemptEvent);
         GameTicker.SharedInstance.Update -= Update;
     }
 }

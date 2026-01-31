@@ -95,39 +95,11 @@ public class GridManager
             for (int y = 0; y < h; y++)
             for (int x = 0; x < w; x++)
             {
-                var cell = def.GetCell(x, y);
                 var view = grid[x, y];
                 if (view == null) continue;
 
-                // Determine target state for this mask (fallback to startState)
-                var newState = cell.GetStateForMask(e.maskType, cell.startState);
                 view.ChangeVisuals(e.maskType);
-                view.ApplyState(newState);
             }
-
-            // Death check after updating blocks
-            CheckDeathCondition(side);
-        }
-    }
-
-    private void CheckDeathCondition(PlayerSide side)
-    {
-        if (GetPlayerCell == null) return;
-
-        var playerCell = GetPlayerCell.Invoke(side);
-
-        var def = levelData.GetPlayerDefinition(side);
-        if (def == null) return;
-
-        if (!def.IsInside(playerCell))
-            return;
-
-        var cell = def.GetCell(playerCell.x, playerCell.y);
-        if (cell == null) return;
-
-        if (cell.startState == BlockState.Deadly)
-        {
-            OnPlayerDeath?.Invoke(side);
         }
     }
 

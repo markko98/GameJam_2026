@@ -174,16 +174,11 @@ public class GridSpawner
         for (int x = 0; x < w; x++)
         {
             var cell = def.GetCell(x, y);
-            if (cell == null)
-            {
-                Debug.LogError($"GridSpawner: Cell is null at {side} ({x},{y}).");
-                continue;
-            }
 
-            var prefab = GameplayAssetProvider.GetBlock(cell.blockType);
+            var prefab = GameplayAssetProvider.GetBlock(cell);
             if (!prefab)
             {
-                Debug.LogError($"GridSpawner: No prefab for blockType={cell.blockType} at {side} ({x},{y}).");
+                Debug.LogError($"GridSpawner: No prefab for blockType={cell} at {side} ({x},{y}).");
                 continue;
             }
 
@@ -198,7 +193,7 @@ public class GridSpawner
             var view = go.GetComponent<BlockView>();
             if (!view) view = go.AddComponent<BlockView>();
 
-            view.Initialize(side, new Vector2Int(x, y), cell.blockType, cell.startState);
+            view.Initialize(side, cell);
 
             // start hidden
             view.transform.localScale = Vector3.zero;

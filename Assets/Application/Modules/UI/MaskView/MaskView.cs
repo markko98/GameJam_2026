@@ -16,7 +16,7 @@ public class MaskView
     {
         outlet.button.onClick.AddListener(() =>
         {
-            UEventBus<MaskTriggeredEvent>.Raise(new MaskTriggeredEvent() {maskType = maskType});
+            UEventBus<MaskTriggerAttemptEvent>.Raise(new MaskTriggerAttemptEvent() {maskType = maskType});
         });
         
         outlet.nameText.text = maskType.ToString();
