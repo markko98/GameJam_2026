@@ -7,15 +7,22 @@ public class PlayerController : MonoBehaviour
     [Header("Grid")]
     [SerializeField] private float gridSize = 2f;
     [SerializeField] private bool useXZPlane = true;
+    [SerializeField] private float yHeight = 0.75f;
 
     [Header("Movement")]
     [SerializeField] private float moveDuration = 0.15f;
+    [SerializeField] private float rotateDuration = 0.25f;
     [SerializeField] private Ease moveEase = Ease.OutQuad;
 
+    [Header("Animation")] [SerializeField] private Animator animator;
+    
     [Header("Input")]
     [SerializeField] private float joystickDeadzone = 0.3f;
 
     [SerializeField] private PlayerType playerType;
+
+    private string jumpTrigger = "Jump";
+    private string dash = "Dash";
 
     private bool isMoving;
 
@@ -77,24 +84,40 @@ public class PlayerController : MonoBehaviour
 
     private void Move(Vector2 direction)
     {
-        var realDirection = new Vector3(direction.x, 0f, direction.y);
-        if (Physics.Raycast(transform.position, realDirection, out RaycastHit hit, gridSize))
+        if (isMoving) return;
+
+        Vector3 moveDir = new Vector3(direction.x, 0f, direction.y);
+        if (moveDir.sqrMagnitude < 0.001f) return;
+
+        // Wall check
+        if (Physics.Raycast(transform.position, moveDir.normalized, out RaycastHit hit, gridSize))
         {
-            if(hit.collider.CompareTag("Wall")) return;
+            if (hit.collider.CompareTag("Wall")) return;
         }
-        
-        
+
+        animator.SetBool(dash, true);
         isMoving = true;
 
-        var offset = useXZPlane
-            ? new Vector3(direction.x, 0.5f, direction.y) * gridSize
-            : new Vector3(direction.x, direction.y, 0.5f) * gridSize;
+        Vector3 offset = useXZPlane
+            ? new Vector3(direction.x, 0f, direction.y) * gridSize
+            : new Vector3(direction.x, direction.y, 0f) * gridSize;
 
-        var sequence = DOTween.Sequence();
-        sequence
-            .Append(transform.DOMove(transform.position + offset, moveDuration).SetEase(moveEase))
-            .Append(transform.DOMoveY(0, moveDuration))
-            .OnComplete(() => isMoving = false);
-            
+        Vector3 targetPos = transform.position + offset;
+
+        Vector3 flatDir = new Vector3(offset.x, 0f, offset.z);
+        float yaw = Mathf.Atan2(flatDir.x, flatDir.z) * Mathf.Rad2Deg; // Unity yaw
+        Quaternion targetRot = Quaternion.Euler(0f, yaw, 0f);
+
+        transform.DOKill();
+
+        DOTween.Sequence()
+            .Append(transform.DORotateQuaternion(targetRot, rotateDuration))
+            .Append(transform.DOMove(targetPos, moveDuration).SetEase(moveEase))
+            .OnComplete(() =>
+            {
+                isMoving = false;
+                animator.SetBool(dash, false);
+            });
     }
+
 }

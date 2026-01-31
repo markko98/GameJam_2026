@@ -10,20 +10,18 @@ public class GridManager
     // check where is the player when the mask changes - if death condition raise an event for PlayerDeathTrigger
 
     private readonly LevelSO levelData;
+    private const float posY = 0.25f;
+
 
     private Transform rightGridRoot;
     private Transform leftGridRoot;
     
     public GridSpawner gridSpawner;
 
-    // Cache: per player -> spawned block views [x,y]
     private readonly Dictionary<PlayerSide, BlockView[,]> spawnedGrids = new();
 
-    // Hooks you can connect from outside:
-    // - Provide where player currently is (grid cell) so we can detect death on mask-change
     public Func<PlayerSide, Vector2Int> GetPlayerCell;
 
-    // - Trigger player death (or forward to your own event bus)
     public Action<PlayerSide> OnPlayerDeath;
     
     private EventBinding<MaskTriggeredEvent> maskTriggeredEvent;
@@ -71,8 +69,30 @@ public class GridManager
                 // outlet.playerSpawner.SpawnPlayers(levelData);
                 // For now, just log:
                 Debug.Log("Grids spawned & animated. Ready to spawn players.");
+                SpawnPlayers();
             }
         );
+    }
+
+    private void SpawnPlayers()
+    {
+        var startBlockLeft = GetPlayerStartBlock(PlayerSide.Left);
+        var startBlockRight = GetPlayerStartBlock(PlayerSide.Right);
+
+        var leftPlayerPrefab = GameplayAssetProvider.GetPlayer(PlayerType.Player1);
+        var rightPlayerPrefab = GameplayAssetProvider.GetPlayer(PlayerType.Player2);
+
+        var leftPlayer = UnityEngine.Object.Instantiate(leftPlayerPrefab, startBlockLeft.transform.position, Quaternion.identity, null);
+        var rightPlayer = UnityEngine.Object.Instantiate(rightPlayerPrefab, startBlockRight.transform.position, Quaternion.identity, null);
+
+        var startPosLeft = startBlockLeft.transform.position;
+        startPosLeft.y = posY;
+        
+        var startPosRight = startBlockRight.transform.position;
+        startPosRight.y = posY;
+        
+        leftPlayer.transform.position = startPosLeft;
+        rightPlayer.transform.position = startPosRight;
     }
 
     /// <summary>
@@ -107,6 +127,29 @@ public class GridManager
     {
         return spawnedGrids.TryGetValue(side, out var grid) ? grid : null;
     }
+
+    public BlockView GetPlayerStartBlock(PlayerSide side)
+    {
+        var grid = GetSpawnedGrid(side);
+        if (grid == null) return null;
+
+        var def = levelData.GetPlayerDefinition(side);
+        if (def == null) return null;
+
+        Vector2Int start = def.playerStartCell;
+
+        int w = grid.GetLength(0);
+        int h = grid.GetLength(1);
+
+        if (start.x < 0 || start.y < 0 || start.x >= w || start.y >= h)
+        {
+            Debug.LogError($"Start cell out of bounds for {side}: {start} (grid {w}x{h})");
+            return null;
+        }
+
+        return grid[start.x, start.y];
+    }
+
 
     public void CleanUp()
     {

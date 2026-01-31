@@ -79,8 +79,8 @@ public class GridSpawner
             return;
         }
         
-        leftGridRoot.position  = ViewportToPlanePoint(new Vector2(0.25f, 0.5f), gridPlaneY);
-        rightGridRoot.position = ViewportToPlanePoint(new Vector2(0.75f, 0.5f), gridPlaneY);
+        leftGridRoot.position  = ViewportToPlanePoint(new Vector2(0.25f, 0.6f), gridPlaneY);
+        rightGridRoot.position = ViewportToPlanePoint(new Vector2(0.75f, 0.6f), gridPlaneY);
     }
 
     private Vector3 ViewportToPlanePoint(Vector2 viewport01, float planeY)
@@ -137,12 +137,12 @@ public class GridSpawner
     {
         float y = gridPlaneY;
 
-        var left  = ViewportToPlanePoint(new Vector2(0f, 0.5f), y);
-        var right = ViewportToPlanePoint(new Vector2(1f, 0.5f), y);
+        var left  = ViewportToPlanePoint(new Vector2(0.05f, 0.6f), y);
+        var right = ViewportToPlanePoint(new Vector2(0.95f, 0.6f), y);
         planeWidth = Vector3.Distance(left, right);
 
-        var bottom = ViewportToPlanePoint(new Vector2(0.5f, 0f), y);
-        var top    = ViewportToPlanePoint(new Vector2(0.5f, 1f), y);
+        var bottom = ViewportToPlanePoint(new Vector2(0.6f, 0.05f), y);
+        var top    = ViewportToPlanePoint(new Vector2(0.6f, 0.95f), y);
         planeHeight = Vector3.Distance(bottom, top);
     }
 
