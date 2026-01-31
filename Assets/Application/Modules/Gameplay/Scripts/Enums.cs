@@ -37,4 +37,7 @@ public enum MaskType
     None = 0,
     Trap = 1,
     Obstacle = 2,
+    Nature = 3,
+    Lava = 4,
+    // add more as needed
 }

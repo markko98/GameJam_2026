@@ -6,4 +6,5 @@
     public static readonly string TutorialPrefixKey = "TutorialCompleted";
     public static readonly string CurrencySufix = "Currency";
     public static readonly string CurrencyWalletSufix = "CurrencyWallet";
+    public static readonly string UnlockedMasks = "UnlockedMasks";
 }

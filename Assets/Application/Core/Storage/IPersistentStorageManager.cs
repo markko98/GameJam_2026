@@ -26,4 +26,7 @@ public interface IPersistentStorageManager
     // audio
     float LoadMixerValue(SoundMixerType mixerType);
     void SaveMixerValue(SoundMixerType mixerType, float value);
+    
+    List<MaskType> LoadUnlockedMasks();
+    void SaveUnlockedMasks(List<MaskType> masks);
 }

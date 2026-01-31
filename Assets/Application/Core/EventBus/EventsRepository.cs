@@ -9,3 +9,13 @@ public class TestEvent : IEvent
         this.isTest = isTest;
     }
 }
+
+public class MaskTriggeredEvent : IEvent
+{
+    public MaskType maskType;
+}
+
+public class MaskExpiredEvent : IEvent
+{
+    public MaskType maskType;
+}

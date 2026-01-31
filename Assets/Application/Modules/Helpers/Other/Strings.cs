@@ -6,5 +6,7 @@
     public static string UIComponentsResourcesPath = "UI/Components/";
     public static string SoundsPath = "Sounds/";
     public static string UISharedResourcesPath = "UI/Shared/";
-    public static string UITasksResourcesPath = "UI/Tasks/";
+    public static string UIViewsResourcesPath = "UI/UIViews/";
+    public static string UIPrefabsResourcesPath = "UI/Prefabs/";
+
 }

@@ -79,4 +79,14 @@ public class LocalPersistentStorageManager : IPersistentStorageManager
     {
         PlayerPrefs.SetFloat($"{StorageKeys.MixerValue}_{mixerType.ToString()}", value);
     }
+
+    public List<MaskType> LoadUnlockedMasks()
+    {
+        return Serializer.LoadFromPlayerPrefs<List<MaskType>>(StorageKeys.UnlockedMasks) ?? new List<MaskType>();
+    }
+
+    public void SaveUnlockedMasks(List<MaskType> masks)
+    {
+        Serializer.SaveToPlayerPrefs(StorageKeys.UnlockedMasks, masks);
+    }
 }
