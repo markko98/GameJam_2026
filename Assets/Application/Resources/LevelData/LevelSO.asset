@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LevelSO
   spawnAnimDelayPerBlock: 0.005
   leftPlayer:
-    gridSize: {x: 7, y: 7}
+    gridSize: {x: 5, y: 5}
     cellSize: 2.1
     playerStartCell: {x: 0, y: 0}
-    targetCell: {x: 2, y: 2}
+    targetCell: {x: 6, y: 4}
     availableMasks: 01000000
     cells:
     - blockType: 0
@@ -97,80 +97,8 @@ MonoBehaviour:
     - blockType: 1
       startState: 0
       maskOverrides: []
-    - blockType: 1
-      startState: 0
-      maskOverrides: []
-    - blockType: 1
-      startState: 0
-      maskOverrides: []
-    - blockType: 1
-      startState: 0
-      maskOverrides: []
-    - blockType: 1
-      startState: 0
-      maskOverrides: []
-    - blockType: 1
-      startState: 0
-      maskOverrides: []
-    - blockType: 1
-      startState: 0
-      maskOverrides: []
-    - blockType: 1
-      startState: 0
-      maskOverrides: []
-    - blockType: 1
-      startState: 0
-      maskOverrides: []
-    - blockType: 1
-      startState: 0
-      maskOverrides: []
-    - blockType: 1
-      startState: 0
-      maskOverrides: []
-    - blockType: 1
-      startState: 0
-      maskOverrides: []
-    - blockType: 1
-      startState: 0
-      maskOverrides: []
-    - blockType: 1
-      startState: 0
-      maskOverrides: []
-    - blockType: 1
-      startState: 0
-      maskOverrides: []
-    - blockType: 1
-      startState: 0
-      maskOverrides: []
-    - blockType: 1
-      startState: 0
-      maskOverrides: []
-    - blockType: 1
-      startState: 0
-      maskOverrides: []
-    - blockType: 1
-      startState: 0
-      maskOverrides: []
-    - blockType: 1
-      startState: 0
-      maskOverrides: []
-    - blockType: 1
-      startState: 0
-      maskOverrides: []
-    - blockType: 1
-      startState: 0
-      maskOverrides: []
-    - blockType: 1
-      startState: 0
-      maskOverrides: []
-    - blockType: 1
-      startState: 0
-      maskOverrides: []
-    - blockType: 1
-      startState: 0
-      maskOverrides: []
   rightPlayer:
-    gridSize: {x: 7, y: 7}
+    gridSize: {x: 5, y: 5}
     cellSize: 2.1
     playerStartCell: {x: 0, y: 0}
     targetCell: {x: 0, y: 2}
@@ -200,78 +128,6 @@ MonoBehaviour:
       startState: 0
       maskOverrides: []
     - blockType: 4
-      startState: 0
-      maskOverrides: []
-    - blockType: 0
-      startState: 0
-      maskOverrides: []
-    - blockType: 0
-      startState: 0
-      maskOverrides: []
-    - blockType: 0
-      startState: 0
-      maskOverrides: []
-    - blockType: 0
-      startState: 0
-      maskOverrides: []
-    - blockType: 0
-      startState: 0
-      maskOverrides: []
-    - blockType: 0
-      startState: 0
-      maskOverrides: []
-    - blockType: 0
-      startState: 0
-      maskOverrides: []
-    - blockType: 0
-      startState: 0
-      maskOverrides: []
-    - blockType: 0
-      startState: 0
-      maskOverrides: []
-    - blockType: 0
-      startState: 0
-      maskOverrides: []
-    - blockType: 0
-      startState: 0
-      maskOverrides: []
-    - blockType: 0
-      startState: 0
-      maskOverrides: []
-    - blockType: 0
-      startState: 0
-      maskOverrides: []
-    - blockType: 0
-      startState: 0
-      maskOverrides: []
-    - blockType: 0
-      startState: 0
-      maskOverrides: []
-    - blockType: 0
-      startState: 0
-      maskOverrides: []
-    - blockType: 0
-      startState: 0
-      maskOverrides: []
-    - blockType: 0
-      startState: 0
-      maskOverrides: []
-    - blockType: 0
-      startState: 0
-      maskOverrides: []
-    - blockType: 0
-      startState: 0
-      maskOverrides: []
-    - blockType: 0
-      startState: 0
-      maskOverrides: []
-    - blockType: 0
-      startState: 0
-      maskOverrides: []
-    - blockType: 0
-      startState: 0
-      maskOverrides: []
-    - blockType: 0
       startState: 0
       maskOverrides: []
     - blockType: 0

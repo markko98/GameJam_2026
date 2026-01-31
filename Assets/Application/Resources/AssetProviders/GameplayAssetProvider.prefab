@@ -50,3 +50,5 @@ MonoBehaviour:
   obstacleBlock: {fileID: 7216127156916089820, guid: d9d818b8712964517ab82294f0467895, type: 3}
   goalBlock: {fileID: 7216127156916089820, guid: d9d818b8712964517ab82294f0467895, type: 3}
   startBlock: {fileID: 7216127156916089820, guid: d9d818b8712964517ab82294f0467895, type: 3}
+  player1: {fileID: 8585032940491824722, guid: daf6669f32eec47af92cd540f3417f43, type: 3}
+  player2: {fileID: 8585032940491824722, guid: f2eb452cef7b24efc9f4bc1cc5586044, type: 3}
