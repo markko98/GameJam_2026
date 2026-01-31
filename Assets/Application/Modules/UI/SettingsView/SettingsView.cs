@@ -24,7 +24,7 @@ public class SettingsView : UIViewController
         outlet.musicSlider.SetValueWithoutNotify(ServiceProvider.audioService.GetMixerValue(SoundMixerType.Music));
         outlet.sfxSlider.onValueChanged.AddListener(OnSFXChange);
         outlet.musicSlider.onValueChanged.AddListener(OnMusicChange);
-        outlet.backButton.button.onClick.AddListener(ExitSettings);
+        outlet.closeButton.button.onClick.AddListener(ExitSettings);
     }
 
     private void ExitSettings()
@@ -53,6 +53,6 @@ public class SettingsView : UIViewController
         base.Cleanup();
         outlet.sfxSlider.onValueChanged.RemoveListener(OnSFXChange);
         outlet.musicSlider.onValueChanged.RemoveListener(OnMusicChange);
-        outlet.backButton.button.onClick.RemoveListener(ExitSettings);
+        outlet.closeButton.button.onClick.RemoveListener(ExitSettings);
     }
 }
