@@ -24,7 +24,8 @@ public enum BlockType
     Start = 5,
     Floor1 = 6,
     Bridge = 7,
-    ArrowDispenser = 8
+    ArrowDispenser = 8,
+    NatureBridge = 9
 }
 
 public enum MaskType

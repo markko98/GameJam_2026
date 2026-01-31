@@ -19,6 +19,8 @@ public class LevelSO : ScriptableObject
 
     public GameObject wallPrefab;
     public GameObject gatePrefab;
+    public GameObject finishPrefab;
+
     public PlayerGridDefinition GetPlayerDefinition(PlayerSide side)
     {
         return side == PlayerSide.Left ? leftPlayer : rightPlayer;

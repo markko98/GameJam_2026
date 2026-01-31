@@ -51,6 +51,8 @@ public class GridSpawner
         var leftGrid = SpawnGrid(PlayerSide.Left);
         var rightGrid = SpawnGrid(PlayerSide.Right);
 
+        SpawnFinishTile();
+
         onSpawned?.Invoke(PlayerSide.Left, leftGrid);
         onSpawned?.Invoke(PlayerSide.Right, rightGrid);
 
@@ -280,9 +282,64 @@ public class GridSpawner
         SpawnGate(parent, startGate.x, startGate.y, cell, halfExtents, startGateRot);
         SpawnGate(parent, goalGate.x, goalGate.y, cell, halfExtents, goalGateRot);
 
-        // Walls flanking the goal gate (top and bottom)
-        SpawnWall(parent, goalGate.x, goalGate.y + 1, cell, halfExtents, wallHeight, topRot);
+        // Wall below the goal gate
         SpawnWall(parent, goalGate.x, goalGate.y - 1, cell, halfExtents, wallHeight, bottomRot);
+    }
+
+    private void SpawnFinishTile()
+    {
+        if (level.finishPrefab == null) return;
+
+        var leftDef = level.GetPlayerDefinition(PlayerSide.Left);
+        var rightDef = level.GetPlayerDefinition(PlayerSide.Right);
+
+        // Goal gate positions in world space
+        int leftW = leftDef.gridSize.x;
+        var leftHalf = new Vector2((leftW - 1) * leftDef.cellSize * 0.5f, (leftDef.gridSize.y - 1) * leftDef.cellSize * 0.5f);
+        var leftGateWorld = leftGridRoot.position + new Vector3(
+            leftW * leftDef.cellSize - leftHalf.x,
+            0f,
+            leftDef.targetCell.y * leftDef.cellSize - leftHalf.y
+        );
+
+        int rightW = rightDef.gridSize.x;
+        var rightHalf = new Vector2((rightW - 1) * rightDef.cellSize * 0.5f, (rightDef.gridSize.y - 1) * rightDef.cellSize * 0.5f);
+        var rightGateWorld = rightGridRoot.position + new Vector3(
+            -1 * rightDef.cellSize - rightHalf.x,
+            0f,
+            rightDef.targetCell.y * rightDef.cellSize - rightHalf.y
+        );
+
+        // Finish tile at the midpoint between the two goal gates
+        var midpoint = (leftGateWorld + rightGateWorld) * 0.5f;
+        var finishPos = midpoint + new Vector3(1f, 0f, leftDef.cellSize);
+
+        var finish = Object.Instantiate(level.finishPrefab, finishPos, Quaternion.identity);
+        finish.transform.parent = null;
+
+        // Walls around the finish tile (2 cells wide, so offset by cellSize from center)
+        float cell = leftDef.cellSize;
+        float wallHeight = 1f;
+
+        // Top wall
+        var topWall = Object.Instantiate(level.wallPrefab, finishPos + new Vector3(0f, 0f, cell), Quaternion.Euler(0f, 0f, 0f));
+        topWall.tag = "Wall";
+        topWall.AddComponent<BoxCollider>().size = new Vector3(cell, wallHeight, cell);
+        
+        // Top wall
+        var topLeftWall = Object.Instantiate(level.wallPrefab, finishPos + new Vector3(-cell, 0f, cell), Quaternion.Euler(0f, 0f, 0f));
+        topLeftWall.tag = "Wall";
+        topLeftWall.AddComponent<BoxCollider>().size = new Vector3(cell, wallHeight, cell);
+
+        // Left wall
+        var leftWall = Object.Instantiate(level.wallPrefab, finishPos + new Vector3(-cell *2, 0f, 0f), Quaternion.Euler(0f, -90f, 0f));
+        leftWall.tag = "Wall";
+        leftWall.AddComponent<BoxCollider>().size = new Vector3(cell, wallHeight, cell);
+
+        // Right wall
+        var rightWall = Object.Instantiate(level.wallPrefab, finishPos + new Vector3(cell, 0f, 0f), Quaternion.Euler(0f, 90f, 0f));
+        rightWall.tag = "Wall";
+        rightWall.AddComponent<BoxCollider>().size = new Vector3(cell, wallHeight, cell);
     }
 
     private void SpawnGate(Transform parent, int x, int y, float cellSize, Vector2 halfExtents, Quaternion rotation)
