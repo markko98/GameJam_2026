@@ -1651,11 +1651,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 826644611508111459, guid: 578f389ee1f3340289f05120ec30b44c, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 120
+      value: 135
       objectReference: {fileID: 0}
     - target: {fileID: 826644611508111459, guid: 578f389ee1f3340289f05120ec30b44c, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 60
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 826644611508111459, guid: 578f389ee1f3340289f05120ec30b44c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1714,7 +1714,7 @@ PrefabInstance:
     - target: {fileID: 7226116868972060823, guid: 578f389ee1f3340289f05120ec30b44c, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 077d0d857816cf649bc1400c22e6819e, type: 3}
+      objectReference: {fileID: 21300000, guid: c92c47ec3d4f0f84fabaeee15f9896e1, type: 3}
     - target: {fileID: 9149153596362903931, guid: 578f389ee1f3340289f05120ec30b44c, type: 3}
       propertyPath: m_Name
       value: BackButton
