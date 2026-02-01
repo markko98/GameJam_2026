@@ -15,6 +15,7 @@ public class MaskInteractionView: UIViewController
     
     private EventBinding<MaskTriggeredEvent> maskTriggeredEvent;
     private EventBinding<MaskExpiredEvent> maskExpiredEvent;
+    private bool wasCooldownActive;
 
     public MaskInteractionView(Transform viewport, UIStackNavigationController controller) : base(controller)
     {
@@ -52,12 +53,19 @@ public class MaskInteractionView: UIViewController
 
         if (manager.isMaskCooldownActive)
         {
+            if (!wasCooldownActive)
+            {
+                outlet.cooldownImage.fillAmount = 1f;
+                outlet.cooldownImage.transform.DOMoveY(400f, 0.3f);
+            }
+            wasCooldownActive = true;
             outlet.cooldownImage.DOFillAmount(Mathf.Clamp01(manager.cooldownProgress), 0.2f).SetEase(Ease.Linear);
         }
         else
         {
+            wasCooldownActive = false;
             if (Mathf.Approximately(outlet.cooldownImage.transform.position.y, 50f)) return;
-            
+
             outlet.cooldownImage.transform.DOMoveY(50f,0.3f);
         }
     }

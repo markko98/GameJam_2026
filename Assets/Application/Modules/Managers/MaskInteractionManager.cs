@@ -83,7 +83,8 @@ public class MaskInteractionManager
             maskType = MaskType.Kanaloa;
         }
 
-        OnMaskTriggerAttempt(maskType);
+        if (maskType != MaskType.None)
+            OnMaskTriggerAttempt(maskType);
     }
 
     private void OnMaskTriggerAttempt(MaskType maskType)
@@ -91,15 +92,20 @@ public class MaskInteractionManager
         if (isMaskCooldownActive) return; // maybe play some sound or ui
         if(unlockedMasks.Contains(maskType) == false) return;
 
-        if (maskType != activeMaskType)
+        if (maskType == activeMaskType)
         {
-            OnMaskExpired();
+            // Same mask pressed again - refresh the timer but don't re-toggle blocks
+            currentMaskTimer = 0f;
+            maskCooldownTimer = maxCooldownTimer;
+            return;
         }
-        
+
+        OnMaskExpired();
+
         activeMaskType = maskType;
         currentMaskTimer = 0f;
         maskCooldownTimer = maxCooldownTimer;
-        
+
         ServiceProvider.audioService.PlayOneShot(SoundIds.sfx_mask_change);
         UEventBus<MaskTriggeredEvent>.Raise(new MaskTriggeredEvent {maskType = activeMaskType});
     }
