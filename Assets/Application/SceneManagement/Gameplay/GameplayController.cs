@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
@@ -77,6 +78,8 @@ public class GameplayController : USceneController
     
     private void OnLevelCompletedCallback(LevelCompletedEvent obj)
     {
+        SaveLevelIndex();
+        UnlockMask();
         ShowLevelCompleted();
     }
 
@@ -104,6 +107,30 @@ public class GameplayController : USceneController
         UEventBus<PauseEvent>.Raise(new PauseEvent(false));
     }
 
+    private void UnlockMask()
+    {
+        var mask = levelData.unlockedMask;
+        if (mask == MaskType.None) return;
+
+        var unlocked = ServiceProvider.storage.LoadUnlockedMasks();
+        if (unlocked.Contains(mask)) return;
+
+        unlocked.Add(mask);
+        ServiceProvider.storage.SaveUnlockedMasks(unlocked);
+    }
+
+    private void SaveLevelIndex()
+    {
+        var levelIndex = ServiceProvider.storage.LoadInt(StorageKeys.MaxLevelIndex);
+
+        if (levelIndex > (int)levelType) return;
+
+        int maxLevel = Enum.GetValues(typeof(LevelType)).Length - 1;
+        levelIndex = Math.Clamp((int)levelType + 1, 0, maxLevel);
+
+        ServiceProvider.storage.SaveInt(StorageKeys.MaxLevelIndex, levelIndex);
+    }
+
     private void GoToNextLevel()
     {
         loadingView ??= new LoadingView(OnLoadedCallback, 2f, outlet.canvas.transform, navigationPauseController);
@@ -113,8 +140,9 @@ public class GameplayController : USceneController
     private void OnLoadedCallback()
     {
         loadingView.RemoveView();
-        // TODO - load from storage
-        var gameplay = new GameplayController(LevelType.Level2);
+        int maxLevel = Enum.GetValues(typeof(LevelType)).Length - 1;
+        var nextLevel = (LevelType)Math.Clamp((int)levelType + 1, 0, maxLevel);
+        var gameplay = new GameplayController(nextLevel);
         PushSceneController(gameplay);
     }
     public override void SceneWillDisappear()

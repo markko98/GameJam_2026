@@ -7,4 +7,5 @@
     public static readonly string CurrencySufix = "Currency";
     public static readonly string CurrencyWalletSufix = "CurrencyWallet";
     public static readonly string UnlockedMasks = "UnlockedMasks";
+    public static readonly string MaxLevelIndex = "MaxLevelIndex";
 }
