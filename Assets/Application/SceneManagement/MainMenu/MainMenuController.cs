@@ -7,7 +7,7 @@ public class MainMenuController : USceneController
     private UIStackNavigationController navigationController;
     private SettingsView settingsView;
     private LoadingView loadingView;
-    private UIStackNavigationController navigationLoadingController;
+    private VideoView videoView;
 
     public MainMenuController() : base(SceneNames.MainMenu)
     {
@@ -15,7 +15,7 @@ public class MainMenuController : USceneController
     public override void SceneDidLoad()
     {
         base.SceneDidLoad();
-        navigationLoadingController = new UIStackNavigationController();
+        navigationController ??= new UIStackNavigationController();
         outlet = GameObject.Find(OutletNames.MainMenu).GetComponent<MainMenuOutlet>();
         outlet.newGameButton.button.onClick.AddListener(GoToNextLevel);
         outlet.continueButton.button.onClick.AddListener(ContinueGameplay);
@@ -26,8 +26,15 @@ public class MainMenuController : USceneController
         UpdateTimeBasedBackground();
     }
 
+    private void ShowLoadingScreen()
+    {
+        loadingView ??= new LoadingView(OnLoadedCallback, 2f, outlet.canvas.transform, navigationController);
+        loadingView?.PresentView(0f, AnimationType.ScaleUpFromMiddle);
+    }
+
     private void ContinueGameplay()
     {
+        ShowLoadingScreen();
     }
 
     private void UpdateTimeBasedBackground()
@@ -45,8 +52,8 @@ public class MainMenuController : USceneController
     
     private void GoToNextLevel()
     {
-        loadingView ??= new LoadingView(OnLoadedCallback, 2f, outlet.canvas.transform, navigationLoadingController);
-        loadingView?.PresentView(0f, AnimationType.ScaleUpFromMiddle);
+        videoView ??= new VideoView(ShowLoadingScreen, outlet.canvas.transform, navigationController);
+        videoView.PresentView(0f, AnimationType.ScaleUpFromMiddle);
     }
 
     private void OnLoadedCallback()
@@ -58,10 +65,7 @@ public class MainMenuController : USceneController
 
     private void OpenSettings()
     {
-        navigationController ??= new UIStackNavigationController();
-
         settingsView ??= new SettingsView(outlet.canvas.transform, navigationController);
-
         settingsView?.PresentView(0f, AnimationType.SlideInRight);
     }
 
