@@ -44,7 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8f45c2c2e9f4656bd99d5b6166bc91b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpriteProvider
-  mask1Sprite: {fileID: 21300000, guid: 005888ede18a58e4db8d069cfa3007cb, type: 3}
-  mask2Sprite: {fileID: 21300000, guid: 005888ede18a58e4db8d069cfa3007cb, type: 3}
-  mask3Sprite: {fileID: 21300000, guid: 005888ede18a58e4db8d069cfa3007cb, type: 3}
-  mask4Sprite: {fileID: 21300000, guid: 005888ede18a58e4db8d069cfa3007cb, type: 3}
+  mask1Sprite: {fileID: 21300000, guid: 2ac5c59570ebc48179e33b06f9d09063, type: 3}
+  mask2Sprite: {fileID: 21300000, guid: fdffd00f4bfb1456eb75991aa4f929f9, type: 3}
+  mask3Sprite: {fileID: 21300000, guid: d5e48b8f415444515a74431aee8d5427, type: 3}
+  mask4Sprite: {fileID: 21300000, guid: 6fa9e3c765fe74b9da15f3c7665ee3b1, type: 3}
+  lockSprite: {fileID: 21300000, guid: a9534ecda579f4fec95a48d6b1725784, type: 3}
