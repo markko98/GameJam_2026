@@ -67,16 +67,16 @@ public class MaskInteractionManager
         var maskType = MaskType.None;
         if (mask1Action.WasPressedThisFrame())
         {
-            maskType = MaskType.Trap;
+            maskType = MaskType.Kane;
         }else if (mask2Action.WasPressedThisFrame())
         {
-            maskType = MaskType.Obstacle;
+            maskType = MaskType.Lono;
         }else if (mask3Action.WasPressedThisFrame())
         {
-            maskType = MaskType.Nature;
+            maskType = MaskType.Ku;
         }else if (mask4Action.WasPressedThisFrame())
         {
-            maskType = MaskType.Lava;
+            maskType = MaskType.Kanaloa;
         }
 
         OnMaskTriggerAttempt(maskType);

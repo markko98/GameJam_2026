@@ -5,7 +5,7 @@ public enum BlockAnimationState
 
 public enum LevelType
 {
-    Level1, Level2
+    Level1, Level2, Level3, Level4
 }
 
 public enum PlayerSide
@@ -31,9 +31,8 @@ public enum BlockType
 public enum MaskType
 {
     None = 0,
-    Trap = 1,
-    Obstacle = 2,
-    Nature = 3,
-    Lava = 4,
-    // add more as needed
+    Kane = 1,
+    Lono = 2,
+    Ku = 3,
+    Kanaloa = 4,
 }

@@ -153,7 +153,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BlockView
   Side: 0
   Type: 1
-  maskType: 1
+  maskType: 3
   state: 1
   inactiveStateData:
     state: 1
@@ -230,6 +230,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tile_Arrow_Dispenser
       objectReference: {fileID: 0}
+    - target: {fileID: 3183824968928212653, guid: ff67c99a006184ec8a92124848e3c383, type: 3}
+      propertyPath: m_TagString
+      value: Wall
+      objectReference: {fileID: 0}
     - target: {fileID: 3976620750857803640, guid: ff67c99a006184ec8a92124848e3c383, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -237,8 +241,37 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3183824968928212653, guid: ff67c99a006184ec8a92124848e3c383, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4670975683647799715}
   m_SourcePrefab: {fileID: 100100000, guid: ff67c99a006184ec8a92124848e3c383, type: 3}
+--- !u!1 &1486677702057423776 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3183824968928212653, guid: ff67c99a006184ec8a92124848e3c383, type: 3}
+  m_PrefabInstance: {fileID: 4075347057678501133}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &4670975683647799715
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1486677702057423776}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.5890996, y: 1.8641857, z: 0.69805026}
+  m_Center: {x: -0.028157711, y: 1.0668144, z: 0.09568004}
 --- !u!4 &2299771312128665882 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2838648048837225495, guid: ff67c99a006184ec8a92124848e3c383, type: 3}

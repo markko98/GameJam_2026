@@ -151,7 +151,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BlockView
   Side: 0
   Type: 0
-  maskType: 1
+  maskType: 0
   state: 1
   inactiveStateData:
     state: 1

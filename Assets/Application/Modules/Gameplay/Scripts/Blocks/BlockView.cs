@@ -71,10 +71,10 @@ public class BlockView : MonoBehaviour
         return maskType switch
         {
             MaskType.None => Color.black,
-            MaskType.Trap => Color.blue,
-            MaskType.Obstacle => Color.yellow,
-            MaskType.Nature => Color.green,
-            MaskType.Lava => Color.red,
+            MaskType.Kane => Color.yellow,
+            MaskType.Lono => Color.green,
+            MaskType.Ku => Color.red,
+            MaskType.Kanaloa => Color.blue,
             _ => Color.black
         };
     }
