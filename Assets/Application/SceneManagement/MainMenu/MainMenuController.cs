@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class MainMenuController : USceneController
@@ -57,6 +58,9 @@ public class MainMenuController : USceneController
     
     private void GoToNextLevel()
     {
+        ServiceProvider.storage.SaveInt(StorageKeys.MaxLevelIndex, 0);
+        ServiceProvider.storage.SaveUnlockedMasks(new List<MaskType>() { MaskType.Kane });
+        
         ServiceProvider.audioService.StopAmbience(mainMenuSound);
         videoView ??= new VideoView(ShowLoadingScreen, outlet.canvas.transform, navigationController);
         videoView.PresentView(0f, AnimationType.ScaleUpFromMiddle);
