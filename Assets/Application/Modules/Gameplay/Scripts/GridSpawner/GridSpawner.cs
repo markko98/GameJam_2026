@@ -280,7 +280,7 @@ public class GridSpawner
 
         // Spawn gates
         SpawnGate(parent, startGate.x, startGate.y, cell, halfExtents, startGateRot);
-        SpawnGate(parent, goalGate.x, goalGate.y, cell, halfExtents, goalGateRot);
+        SpawnGate(parent, goalGate.x, goalGate.y, cell, halfExtents, goalGateRot, true);
 
         // Wall below the goal gate
         SpawnWall(parent, goalGate.x, goalGate.y - 1, cell, halfExtents, wallHeight, bottomRot);
@@ -342,7 +342,7 @@ public class GridSpawner
         rightWall.AddComponent<BoxCollider>().size = new Vector3(cell, wallHeight, cell);
     }
 
-    private void SpawnGate(Transform parent, int x, int y, float cellSize, Vector2 halfExtents, Quaternion rotation)
+    private void SpawnGate(Transform parent, int x, int y, float cellSize, Vector2 halfExtents, Quaternion rotation, bool disableCollider = false)
     {
         if (level.gatePrefab == null) return;
 
@@ -354,10 +354,13 @@ public class GridSpawner
 
         var floor = Object.Instantiate(GameplayAssetProvider.GetBlock(BlockType.Floor), worldPos, Quaternion.identity);
         floor.transform.parent = parent;
+        
 
         var gate = Object.Instantiate(level.gatePrefab, worldPos, rotation);
         gate.transform.parent = parent;
         gate.tag = "Wall";
+        
+        gate.GetComponent<BoxCollider>().enabled = !disableCollider;
     }
 
     private void SpawnWall(Transform parent, int x, int y, float cellSize, Vector2 halfExtents, float wallHeight, Quaternion? rotation = null)
@@ -375,7 +378,7 @@ public class GridSpawner
 
         var col = wall.AddComponent<BoxCollider>();
         col.size = new Vector3(cellSize, wallHeight, cellSize);
-        col.center = new Vector3(0f, wallHeight * 0.5f, 0f);
+        col.center = new Vector3(0f, wallHeight, 0f);
     }
 
     /// <summary>
