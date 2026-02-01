@@ -49,8 +49,8 @@ MonoBehaviour:
   floor1Block: {fileID: 3834396108301582109, guid: 39d077038d90e41a2b8d038ec0e5107b, type: 3}
   trapBlock: {fileID: 7216127156916089820, guid: d1ba56f60dd24464f871937c7b3a1248, type: 3}
   obstacleBlock: {fileID: 7216127156916089820, guid: d9d818b8712964517ab82294f0467895, type: 3}
-  goalBlock: {fileID: 7216127156916089820, guid: d9d818b8712964517ab82294f0467895, type: 3}
-  startBlock: {fileID: 7216127156916089820, guid: d9d818b8712964517ab82294f0467895, type: 3}
+  goalBlock: {fileID: 3834396108301582109, guid: 72fa768c3913f4e05ad8ceec5b1d8e0c, type: 3}
+  startBlock: {fileID: 3834396108301582109, guid: c19e58ce6b5844271bd887a53e330f5d, type: 3}
   bridgeBlock: {fileID: 3834396108301582109, guid: 477bb79e1a18c41c6855db7c4fdb0a52, type: 3}
   arrowDispenserBlock: {fileID: 3834396108301582109, guid: 37f506d92e18849788bd1f979c03ba80, type: 3}
   natureBridgeBlock: {fileID: 3834396108301582109, guid: c6b34b5fd376a41418cbf4f6e9352702, type: 3}

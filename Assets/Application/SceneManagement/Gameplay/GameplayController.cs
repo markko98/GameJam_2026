@@ -27,7 +27,7 @@ public class GameplayController : USceneController
         navigationPauseController ??= new UIStackNavigationController();
         var masks = new List<MaskType>()
         {
-            MaskType.Trap, MaskType.Obstacle
+            MaskType.Trap, MaskType.Obstacle, MaskType.Nature, MaskType.Lava
         };
         ServiceProvider.storage.SaveUnlockedMasks(masks);
 
