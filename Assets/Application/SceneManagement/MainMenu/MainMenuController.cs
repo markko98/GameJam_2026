@@ -6,6 +6,8 @@ public class MainMenuController : USceneController
     private MainMenuOutlet outlet;
     private UIStackNavigationController navigationController;
     private SettingsView settingsView;
+    private LoadingView loadingView;
+    private UIStackNavigationController navigationLoadingController;
 
     public MainMenuController() : base(SceneNames.MainMenu)
     {
@@ -13,8 +15,9 @@ public class MainMenuController : USceneController
     public override void SceneDidLoad()
     {
         base.SceneDidLoad();
+        navigationLoadingController = new UIStackNavigationController();
         outlet = GameObject.Find(OutletNames.MainMenu).GetComponent<MainMenuOutlet>();
-        outlet.newGameButton.button.onClick.AddListener(OpenGameplay);
+        outlet.newGameButton.button.onClick.AddListener(GoToNextLevel);
         outlet.continueButton.button.onClick.AddListener(ContinueGameplay);
         outlet.continueButton.Toggle(false);
         outlet.settingsButton.button.onClick.AddListener(OpenSettings);
@@ -38,9 +41,17 @@ public class MainMenuController : USceneController
         else
             outlet.backgroundImage.sprite = outlet.nightBackgroundSprite;
     }
-
-    private void OpenGameplay()
+    
+    
+    private void GoToNextLevel()
     {
+        loadingView ??= new LoadingView(OnLoadedCallback, 2f, outlet.canvas.transform, navigationLoadingController);
+        loadingView?.PresentView(0f, AnimationType.ScaleUpFromMiddle);
+    }
+
+    private void OnLoadedCallback()
+    {
+        // TODO - load from storage
         var gameplay = new GameplayController(LevelType.Level1);
         PushSceneController(gameplay);
     }
@@ -61,7 +72,8 @@ public class MainMenuController : USceneController
 
     public override void SceneWillDisappear()
     {
-        outlet.newGameButton.button.onClick.AddListener(OpenGameplay);
+        loadingView = null;
+        outlet.newGameButton.button.onClick.AddListener(GoToNextLevel);
         outlet.settingsButton.button.onClick.AddListener(OpenSettings);
     }
 }

@@ -11,6 +11,7 @@ public class GameplayController : USceneController
     private UIStackNavigationController navigationPauseController;
     private MaskInteractionView maskInteractionView;
     private PauseView pauseView;
+    private LoadingView loadingView;
 
     public GameplayController(LevelType levelType) : base(SceneNames.Gameplay)
     {
@@ -60,7 +61,7 @@ public class GameplayController : USceneController
     private void OnExitCallback()
     {
         UEventBus<PauseEvent>.Raise(new PauseEvent(false));
-        PopToParentSceneController();
+        UNavigationController.PopToRootViewController();
     }
 
     private void OnResumeCallback()
@@ -68,6 +69,19 @@ public class GameplayController : USceneController
         UEventBus<PauseEvent>.Raise(new PauseEvent(false));
     }
 
+    private void GoToNextLevel()
+    {
+        loadingView ??= new LoadingView(OnLoadedCallback, 2f, outlet.canvas.transform, navigationPauseController);
+        loadingView?.PresentView(0f, AnimationType.ScaleUpFromMiddle);
+    }
+
+    private void OnLoadedCallback()
+    {
+        loadingView.RemoveView();
+        // TODO - load from storage
+        var gameplay = new GameplayController(LevelType.Level2);
+        PushSceneController(gameplay);
+    }
     public override void SceneWillDisappear()
     {
         base.SceneWillDisappear();
