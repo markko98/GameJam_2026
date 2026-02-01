@@ -183,6 +183,7 @@ public class PlayerController : MonoBehaviour
 
     private void Die(DeathReason reason)
     {
+        if (isDead) return;
         
         ServiceProvider.audioService.PlayOneShot(SoundIds.sfx_death);
         isDead = true;
