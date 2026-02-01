@@ -8,6 +8,7 @@ public class MainMenuController : USceneController
     private SettingsView settingsView;
     private LoadingView loadingView;
     private VideoView videoView;
+    private PooledAudioSource mainMenuSound;
 
     public MainMenuController() : base(SceneNames.MainMenu)
     {
@@ -24,6 +25,8 @@ public class MainMenuController : USceneController
         outlet.settingsButton.button.onClick.AddListener(OpenSettings);
         outlet.exitButton.button.onClick.AddListener(ExitGame);
 
+        mainMenuSound = ServiceProvider.audioService.PlayAmbience(SoundIds.music_main_menu);
+
         UpdateTimeBasedBackground();
     }
 
@@ -35,6 +38,7 @@ public class MainMenuController : USceneController
 
     private void ContinueGameplay()
     {
+        ServiceProvider.audioService.StopAmbience(mainMenuSound);
         ShowLoadingScreen();
     }
 
@@ -53,6 +57,7 @@ public class MainMenuController : USceneController
     
     private void GoToNextLevel()
     {
+        ServiceProvider.audioService.StopAmbience(mainMenuSound);
         videoView ??= new VideoView(ShowLoadingScreen, outlet.canvas.transform, navigationController);
         videoView.PresentView(0f, AnimationType.ScaleUpFromMiddle);
     }

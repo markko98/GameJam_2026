@@ -20,6 +20,7 @@ public class GameplayController : USceneController
     private LevelSO levelData;
     
     private GameOverView gameOverView;
+    private PooledAudioSource gameplaySound;
 
     public GameplayController(LevelType levelType) : base(SceneNames.Gameplay)
     {
@@ -29,6 +30,8 @@ public class GameplayController : USceneController
     public override void SceneDidLoad()
     {
         base.SceneDidLoad();
+        gameplaySound = ServiceProvider.audioService.PlayAmbience(SoundIds.music_gameplay);
+
         levelCompletedBinding = new EventBinding<LevelCompletedEvent>(OnLevelCompletedCallback);
         UEventBus<LevelCompletedEvent>.Register(levelCompletedBinding);
         outlet = GameObject.Find(OutletNames.Gameplay).GetComponent<GameplayOutlet>();
@@ -159,6 +162,7 @@ public class GameplayController : USceneController
     public override void SceneWillDisappear()
     {
         base.SceneWillDisappear();
+        ServiceProvider.audioService.StopAmbience(gameplaySound);
         outlet.pauseButton.button.onClick.RemoveListener(ShowPause);
         UEventBus<LevelCompletedEvent>.Deregister(levelCompletedBinding);
         UEventBus<PlayerDiedEvent>.Deregister(playerDiedBinding);

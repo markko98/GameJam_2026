@@ -164,6 +164,7 @@ public class PlayerController : MonoBehaviour
 
         transform.DOKill();
 
+        ServiceProvider.audioService.PlayOneShot(SoundIds.sfx_move);
         DOTween.Sequence()
             .Append(transform.DORotateQuaternion(targetRot, rotateDuration))
             .Append(transform.DOMove(targetPos, moveDuration).SetEase(moveEase))
@@ -182,6 +183,8 @@ public class PlayerController : MonoBehaviour
 
     private void Die(DeathReason reason)
     {
+        
+        ServiceProvider.audioService.PlayOneShot(SoundIds.sfx_death);
         isDead = true;
         animator.SetBool(die, true);
         ShowParticle(reason);
