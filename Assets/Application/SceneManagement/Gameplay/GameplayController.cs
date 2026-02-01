@@ -99,6 +99,10 @@ public class GameplayController : USceneController
 
     private void ShowLevelCompleted()
     {
+        if (levelData.unlockedMask == MaskType.None)
+        {
+            OnExitCallback();
+        }
         var maskSprite = SpriteProvider.GetMaskSprite(levelData.unlockedMask);
         var description = LevelDataProvider.GetMaskDescription(levelData.unlockedMask);
         levelCompletedView ??= new LevelCompleteView(OnContinueLevelCompleteCallback, outlet.canvas.transform, navigationController, maskSprite, description);
