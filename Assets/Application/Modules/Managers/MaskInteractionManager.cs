@@ -8,10 +8,10 @@ public class MaskInteractionManager
     
     private MaskType activeMaskType = MaskType.None;
     
-    private float currentMaskTimer;
+    public float currentMaskTimer;
     private const float maxMaskTimer = 5f;
 
-    private float maskCooldownTimer;
+    public float maskCooldownTimer;
     
     private readonly InputAction mask1Action;
     private readonly InputAction mask2Action;
@@ -22,7 +22,11 @@ public class MaskInteractionManager
 
     private const float maxCooldownTimer = 2f;
 
-    private bool isMaskCooldownActive => maskCooldownTimer > 0;
+    public bool isMaskCooldownActive => maskCooldownTimer > 0;
+    public float cooldownProgress => maskCooldownTimer / maxCooldownTimer;
+    
+    public bool isMaskActive => activeMaskType != MaskType.None && currentMaskTimer > 0f;
+    public float maskProgress => 1 - currentMaskTimer / maxMaskTimer;
     
     public MaskInteractionManager(InputActionAsset playerInput)
     {

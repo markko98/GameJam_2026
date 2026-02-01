@@ -66,7 +66,7 @@ public class BlockView : MonoBehaviour
         }
     }
 
-    private Color GetColorForMaskType(MaskType maskType)
+    public static Color GetColorForMaskType(MaskType maskType)
     {
         return maskType switch
         {
