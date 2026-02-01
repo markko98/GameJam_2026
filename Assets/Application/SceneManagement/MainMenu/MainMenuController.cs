@@ -19,7 +19,8 @@ public class MainMenuController : USceneController
         outlet = GameObject.Find(OutletNames.MainMenu).GetComponent<MainMenuOutlet>();
         outlet.newGameButton.button.onClick.AddListener(GoToNextLevel);
         outlet.continueButton.button.onClick.AddListener(ContinueGameplay);
-        outlet.continueButton.Toggle(false);
+        var levelIndex = ServiceProvider.storage.LoadInt(StorageKeys.MaxLevelIndex);
+        outlet.continueButton.Toggle(levelIndex > 0);
         outlet.settingsButton.button.onClick.AddListener(OpenSettings);
         outlet.exitButton.button.onClick.AddListener(ExitGame);
 
@@ -58,8 +59,9 @@ public class MainMenuController : USceneController
 
     private void OnLoadedCallback()
     {
-        // TODO - load from storage
-        var gameplay = new GameplayController(LevelType.Level1);
+        var levelIndex = ServiceProvider.storage.LoadInt(StorageKeys.MaxLevelIndex);
+        
+        var gameplay = new GameplayController((LevelType)levelIndex);
         PushSceneController(gameplay);
     }
 
