@@ -60,3 +60,7 @@ MonoBehaviour:
   level2Skybox: {fileID: 2100000, guid: eac081b09a548454e9e5c1a53dba5003, type: 2}
   level3Skybox: {fileID: 2100000, guid: d69d51428521d40efb34321557a53c7f, type: 2}
   level4Skybox: {fileID: 2100000, guid: 9499a3c9790744b58902830291b62eb5, type: 2}
+  kaneMask: {fileID: 919132149155446097, guid: 507c6aac1fb5bbc4aad12696da6432db, type: 3}
+  lonoMask: {fileID: 919132149155446097, guid: 9bfcc7e15f68f46418e139131aa9c602, type: 3}
+  kuMask: {fileID: 919132149155446097, guid: 0280fea547a08db4dabb197a357d406f, type: 3}
+  kanaloaMask: {fileID: 919132149155446097, guid: 9286777c4e7c3dc4ca0b95c91a631b03, type: 3}
