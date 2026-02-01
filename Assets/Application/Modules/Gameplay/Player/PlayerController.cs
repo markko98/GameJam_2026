@@ -60,7 +60,7 @@ public class PlayerController : MonoBehaviour
     private void CustomUpdate()
     {
         if(isPaused) return;
-        if(canMove) return;
+        if(!canMove) return;
         if (isMoving || isDead) return;
         
         CheckGround();
@@ -119,7 +119,8 @@ public class PlayerController : MonoBehaviour
 
     private void CheckGround()
     {
-        if (!Physics.Raycast(transform.position + Vector3.up, Vector3.down, out var hit, groundCheckDistance)) return;
+        int layerMask = ~LayerMask.GetMask("PlayerDetection", "PlayerDetectionCollider");
+        if (!Physics.Raycast(transform.position + Vector3.up, Vector3.down, out var hit, groundCheckDistance, layerMask)) return;
         
         if (hit.transform.gameObject.layer == LayerMask.NameToLayer("FallTrap"))
         {

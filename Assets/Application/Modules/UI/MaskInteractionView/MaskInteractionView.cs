@@ -109,5 +109,10 @@ public class MaskInteractionView: UIViewController
         }
         
         maskViews.Clear();
+        GameTicker.SharedInstance.Update -= Update;
+        UEventBus<MaskTriggeredEvent>.Deregister(maskTriggeredEvent);
+        UEventBus<MaskExpiredEvent>.Deregister(maskExpiredEvent);
+        maskTriggeredEvent = null;
+        maskExpiredEvent = null;
     }
 }
