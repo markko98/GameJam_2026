@@ -144,7 +144,7 @@ public class PlayerController : MonoBehaviour
         if (moveDir.sqrMagnitude < 0.001f) return;
 
         // Wall check
-        if (Physics.Raycast(transform.position + Vector3.up, moveDir.normalized, out RaycastHit hit, gridSize))
+        if (Physics.Raycast(transform.position + Vector3.up, moveDir.normalized, out RaycastHit hit, gridSize, ~LayerMask.GetMask("UI")))
         {
             if (hit.collider.CompareTag("Wall")) return;
         }

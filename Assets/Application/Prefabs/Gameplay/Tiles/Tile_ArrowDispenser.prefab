@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1369163938170980684}
   m_Layer: 0
   m_Name: Empty
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -115,7 +115,7 @@ GameObject:
   - component: {fileID: 6090976931514599793}
   m_Layer: 0
   m_Name: Tile_ArrowDispenser
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
