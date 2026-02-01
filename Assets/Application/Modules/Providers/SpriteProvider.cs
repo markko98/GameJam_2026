@@ -39,10 +39,10 @@ public class SpriteProvider: MonoBehaviour
     {
         return type switch
         {
-            MaskType.Obstacle => Instance.mask1Sprite,
-            MaskType.Trap => Instance.mask2Sprite,
-            MaskType.Nature => Instance.mask3Sprite,
-            MaskType.Lava => Instance.mask4Sprite,
+            MaskType.Lono => Instance.mask1Sprite,
+            MaskType.Kane => Instance.mask2Sprite,
+            MaskType.Ku => Instance.mask3Sprite,
+            MaskType.Kanaloa => Instance.mask4Sprite,
             _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
         };
     }
