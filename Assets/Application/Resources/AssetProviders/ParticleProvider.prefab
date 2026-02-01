@@ -48,3 +48,4 @@ MonoBehaviour:
   fallDeathParticle: {fileID: 1889919486439536, guid: 35ad08272de78064cbd645a70f31f454, type: 3}
   arrowDeathParticle: {fileID: 119212, guid: 67a02ea392505844bab240611d904cc0, type: 3}
   obstacleDeathParticle: {fileID: 1477782971762948, guid: 8e2edb2a8a19e674f80d0fb19fe5c051, type: 3}
+  confettiParticles: {fileID: 165102, guid: 4de72d65c2293424cbe6461a89fe2997, type: 3}
