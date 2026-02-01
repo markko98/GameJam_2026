@@ -199,19 +199,19 @@ public class PlayerController : MonoBehaviour
         switch (reason)
         {
             case DeathReason.Trap:
-                PlayParticle(ParticleType.ObstacleDeathParticle);
+                PlayParticle(ParticleType.ObstacleDeathParticle, Vector3.one * 2);
                 DecreaseSize(0.5f);
                 break;
             case DeathReason.Fall:
-                PlayParticle(ParticleType.FallDeathParticle);
+                PlayParticle(ParticleType.FallDeathParticle, Vector3.one);
                 DecreaseSize(0.5f);
                 break;
             case DeathReason.Spike:
-                PlayParticle(ParticleType.TrapDeathParticle);
+                PlayParticle(ParticleType.TrapDeathParticle, Vector3.one * 3);
                 DecreaseSize(0.5f);
                 break;
             case DeathReason.Arrow:
-                PlayParticle(ParticleType.TrapDeathParticle);
+                PlayParticle(ParticleType.TrapDeathParticle, Vector3.one * 2);
                 DecreaseSize(0.5f);
                 break;
             default:
@@ -227,17 +227,17 @@ public class PlayerController : MonoBehaviour
     public void TriggerHappyAnimation()
     {
         canMove = false;
-        PlayParticle(ParticleType.ConfettiParticle);
+        PlayParticle(ParticleType.ConfettiParticle, new Vector3(3, 3, 3));
         animator.SetTrigger(victoryParam);
     }
-    private void PlayParticle(ParticleType particleType)
+    private void PlayParticle(ParticleType particleType, Vector3 scale)
     {
         var particle = ParticleProvider.GetParticle(particleType);
         if (particle == null) return;
         var pc = particle.GetComponent<ParticleSystem>();
         
         particle.transform.position = transform.position;
-        particle.transform.localScale = Vector3.one;
+        particle.transform.localScale = scale;
         pc.Play();
         if (!Mathf.Approximately(3000, 0))
         {
