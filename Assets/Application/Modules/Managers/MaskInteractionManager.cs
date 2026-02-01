@@ -99,6 +99,8 @@ public class MaskInteractionManager
         activeMaskType = maskType;
         currentMaskTimer = 0f;
         maskCooldownTimer = maxCooldownTimer;
+        
+        ServiceProvider.audioService.PlayOneShot(SoundIds.sfx_mask_change);
         UEventBus<MaskTriggeredEvent>.Raise(new MaskTriggeredEvent {maskType = activeMaskType});
     }
     
@@ -107,7 +109,8 @@ public class MaskInteractionManager
         if (activeMaskType == MaskType.None) return;
         
         UEventBus<MaskExpiredEvent>.Raise(new MaskExpiredEvent {maskType = activeMaskType});
-        
+        ServiceProvider.audioService.PlayOneShot(SoundIds.sfx_mask_change_expired);
+
         activeMaskType = MaskType.None;
         currentMaskTimer = 0f;
     }

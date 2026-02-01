@@ -19,3 +19,15 @@ MonoBehaviour:
     definition: {fileID: 11400000, guid: 5acf1898b9a824b32991d68601f483b4, type: 2}
   - id: ui_button_click
     definition: {fileID: 11400000, guid: e4770ae20e59dd84592efdbd24c7bade, type: 2}
+  - id: music_main_menu
+    definition: {fileID: 11400000, guid: 850e96564f7b2456caec3d34c92caa15, type: 2}
+  - id: music_gameplay
+    definition: {fileID: 11400000, guid: 447e12f27a885420cbc289ebbb86d8b5, type: 2}
+  - id: sfx_death
+    definition: {fileID: 11400000, guid: 5b791c231f0964053b5c027fc4d6057b, type: 2}
+  - id: sfx_move
+    definition: {fileID: 11400000, guid: 61040d115a9b24ed99cd4ab8fb82e61f, type: 2}
+  - id: sfx_mask_change
+    definition: {fileID: 11400000, guid: 6b6be1f59467540d98ba3e5a23e3226a, type: 2}
+  - id: sfx_mask_change_expired
+    definition: {fileID: 11400000, guid: fe38bee7e72ed41348529bb839fb4c02, type: 2}

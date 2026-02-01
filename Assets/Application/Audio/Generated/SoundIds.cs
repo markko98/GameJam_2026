@@ -4,4 +4,10 @@ public static class SoundIds
     public const string test_01 = "test_01";
     public const string ui_tab_switch = "ui_tab_switch";
     public const string ui_button_click = "ui_button_click";
+    public const string music_main_menu = "music_main_menu";
+    public const string music_gameplay = "music_gameplay";
+    public const string sfx_death = "sfx_death";
+    public const string sfx_move = "sfx_move";
+    public const string sfx_mask_change = "sfx_mask_change";
+    public const string sfx_mask_change_expired = "sfx_mask_change_expired";
 }
