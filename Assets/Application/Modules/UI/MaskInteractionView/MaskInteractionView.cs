@@ -33,6 +33,8 @@ public class MaskInteractionView: UIViewController
 
     private void OnMaskTriggered(MaskTriggeredEvent obj)
     {
+        var viewMask = maskViews.Find(x => x.MaskType == obj.maskType);
+        viewMask?.MaskTriggerAttempt();
         outlet.loadingBarFill.color = BlockView.GetColorForMaskType(obj.maskType);
         outlet.loadingBarFill.fillAmount = 1f;
         outlet.loadingBar.transform.DOLocalMoveY(-80f, 0.3f);

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Sound_sfx_maskChangeExpired
   m_EditorClassIdentifier: 
   clips:
-  - {fileID: 8300000, guid: ff159b2787d67461f89f588352b37915, type: 3}
+  - {fileID: 8300000, guid: 1c1aa47e1aedc426eb82220b66780027, type: 3}
   mixerGroup: {fileID: -4557929014893226497, guid: 54fe4eae7dd064a408a95aef459de5e4, type: 2}
   channel: 0
   volume: 1
