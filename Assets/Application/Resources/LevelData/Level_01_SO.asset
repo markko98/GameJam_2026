@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd9c313d93d44d89926590a5d9bbc450, type: 3}
   m_Name: Level_01_SO
   m_EditorClassIdentifier: Assembly-CSharp::LevelSO
-  unlockedMask: 1
+  unlockedMask: 2
   spawnAnimDelayPerBlock: 0.005
   leftPlayer:
     gridSize: {x: 3, y: 3}

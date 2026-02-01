@@ -28,10 +28,10 @@ public class SpriteProvider: MonoBehaviour
         DontDestroyOnLoad(_instance);
     }    
     
-    public Sprite mask1Sprite;
-    public Sprite mask2Sprite;
-    public Sprite mask3Sprite;
-    public Sprite mask4Sprite;
+    public Sprite kaneSprite;
+    public Sprite lonoSprite;
+    public Sprite kuSprite;
+    public Sprite kanaloaSprite;
     public Sprite lockSprite;
 
 
@@ -39,10 +39,10 @@ public class SpriteProvider: MonoBehaviour
     {
         return type switch
         {
-            MaskType.Lono => Instance.mask1Sprite,
-            MaskType.Kane => Instance.mask2Sprite,
-            MaskType.Ku => Instance.mask3Sprite,
-            MaskType.Kanaloa => Instance.mask4Sprite,
+            MaskType.Kane => Instance.kaneSprite,
+            MaskType.Lono => Instance.lonoSprite,
+            MaskType.Ku => Instance.kuSprite,
+            MaskType.Kanaloa => Instance.kanaloaSprite,
             _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
         };
     }

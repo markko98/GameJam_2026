@@ -46,8 +46,8 @@ public class LevelDataProvider : MonoBehaviour
             MaskType.None => "",
             MaskType.Kane => "The Mask of Kane pulses with the warmth of a newborn sun, turning the world into a golden haze. With its power, you shall walk through stone like morning mist and tread upon traps as if they were solid light.",
             MaskType.Lono => "The Mask of Lono radiates a gentle, emerald hum, causing the air to smell of fresh rain and growth. With its blessing, you shall mend shattered timber bridges with a touch and command wild jungle vines to weave into sturdy new paths.",
-            MaskType.Ku => "The Mask of Kanaloa surges with the cool, rhythmic power of the deep tide. Its icy aura chills molten lava into harmless stone at your touch, allowing you to cross volcanic pits as if they were cooling reefs.",
-            MaskType.Kanaloa => "The Mask of Ku thrums with the iron-willed heat of a thousand battles. Hardened by an unbreakable spirit, you shall shrug off stinging arrow volleys and stride over lethal floor spikes without drawing a drop of blood.",
+            MaskType.Ku => "The Mask of Ku thrums with the iron-willed heat of a thousand battles. Hardened by an unbreakable spirit, you shall shrug off stinging arrow volleys and stride over lethal floor spikes without drawing a drop of blood.",
+            MaskType.Kanaloa => "The Mask of Kanaloa surges with the cool, rhythmic power of the deep tide. Its icy aura chills molten lava into harmless stone at your touch, allowing you to cross volcanic pits as if they were cooling reefs.",
             _ => ""
         };
     }

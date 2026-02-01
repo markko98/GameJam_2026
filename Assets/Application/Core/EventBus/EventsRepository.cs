@@ -56,3 +56,8 @@ public class LevelCompletedEvent : IEvent
     {
     }
 }
+
+public class PlayerDiedEvent : IEvent
+{
+    
+}
