@@ -26,7 +26,7 @@ public class Arrow : MonoBehaviour
             velocity = direction * speed + Vector3.down * fallSpeed;
             transform.position += velocity * Time.deltaTime;
             transform.rotation = Quaternion.LookRotation(velocity);
-            if (transform.position.y < -5f)
+            if (transform.position.y < -0.2f)
                 Destroy(gameObject);
             return;
         }

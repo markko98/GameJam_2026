@@ -202,7 +202,8 @@ public class GridSpawner
                 y * def.cellSize - halfExtents.y
             );
 
-            var go = UnityEngine.Object.Instantiate(prefab, worldPos, Quaternion.identity, parent);
+            var rotation = Quaternion.Euler(0f, (float)def.GetCellRotation(x, y), 0f);
+            var go = UnityEngine.Object.Instantiate(prefab, worldPos, rotation, parent);
 
             var view = go.GetComponent<BlockView>();
             if (!view) view = go.AddComponent<BlockView>();

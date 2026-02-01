@@ -18,6 +18,9 @@ public class PlayerGridDefinition
     [Header("Cells (size must be width*height)")]
     public BlockType[] cells;
 
+    [Header("Cell Rotations (size must be width*height)")]
+    public BlockRotation[] cellRotations;
+
     public bool IsInside(Vector2Int c)
     {
         return c.x >= 0 && c.y >= 0 && c.x < gridSize.x && c.y < gridSize.y;
@@ -36,6 +39,19 @@ public class PlayerGridDefinition
         return cells[index];
     }
 
+    public BlockRotation GetCellRotation(int x, int y)
+    {
+        if (cellRotations == null) return BlockRotation.Up;
+        int w = gridSize.x;
+        int h = gridSize.y;
+        if (x < 0 || y < 0 || x >= w || y >= h) return BlockRotation.Up;
+
+        int index = y * w + x;
+        if (index < 0 || index >= cellRotations.Length) return BlockRotation.Up;
+
+        return cellRotations[index];
+    }
+
 #if UNITY_EDITOR
     public void ValidateOrFix()
     {
@@ -50,6 +66,18 @@ public class PlayerGridDefinition
             }
 
             cells = newArr;
+        }
+
+        if (cellRotations == null || cellRotations.Length != required)
+        {
+            var newArr = new BlockRotation[required];
+            if (cellRotations != null)
+            {
+                int copy = Mathf.Min(cellRotations.Length, required);
+                Array.Copy(cellRotations, newArr, copy);
+            }
+
+            cellRotations = newArr;
         }
     }
 #endif
