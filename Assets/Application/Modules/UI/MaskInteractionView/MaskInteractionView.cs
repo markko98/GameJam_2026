@@ -14,7 +14,7 @@ public class MaskInteractionView: UIViewController
     {
         var prefab = Resources.Load<GameObject>(Strings.UIViewsResourcesPath + "MaskInteractionView");
         view = Object.Instantiate(prefab, viewport, false);
-        manager = new MaskInteractionManager();
+        manager = new MaskInteractionManager(outlet.inputAsset);
     }
     
     public override void ViewDidLoad()
@@ -27,17 +27,14 @@ public class MaskInteractionView: UIViewController
 
     private void SetupMasks()
     {
-        var maskViewPrefab = Resources.Load<GameObject>(Strings.UIPrefabsResourcesPath + "MaskView");
         var masks = ServiceProvider.storage.LoadUnlockedMasks();
 
         if (masks.Count == 0) return;
         
-        foreach (var maskType in masks)
+        foreach (var maskData in outlet.masksData)
         {
-            var maskGo = Object.Instantiate(maskViewPrefab, outlet.maskViewContainer, false);
-            var maskViewOutlet = maskGo.GetComponent<MaskViewOutlet>();
-            
-            var maskView = new MaskView(maskType, maskViewOutlet);
+            bool isUnlocked = masks.Contains(maskData.MaskType);
+            var maskView = new MaskView(maskData.MaskType, !isUnlocked, maskData.MaskViewOutlet);
             maskViews.Add(maskView);
         }
     }

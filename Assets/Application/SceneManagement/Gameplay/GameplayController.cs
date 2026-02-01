@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using NUnit.Framework;
 using UnityEngine;
 
 public class GameplayController : USceneController
@@ -24,6 +25,12 @@ public class GameplayController : USceneController
         outlet = GameObject.Find(OutletNames.Gameplay).GetComponent<GameplayOutlet>();
         navigationController ??= new UIStackNavigationController();
         navigationPauseController ??= new UIStackNavigationController();
+        var masks = new List<MaskType>()
+        {
+            MaskType.Trap, MaskType.Obstacle, MaskType.Nature, MaskType.Lava
+        };
+        ServiceProvider.storage.SaveUnlockedMasks(masks);
+
 
         outlet.pauseButton.button.onClick.AddListener(ShowPause);
         SetupGrid();

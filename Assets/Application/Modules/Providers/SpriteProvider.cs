@@ -32,6 +32,7 @@ public class SpriteProvider: MonoBehaviour
     public Sprite mask2Sprite;
     public Sprite mask3Sprite;
     public Sprite mask4Sprite;
+    public Sprite lockSprite;
 
 
     public static Sprite GetMaskSprite(MaskType type)
@@ -44,5 +45,10 @@ public class SpriteProvider: MonoBehaviour
             MaskType.Lava => Instance.mask4Sprite,
             _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
         };
+    }
+
+    public static Sprite GetLockSprite()
+    {
+        return Instance.lockSprite;
     }
 }

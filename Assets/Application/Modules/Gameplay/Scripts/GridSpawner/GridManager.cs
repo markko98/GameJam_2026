@@ -145,7 +145,27 @@ public class GridManager
 
         return grid[start.x, start.y];
     }
+    public BlockView GetPlayerGoalBlock(PlayerSide side)
+    {
+        var grid = GetSpawnedGrid(side);
+        if (grid == null) return null;
 
+        var def = levelData.GetPlayerDefinition(side);
+        if (def == null) return null;
+
+        Vector2Int targetCell = def.targetCell;
+
+        int w = grid.GetLength(0);
+        int h = grid.GetLength(1);
+
+        if (targetCell.x < 0 || targetCell.y < 0 || targetCell.x >= w || targetCell.y >= h)
+        {
+            Debug.LogError($"Target cell out of bounds for {side}: {targetCell} (grid {w}x{h})");
+            return null;
+        }
+
+        return grid[targetCell.x, targetCell.y];
+    }
 
     public void CleanUp()
     {

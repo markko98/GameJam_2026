@@ -4,7 +4,8 @@ using UnityEngine.UI;
 
 public class MaskViewOutlet: MonoBehaviour
 {
-    public Button button;
-    public TextMeshProUGUI nameText;
-    public Image image;
+    public MaskType maskType;
+    public Image border;
+    public Image maskImage;
+    public bool isLocked;
 }

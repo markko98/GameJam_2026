@@ -44,4 +44,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 382a82b090f64287a68295db450c0154, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelDataProvider
-  backupLevelSO: {fileID: 11400000, guid: 7e28c7bddb7074d749c0a572374f7334, type: 2}
+  backupLevelSO: {fileID: 11400000, guid: f1c023faa77294433b7848062c02fd76, type: 2}
