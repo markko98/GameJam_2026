@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GridManager
 {
@@ -22,6 +23,14 @@ public class GridManager
     
     private EventBinding<MaskTriggeredEvent> maskTriggeredEvent;
     private EventBinding<MaskExpiredEvent> maskExpiredEvent;
+    
+
+    private Transform leftGoalTransform;
+    private Transform rightGoalTransform;
+    
+    private Transform leftPlayerTransform;
+    private Transform rightPlayerTransform;
+
 
 
     public GridManager(LevelSO levelData, Transform rightGridRoot, Transform leftGridRoot)
@@ -41,6 +50,16 @@ public class GridManager
         });
         
         UEventBus<MaskExpiredEvent>.Register(maskExpiredEvent);
+
+        GameTicker.SharedInstance.Update += CheckForDev;
+    }
+
+    private void CheckForDev()
+    {
+        if (!Keyboard.current.pKey.wasPressedThisFrame) return;
+        
+        leftPlayerTransform.transform.position = leftGoalTransform.position;
+        rightPlayerTransform.transform.position = rightGoalTransform.position;
     }
 
     public void SpawnAndAnimateGrid()
@@ -84,7 +103,13 @@ public class GridManager
 
         var leftPlayer = UnityEngine.Object.Instantiate(leftPlayerPrefab, startBlockLeft.transform.position, Quaternion.identity, null);
         var rightPlayer = UnityEngine.Object.Instantiate(rightPlayerPrefab, startBlockRight.transform.position, Quaternion.identity, null);
-
+        
+        leftPlayerTransform = leftPlayer.transform;
+        rightPlayerTransform = rightPlayer.transform;
+        
+        leftGoalTransform = goalBlockLeft.transform;
+        rightGoalTransform = goalBlockRight.transform;
+        
         var startPosLeft = startBlockLeft.transform.position;
         startPosLeft.y = posY;
         
@@ -187,5 +212,7 @@ public class GridManager
     {
         UEventBus<MaskTriggeredEvent>.Deregister(maskTriggeredEvent);
         UEventBus<MaskExpiredEvent>.Deregister(maskExpiredEvent);
+        
+        GameTicker.SharedInstance.Update -= CheckForDev;
     }
 }
