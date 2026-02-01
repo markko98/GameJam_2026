@@ -25,6 +25,12 @@ public class GameplayAssetProvider : MonoBehaviour
     public Material level3Skybox;
     public Material level4Skybox;
 
+    public GameObject kaneMask;
+    public GameObject lonoMask;
+    public GameObject kuMask;
+    public GameObject kanaloaMask;
+
+
     public static GameplayAssetProvider Instance
     {
         get
@@ -85,6 +91,19 @@ public class GameplayAssetProvider : MonoBehaviour
             LevelType.Level1 => Instance.level1Skybox,
             LevelType.Level2 => Instance.level2Skybox,
             _ => Instance.level1Skybox
+        };
+    }
+
+    public static GameObject GetMaskMesh(MaskType maskType)
+    {
+        return maskType switch
+        {
+            MaskType.None => null,
+            MaskType.Kane => Instance.kaneMask,
+            MaskType.Lono => Instance.lonoMask,
+            MaskType.Ku => Instance.kuMask,
+            MaskType.Kanaloa => Instance.kanaloaMask,
+            _ => throw new ArgumentOutOfRangeException(nameof(maskType), maskType, null)
         };
     }
 }

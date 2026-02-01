@@ -90,6 +90,11 @@ public class MaskInteractionManager
     {
         if (isMaskCooldownActive) return; // maybe play some sound or ui
         if(unlockedMasks.Contains(maskType) == false) return;
+
+        if (maskType != activeMaskType)
+        {
+            OnMaskExpired();
+        }
         
         activeMaskType = maskType;
         currentMaskTimer = 0f;

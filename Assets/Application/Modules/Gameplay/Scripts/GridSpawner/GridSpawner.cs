@@ -202,7 +202,8 @@ public class GridSpawner
                 y * def.cellSize - halfExtents.y
             );
 
-            var go = UnityEngine.Object.Instantiate(prefab, worldPos, Quaternion.identity, parent);
+            var rotation = Quaternion.Euler(0f, (float)def.GetCellRotation(x, y), 0f);
+            var go = UnityEngine.Object.Instantiate(prefab, worldPos, rotation, parent);
 
             var view = go.GetComponent<BlockView>();
             if (!view) view = go.AddComponent<BlockView>();
@@ -340,6 +341,17 @@ public class GridSpawner
         var rightWall = Object.Instantiate(level.wallPrefab, finishPos + new Vector3(cell, 0f, 0f), Quaternion.Euler(0f, 90f, 0f));
         rightWall.tag = "Wall";
         rightWall.AddComponent<BoxCollider>().size = new Vector3(cell, wallHeight, cell);
+
+        // Spawn unlocked mask mesh on the table tile
+        if (level.unlockedMask != MaskType.None)
+        {
+            var maskPrefab = GameplayAssetProvider.GetMaskMesh(level.unlockedMask);
+            if (maskPrefab != null)
+            {
+                var mask = Object.Instantiate(maskPrefab, finishPos + new Vector3(-cell/2, 2, 0), Quaternion.Euler(0f,180f,0f));
+                mask.AddComponent<FloatingEffect>();
+            }
+        }
     }
 
     private void SpawnGate(Transform parent, int x, int y, float cellSize, Vector2 halfExtents, Quaternion rotation, bool disableCollider = false)

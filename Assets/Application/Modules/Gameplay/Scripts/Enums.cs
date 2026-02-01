@@ -36,3 +36,11 @@ public enum MaskType
     Ku = 3,
     Kanaloa = 4,
 }
+
+public enum BlockRotation
+{
+    Up = 0,
+    Right = 90,
+    Down = 180,
+    Left = 270
+}
