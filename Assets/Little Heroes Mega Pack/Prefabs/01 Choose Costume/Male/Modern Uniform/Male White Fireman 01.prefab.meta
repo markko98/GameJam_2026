@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: df27d5088ed492d4dbb01cc24299221d
+timeCreated: 1524553626
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 67636
+  packageName: Little Heroes Mega Pack
+  packageVersion: 2.9
+  assetPath: Assets/Little Heroes Mega Pack/Prefabs/01 Choose Costume/Male/Modern
+    Uniform/Male White Fireman 01.prefab
+  uploadId: 409536

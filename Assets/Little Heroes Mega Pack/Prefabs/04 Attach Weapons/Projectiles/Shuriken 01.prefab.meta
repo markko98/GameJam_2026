@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: ce9eabb3a091c20409d10b932697c6e0
+timeCreated: 1556523747
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 67636
+  packageName: Little Heroes Mega Pack
+  packageVersion: 2.9
+  assetPath: Assets/Little Heroes Mega Pack/Prefabs/04 Attach Weapons/Projectiles/Shuriken
+    01.prefab
+  uploadId: 409536
