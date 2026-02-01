@@ -8,6 +8,7 @@ public class LevelSO : ScriptableObject
     // definition of level - defining level design - starting player pos - block types and their starting states
     // mask types available in a level
     // target block location
+    public MaskType unlockedMask;
 
     [Header("Grid Spawn Animation")]
     [Range(0f, 0.2f)]

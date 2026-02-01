@@ -17,8 +17,8 @@ TagManager:
   - Trap
   - FallTrap
   - SpikeTrap
-  - 
-  - 
+  - PlayerDetection
+  - PlayerDetectionCollider
   - 
   - 
   - 

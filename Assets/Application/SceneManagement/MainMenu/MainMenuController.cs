@@ -77,6 +77,7 @@ public class MainMenuController : USceneController
     public override void SceneWillDisappear()
     {
         loadingView = null;
+        videoView = null;
         outlet.newGameButton.button.onClick.AddListener(GoToNextLevel);
         outlet.settingsButton.button.onClick.AddListener(OpenSettings);
     }
