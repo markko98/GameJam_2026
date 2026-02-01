@@ -98,7 +98,8 @@ public class GameplayController : USceneController
     {
         if (levelData.unlockedMask == MaskType.None)
         {
-            OnExitCallback();
+            OnContinueLevelCompleteCallback();
+            return;
         }
         var maskSprite = SpriteProvider.GetMaskSprite(levelData.unlockedMask);
         var description = LevelDataProvider.GetMaskDescription(levelData.unlockedMask);
@@ -156,6 +157,13 @@ public class GameplayController : USceneController
     {
         loadingView.RemoveView();
         int maxLevel = Enum.GetValues(typeof(LevelType)).Length - 1;
+        if ((int)levelType >= maxLevel)
+        {
+            OnExitCallback();
+            return;
+        }
+        
+        
         var nextLevel = (LevelType)Math.Clamp((int)levelType + 1, 0, maxLevel);
         var gameplay = new GameplayController(nextLevel);
         PushSceneController(gameplay);
