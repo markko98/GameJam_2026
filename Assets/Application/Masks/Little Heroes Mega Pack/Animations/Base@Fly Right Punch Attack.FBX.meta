@@ -589,5 +589,6 @@ AssetOrigin:
   productId: 67636
   packageName: Little Heroes Mega Pack
   packageVersion: 2.9
-  assetPath: Assets/Little Heroes Mega Pack/Animations/Base@Fly Right Punch Attack.FBX
+  assetPath: Assets/Application/Masks/Little Heroes Mega Pack/Animations/Base@Fly
+    Right Punch Attack.FBX
   uploadId: 409536

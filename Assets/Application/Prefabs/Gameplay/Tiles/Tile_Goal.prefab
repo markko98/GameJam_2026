@@ -171,6 +171,7 @@ GameObject:
   - component: {fileID: 8905268172871390329}
   - component: {fileID: 2440722111752526325}
   - component: {fileID: 8159171023987832087}
+  - component: {fileID: 6041428240887119421}
   m_Layer: 11
   m_Name: PlayerDetectionHandler
   m_TagString: Untagged
@@ -226,6 +227,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36c7a74f4972b404a889c0b741fefdaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerDetectionHandler
+--- !u!54 &6041428240887119421
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5320204251085844763}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1001 &152956144495815766
 PrefabInstance:
   m_ObjectHideFlags: 0

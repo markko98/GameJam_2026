@@ -14,7 +14,7 @@ public class PlayerDetectionHandler : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject == targetPlayer)
+        if (other.gameObject.transform.parent.gameObject == targetPlayer)
         {
             UEventBus<PlayerGoalDetectionEvent>.Raise(new PlayerGoalDetectionEvent(true, side, targetPlayer));
         }
@@ -22,7 +22,7 @@ public class PlayerDetectionHandler : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject == targetPlayer)
+        if (other.gameObject.transform.parent.gameObject == targetPlayer)
         {
             UEventBus<PlayerGoalDetectionEvent>.Raise(new PlayerGoalDetectionEvent(false, side, targetPlayer));
         }
