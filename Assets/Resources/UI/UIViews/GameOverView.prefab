@@ -34,7 +34,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: 460}
+  m_AnchoredPosition: {x: 0, y: 608}
   m_SizeDelta: {x: 1305.4951, y: 1127.9321}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &1745439202986591293
@@ -260,6 +260,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameOverViewOutlet
   restartButton: {fileID: 3820390733716057210}
+  exitButton: {fileID: 8860727933708783048}
 --- !u!1 &4485269405514683723
 GameObject:
   m_ObjectHideFlags: 0
@@ -372,8 +373,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -50, y: -28}
-  m_SizeDelta: {x: 1869.0007, y: 1067.0381}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 1292.4851, y: 737.8975}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &5623250770025338514
 GameObject:
@@ -662,6 +663,17 @@ MonoBehaviour:
   playAtEnable: 0
   attachToThisTransform: 0
   useWorldPosition: 0
+--- !u!114 &8860727933708783048 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4917763963274018993, guid: 578f389ee1f3340289f05120ec30b44c, type: 3}
+  m_PrefabInstance: {fileID: 4524087209317207417}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75bf8de9fa6c4822b97381b5e5a48e66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonView
 --- !u!1001 &8159301402820914379
 PrefabInstance:
   m_ObjectHideFlags: 0

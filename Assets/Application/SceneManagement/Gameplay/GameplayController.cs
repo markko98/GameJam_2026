@@ -10,14 +10,16 @@ public class GameplayController : USceneController
     private readonly LevelType levelType;
 
     private UIStackNavigationController navigationController;
-    private UIStackNavigationController navigationPauseController;
     private MaskInteractionView maskInteractionView;
     private PauseView pauseView;
     private LoadingView loadingView;
     private LevelCompleteView levelCompletedView;
 
     private EventBinding<LevelCompletedEvent> levelCompletedBinding;
+    private EventBinding<PlayerDiedEvent> playerDiedBinding;
     private LevelSO levelData;
+    
+    private GameOverView gameOverView;
 
     public GameplayController(LevelType levelType) : base(SceneNames.Gameplay)
     {
@@ -31,16 +33,13 @@ public class GameplayController : USceneController
         UEventBus<LevelCompletedEvent>.Register(levelCompletedBinding);
         outlet = GameObject.Find(OutletNames.Gameplay).GetComponent<GameplayOutlet>();
         navigationController ??= new UIStackNavigationController();
-        navigationPauseController ??= new UIStackNavigationController();
+
         levelData = LevelDataProvider.GetLevelData(levelType);
 
+        playerDiedBinding = new EventBinding<PlayerDiedEvent>(ShowGameOverView);
+        UEventBus<PlayerDiedEvent>.Register(playerDiedBinding);
+
         outlet.EndGameManager.Initialize();
-        
-        var masks = new List<MaskType>()
-        {
-            MaskType.Kane, MaskType.Lono, MaskType.Ku, MaskType.Kanaloa
-        };
-        ServiceProvider.storage.SaveUnlockedMasks(masks);
         
         outlet.pauseButton.button.onClick.AddListener(ShowPause);
         SetupGrid();
@@ -71,8 +70,20 @@ public class GameplayController : USceneController
     private void ShowPause()
     {
         UEventBus<PauseEvent>.Raise(new PauseEvent(true));
-        pauseView ??= new PauseView(OnResumeCallback, OnExitCallback, outlet.canvas.transform, navigationPauseController);
+        pauseView ??= new PauseView(OnResumeCallback, OnExitCallback, outlet.canvas.transform, navigationController);
         pauseView?.PresentView(0f, AnimationType.SlideInDown);
+    }
+
+    private void ShowGameOverView()
+    {
+        gameOverView ??= new GameOverView(RestartGame, OnExitCallback, outlet.canvas.transform, navigationController);
+        gameOverView?.PresentView(0f, AnimationType.SlideInUp);
+    }
+
+    private void RestartGame()
+    {
+        var gameplay = new GameplayController(levelType);
+        PushSceneController(gameplay);
     }
     
     
@@ -87,7 +98,7 @@ public class GameplayController : USceneController
     {
         var maskSprite = SpriteProvider.GetMaskSprite(levelData.unlockedMask);
         var description = LevelDataProvider.GetMaskDescription(levelData.unlockedMask);
-        levelCompletedView ??= new LevelCompleteView(OnContinueLevelCompleteCallback, outlet.canvas.transform, navigationPauseController, maskSprite, description);
+        levelCompletedView ??= new LevelCompleteView(OnContinueLevelCompleteCallback, outlet.canvas.transform, navigationController, maskSprite, description);
         levelCompletedView?.PresentView(0f, AnimationType.SlideInUp);
     }
 
@@ -133,7 +144,7 @@ public class GameplayController : USceneController
 
     private void GoToNextLevel()
     {
-        loadingView ??= new LoadingView(OnLoadedCallback, 2f, outlet.canvas.transform, navigationPauseController);
+        loadingView ??= new LoadingView(OnLoadedCallback, 2f, outlet.canvas.transform, navigationController);
         loadingView?.PresentView(0f, AnimationType.ScaleUpFromMiddle);
     }
 
@@ -150,6 +161,9 @@ public class GameplayController : USceneController
         base.SceneWillDisappear();
         outlet.pauseButton.button.onClick.RemoveListener(ShowPause);
         UEventBus<LevelCompletedEvent>.Deregister(levelCompletedBinding);
+        UEventBus<PlayerDiedEvent>.Deregister(playerDiedBinding);
+        playerDiedBinding = null;
+
         levelCompletedBinding = null;
         levelCompletedView?.RemoveView();
         pauseView?.RemoveView();
@@ -159,5 +173,8 @@ public class GameplayController : USceneController
         maskInteractionView?.Cleanup();
         outlet.EndGameManager.Cleanup();
         levelCompletedView = null;
+        gameOverView?.Cleanup();
+        gameOverView?.RemoveView();
+        gameOverView = null;
     }
 }
