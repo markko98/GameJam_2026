@@ -15,7 +15,7 @@ public class MainMenuController : USceneController
     public override void SceneDidLoad()
     {
         base.SceneDidLoad();
-        navigationController ??= new UIStackNavigationController();
+        navigationController = new UIStackNavigationController();
         outlet = GameObject.Find(OutletNames.MainMenu).GetComponent<MainMenuOutlet>();
         outlet.newGameButton.button.onClick.AddListener(GoToNextLevel);
         outlet.continueButton.button.onClick.AddListener(ContinueGameplay);
@@ -80,6 +80,8 @@ public class MainMenuController : USceneController
     {
         loadingView = null;
         videoView = null;
+        settingsView?.RemoveView();
+        settingsView = null;
         outlet.newGameButton.button.onClick.AddListener(GoToNextLevel);
         outlet.settingsButton.button.onClick.AddListener(OpenSettings);
     }
