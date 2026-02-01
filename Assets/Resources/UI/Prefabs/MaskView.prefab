@@ -128,6 +128,8 @@ MonoBehaviour:
   maskType: 1
   border: {fileID: 6677635833734655710}
   maskImage: {fileID: 1592490061893830708}
+  isLocked: 0
+  root: {fileID: 6507297134118793940}
 --- !u!1 &5671732164637806819
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,7 +1,11 @@
 
+using DG.Tweening;
+using UnityEngine;
+
 public class MaskView
 {
     private readonly MaskType maskType;
+    public MaskType MaskType => maskType;
     private readonly MaskViewOutlet outlet;
     private bool isPaused;
     private readonly bool isLocked;
@@ -21,14 +25,12 @@ public class MaskView
     }
 
 
-    private void MaskTriggerAttempt()
+    public void MaskTriggerAttempt()
     {
-        if (isPaused) return;
-        if (isLocked) return;
+        outlet.root.DOPunchScale(Vector3.one * 0.2f, 0.35f, 1, 1);
     }
 
     public void CleanUp()
     {        
-        // outlet.button.onClick.RemoveAllListeners();
     }
 }

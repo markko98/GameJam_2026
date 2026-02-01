@@ -8,4 +8,5 @@ public class MaskViewOutlet: MonoBehaviour
     public Image border;
     public Image maskImage;
     public bool isLocked;
+    public Transform root;
 }

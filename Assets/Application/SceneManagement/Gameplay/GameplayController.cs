@@ -80,7 +80,7 @@ public class GameplayController : USceneController
     private void ShowGameOverView()
     {
         gameOverView ??= new GameOverView(RestartGame, OnExitCallback, outlet.canvas.transform, navigationController);
-        gameOverView?.PresentView(0f, AnimationType.SlideInUp);
+        gameOverView?.PresentView(0.75f, AnimationType.SlideInUp);
     }
 
     private void RestartGame()
