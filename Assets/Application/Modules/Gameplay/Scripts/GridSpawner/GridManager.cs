@@ -74,7 +74,11 @@ public class GridManager
     {
         var startBlockLeft = GetPlayerStartBlock(PlayerSide.Left);
         var startBlockRight = GetPlayerStartBlock(PlayerSide.Right);
+        
+        var goalBlockLeft = GetPlayerGoalBlock(PlayerSide.Left);
+        var goalBlockRight = GetPlayerGoalBlock(PlayerSide.Right);
 
+        
         var leftPlayerPrefab = GameplayAssetProvider.GetPlayer(PlayerType.Player1);
         var rightPlayerPrefab = GameplayAssetProvider.GetPlayer(PlayerType.Player2);
 
@@ -89,6 +93,18 @@ public class GridManager
         
         leftPlayer.transform.position = startPosLeft;
         rightPlayer.transform.position = startPosRight;
+        
+        var playerDetectionRight = goalBlockRight.gameObject.GetComponentInChildren<PlayerDetectionHandler>();
+        var playerDetectionLeft = goalBlockLeft.gameObject.GetComponentInChildren<PlayerDetectionHandler>();
+
+        if (playerDetectionRight)
+        {
+            playerDetectionRight.SetTargetPlayer(rightPlayer, PlayerSide.Right);
+        }
+        if (playerDetectionLeft)
+        {
+            playerDetectionLeft.SetTargetPlayer(leftPlayer, PlayerSide.Left);
+        }
     }
 
     /// <summary>
