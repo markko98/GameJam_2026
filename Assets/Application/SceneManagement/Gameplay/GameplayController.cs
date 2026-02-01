@@ -28,6 +28,7 @@ public class GameplayController : USceneController
     
     private GameOverView gameOverView;
     private PooledAudioSource gameplaySound;
+    private bool gameOverTriggered;
 
     public GameplayController(LevelType levelType) : base(SceneNames.Gameplay)
     {
@@ -91,6 +92,9 @@ public class GameplayController : USceneController
 
     private void ShowGameOverView()
     {
+        if (gameOverTriggered) return;
+
+        gameOverTriggered = true;
         gameOverView ??= new GameOverView(RestartGame, OnExitCallback, outlet.canvas.transform, navigationController3);
         gameOverView?.PresentView(0.75f, AnimationType.SlideInUp);
     }
