@@ -1,5 +1,4 @@
 #if UNITY_EDITOR
-using System;
 using UnityEditor;
 using UnityEngine;
 
@@ -8,18 +7,14 @@ public class LevelSODefinitionWindow : EditorWindow
     private LevelSO level;
     private SerializedObject so;
 
-    // UI state
     private PlayerSide editingSide = PlayerSide.Left;
 
     private BlockType paintType = BlockType.Floor;
-
-    private enum PaintMode { TypeOnly, StateOnly, TypeAndState }
-    private PaintMode paintMode = PaintMode.TypeAndState;
-
     private bool isPainting;
+
     private Vector2 scroll;
 
-    // Grid visuals
+    // visuals
     private float cellPx = 34f;
     private float cellPad = 3f;
 
@@ -33,7 +28,6 @@ public class LevelSODefinitionWindow : EditorWindow
 
     private void OnSelectionChange()
     {
-        // If you select a LevelSO asset in Project, auto-assign it
         if (Selection.activeObject is LevelSO selected)
         {
             level = selected;
@@ -58,7 +52,6 @@ public class LevelSODefinitionWindow : EditorWindow
         EditorGUILayout.Space(8);
         DrawSideSelector();
 
-        EditorGUILayout.Space(6);
         var playerProp = GetPlayerProp(editingSide);
         if (playerProp == null)
         {
@@ -67,6 +60,7 @@ public class LevelSODefinitionWindow : EditorWindow
             return;
         }
 
+        EditorGUILayout.Space(6);
         DrawGridSettings(playerProp);
 
         EditorGUILayout.Space(8);
@@ -80,11 +74,8 @@ public class LevelSODefinitionWindow : EditorWindow
 
         so.ApplyModifiedProperties();
 
-        // Keep asset dirty if changed via GUI
         if (GUI.changed)
-        {
             EditorUtility.SetDirty(level);
-        }
     }
 
     private void DrawHeader()
@@ -124,7 +115,6 @@ public class LevelSODefinitionWindow : EditorWindow
         }
 
         GUILayout.FlexibleSpace();
-
         cellPx = EditorGUILayout.Slider("Cell Size", cellPx, 18f, 60f);
 
         EditorGUILayout.EndHorizontal();
@@ -132,7 +122,6 @@ public class LevelSODefinitionWindow : EditorWindow
 
     private SerializedProperty GetPlayerProp(PlayerSide side)
     {
-        // LevelSO fields: leftPlayer / rightPlayer
         return side == PlayerSide.Left
             ? so.FindProperty("leftPlayer")
             : so.FindProperty("rightPlayer");
@@ -161,7 +150,6 @@ public class LevelSODefinitionWindow : EditorWindow
             EnsureCellsArraySize(playerProp, cellsProp, sizeProp.vector2IntValue);
         }
 
-        // Show info
         var sz = sizeProp.vector2IntValue;
         int required = Mathf.Max(1, sz.x * sz.y);
         EditorGUILayout.LabelField($"Cells: {cellsProp.arraySize} / Required: {required}");
@@ -175,9 +163,7 @@ public class LevelSODefinitionWindow : EditorWindow
         int h = Mathf.Max(1, size.y);
         int required = w * h;
 
-        // Clamp size back into prop (in case user typed 0 or negative)
-        var sizeProp = playerProp.FindPropertyRelative("gridSize");
-        sizeProp.vector2IntValue = new Vector2Int(w, h);
+        playerProp.FindPropertyRelative("gridSize").vector2IntValue = new Vector2Int(w, h);
 
         if (cellsProp.arraySize == required) return;
 
@@ -186,24 +172,16 @@ public class LevelSODefinitionWindow : EditorWindow
         int old = cellsProp.arraySize;
         cellsProp.arraySize = required;
 
-        // Initialize new elements if expanded
-        if (required > old)
+        // Init defaults
+        for (int i = old; i < required; i++)
         {
-            for (int i = old; i < required; i++)
-            {
-                var cell = cellsProp.GetArrayElementAtIndex(i);
-                // cell is BlockCellData (class) => might be null
-                if (cell.managedReferenceValue == null && cell.propertyType == SerializedPropertyType.ManagedReference)
-                {
-                    // Not expected with your current BlockCellData (Serializable class),
-                    // so we do nothing here.
-                }
-                // For Serializable classes in arrays, Unity typically creates default instances.
-                // We'll still try to set defaults defensively:
-                var bt = cell.FindPropertyRelative("blockType");
-                if (bt != null) bt.enumValueIndex = (int)BlockType.Floor;
-            }
+            var el = cellsProp.GetArrayElementAtIndex(i);
+            el.enumValueIndex = (int)BlockType.Floor;
         }
+
+        so.ApplyModifiedProperties();
+        so.Update();
+        EditorUtility.SetDirty(level);
     }
 
     private void DrawPalette()
@@ -211,25 +189,11 @@ public class LevelSODefinitionWindow : EditorWindow
         EditorGUILayout.BeginVertical(EditorStyles.helpBox);
         EditorGUILayout.LabelField("Paint Palette", EditorStyles.boldLabel);
 
-        paintMode = (PaintMode)EditorGUILayout.EnumPopup("Mode", paintMode);
         paintType = (BlockType)EditorGUILayout.EnumPopup("Block Type", paintType);
-
-        EditorGUILayout.BeginHorizontal();
-        if (GUILayout.Button("Pick From Cell (Alt+Click)"))
-        {
-            EditorGUILayout.HelpBox("Hold Alt and click a cell to pick its type/state into palette.", MessageType.None);
-        }
-
-        GUILayout.FlexibleSpace();
-
-        if (GUILayout.Button("Stop Painting", GUILayout.Width(110)))
-            isPainting = false;
-
-        EditorGUILayout.EndHorizontal();
 
         EditorGUILayout.HelpBox(
             "Left Click = paint. Drag = paint multiple. Alt+Click = pick from cell.\n" +
-            "Tip: Use Mode to paint only type or only state.",
+            "Right Click cell = context menu for Start/Target.",
             MessageType.Info);
 
         EditorGUILayout.EndVertical();
@@ -254,13 +218,10 @@ public class LevelSODefinitionWindow : EditorWindow
         EditorGUILayout.BeginVertical(EditorStyles.helpBox);
         EditorGUILayout.LabelField("Visual Grid", EditorStyles.boldLabel);
 
-        // grid scroll if big
         scroll = EditorGUILayout.BeginScrollView(scroll);
 
-        // Detect mouse events for drag painting
         var e = Event.current;
 
-        // Draw rows from top to bottom (y=h-1..0) so it feels natural
         for (int y = h - 1; y >= 0; y--)
         {
             EditorGUILayout.BeginHorizontal();
@@ -269,45 +230,32 @@ public class LevelSODefinitionWindow : EditorWindow
             for (int x = 0; x < w; x++)
             {
                 int index = y * w + x;
-                var cellProp = cellsProp.GetArrayElementAtIndex(index);
+                var cellEnumProp = cellsProp.GetArrayElementAtIndex(index);
 
-                var btProp = cellProp.FindPropertyRelative("blockType");
-                var stProp = cellProp.FindPropertyRelative("startState");
-
-                BlockType bt = (BlockType)(btProp?.enumValueIndex ?? 0);
+                BlockType bt = (BlockType)cellEnumProp.enumValueIndex;
 
                 Rect r = GUILayoutUtility.GetRect(cellPx, cellPx, GUILayout.Width(cellPx), GUILayout.Height(cellPx));
                 r = new Rect(r.x + cellPad * 0.5f, r.y + cellPad * 0.5f, r.width - cellPad, r.height - cellPad);
 
-                // background color based on type/state
                 Color prev = GUI.color;
                 GUI.color = GetCellColor(bt);
-
                 GUI.Box(r, GUIContent.none);
-
                 GUI.color = prev;
 
-                // Labels
                 var labelStyle = new GUIStyle(EditorStyles.miniLabel)
                 {
                     alignment = TextAnchor.MiddleCenter,
                     normal = { textColor = Color.black },
                     fontStyle = FontStyle.Bold
                 };
+                GUI.Label(r, Short(bt), labelStyle);
 
-                GUI.Label(r, $"{Short(bt)}", labelStyle);
-
-                // Start/Target markers
                 var start = playerProp.FindPropertyRelative("playerStartCell").vector2IntValue;
                 var target = playerProp.FindPropertyRelative("targetCell").vector2IntValue;
 
-                if (start.x == x && start.y == y)
-                    DrawCornerTag(r, "S");
+                if (start.x == x && start.y == y) DrawCornerTag(r, "S");
+                if (target.x == x && target.y == y) DrawCornerTag(r, "T", rightCorner: true);
 
-                if (target.x == x && target.y == y)
-                    DrawCornerTag(r, "T", rightCorner: true);
-
-                // Handle interactions
                 HandleCellInput(e, r, playerProp, cellsProp, x, y);
             }
 
@@ -316,7 +264,6 @@ public class LevelSODefinitionWindow : EditorWindow
 
         EditorGUILayout.EndScrollView();
 
-        // Stop painting on mouse up anywhere
         if (e.type == EventType.MouseUp)
             isPainting = false;
 
@@ -331,20 +278,16 @@ public class LevelSODefinitionWindow : EditorWindow
         int w = Mathf.Max(1, playerProp.FindPropertyRelative("gridSize").vector2IntValue.x);
         int index = y * w + x;
 
-        // Alt+Click picks
+        // Alt pick
         if (e.type == EventType.MouseDown && e.button == 0 && e.alt)
         {
-            var cell = cellsProp.GetArrayElementAtIndex(index);
-            var bt = cell.FindPropertyRelative("blockType");
-
-            if (bt != null) paintType = (BlockType)bt.enumValueIndex;
-
+            paintType = (BlockType)cellsProp.GetArrayElementAtIndex(index).enumValueIndex;
             e.Use();
             Repaint();
             return;
         }
 
-        // Left click starts painting
+        // Paint
         if (e.type == EventType.MouseDown && e.button == 0 && !e.alt)
         {
             isPainting = true;
@@ -353,7 +296,6 @@ public class LevelSODefinitionWindow : EditorWindow
             return;
         }
 
-        // Drag paint
         if (e.type == EventType.MouseDrag && e.button == 0 && isPainting)
         {
             PaintCell(cellsProp, index);
@@ -361,14 +303,16 @@ public class LevelSODefinitionWindow : EditorWindow
             return;
         }
 
-        // Right click context: set Start/Target quickly
+        // Context menu
         if (e.type == EventType.MouseDown && e.button == 1)
         {
             var menu = new GenericMenu();
+
             menu.AddItem(new GUIContent("Set Player Start (S)"), false, () =>
             {
                 Undo.RecordObject(level, "Set Player Start");
                 playerProp.FindPropertyRelative("playerStartCell").vector2IntValue = new Vector2Int(x, y);
+                so.ApplyModifiedProperties();
                 EditorUtility.SetDirty(level);
                 Repaint();
             });
@@ -377,6 +321,7 @@ public class LevelSODefinitionWindow : EditorWindow
             {
                 Undo.RecordObject(level, "Set Target");
                 playerProp.FindPropertyRelative("targetCell").vector2IntValue = new Vector2Int(x, y);
+                so.ApplyModifiedProperties();
                 EditorUtility.SetDirty(level);
                 Repaint();
             });
@@ -392,21 +337,11 @@ public class LevelSODefinitionWindow : EditorWindow
 
         Undo.RecordObject(level, "Paint Cell");
 
-        var cell = cellsProp.GetArrayElementAtIndex(index);
-        var bt = cell.FindPropertyRelative("blockType");
+        var el = cellsProp.GetArrayElementAtIndex(index);
+        el.enumValueIndex = (int)paintType;
 
-        switch (paintMode)
-        {
-            case PaintMode.TypeOnly:
-                if (bt != null) bt.enumValueIndex = (int)paintType;
-                break;
-            case PaintMode.StateOnly:
-                break;
-            case PaintMode.TypeAndState:
-                if (bt != null) bt.enumValueIndex = (int)paintType;
-                break;
-        }
-
+        so.ApplyModifiedProperties();   // important
+        so.Update();
         EditorUtility.SetDirty(level);
         Repaint();
     }
@@ -417,25 +352,24 @@ public class LevelSODefinitionWindow : EditorWindow
 
         if (GUILayout.Button("Clear Grid"))
         {
-            if (EditorUtility.DisplayDialog("Clear Grid", "Set all cells to Floor + Active?", "Yes", "Cancel"))
+            if (EditorUtility.DisplayDialog("Clear Grid", "Set all cells to Floor?", "Yes", "Cancel"))
             {
                 var size = playerProp.FindPropertyRelative("gridSize").vector2IntValue;
                 var cellsProp = playerProp.FindPropertyRelative("cells");
+
                 int w = Mathf.Max(1, size.x);
                 int h = Mathf.Max(1, size.y);
                 int required = w * h;
+
                 if (cellsProp.arraySize != required)
                     EnsureCellsArraySize(playerProp, cellsProp, size);
 
                 Undo.RecordObject(level, "Clear Grid");
 
                 for (int i = 0; i < cellsProp.arraySize; i++)
-                {
-                    var cell = cellsProp.GetArrayElementAtIndex(i);
-                    var bt = cell.FindPropertyRelative("blockType");
-                    if (bt != null) bt.enumValueIndex = (int)BlockType.Floor;
-                }
+                    cellsProp.GetArrayElementAtIndex(i).enumValueIndex = (int)BlockType.Floor;
 
+                so.ApplyModifiedProperties();
                 EditorUtility.SetDirty(level);
             }
         }
@@ -445,7 +379,7 @@ public class LevelSODefinitionWindow : EditorWindow
             if (EditorUtility.DisplayDialog("Swap Left/Right", "Swap both player definitions?", "Swap", "Cancel"))
             {
                 Undo.RecordObject(level, "Swap Players");
-                SwapPlayers(level);
+                (level.leftPlayer, level.rightPlayer) = (level.rightPlayer, level.leftPlayer);
                 EditorUtility.SetDirty(level);
             }
         }
@@ -461,13 +395,6 @@ public class LevelSODefinitionWindow : EditorWindow
         EditorGUILayout.EndHorizontal();
     }
 
-    private static void SwapPlayers(LevelSO lvl)
-    {
-        // Reflection-free swap for known fields (leftPlayer/rightPlayer)
-        (lvl.leftPlayer, lvl.rightPlayer) = (lvl.rightPlayer, lvl.leftPlayer);
-    }
-
-    // Visual helpers
     private static string Short(BlockType t)
     {
         return t switch
@@ -477,25 +404,31 @@ public class LevelSODefinitionWindow : EditorWindow
             BlockType.Trap => "TRP",
             BlockType.Obstacle => "OBS",
             BlockType.Goal => "GOL",
+            BlockType.Start => "STA",
+            BlockType.Bridge => "BRG",
+            BlockType.ArrowDispenser => "ARR",
+            BlockType.NatureBridge => "NBR",
+            BlockType.Floor1 => "F1",
             _ => t.ToString().Substring(0, Mathf.Min(3, t.ToString().Length)).ToUpperInvariant()
         };
     }
 
     private static Color GetCellColor(BlockType t)
     {
-        // Simple readable palette (no fancy styling)
-        // type influences hue, state influences brightness
-        Color c = t switch
+        return t switch
         {
             BlockType.Empty => new Color(0.25f, 0.25f, 0.25f),
             BlockType.Floor => new Color(0.75f, 0.75f, 0.75f),
+            BlockType.Floor1 => new Color(0.80f, 0.85f, 0.90f),
             BlockType.Trap => new Color(0.95f, 0.55f, 0.55f),
             BlockType.Obstacle => new Color(0.95f, 0.75f, 0.45f),
             BlockType.Goal => new Color(0.55f, 0.95f, 0.65f),
+            BlockType.Start => new Color(0.55f, 0.75f, 0.95f),
+            BlockType.Bridge => new Color(0.70f, 0.60f, 0.45f),
+            BlockType.NatureBridge => new Color(0.55f, 0.95f, 0.75f),
+            BlockType.ArrowDispenser => new Color(0.95f, 0.95f, 0.55f),
             _ => new Color(0.7f, 0.7f, 0.7f)
         };
-
-        return new Color(c.r, c.g, c.b);
     }
 
     private static void DrawCornerTag(Rect r, string text, bool rightCorner = false)
