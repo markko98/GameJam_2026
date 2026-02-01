@@ -570,6 +570,6 @@ AssetOrigin:
   productId: 67636
   packageName: Little Heroes Mega Pack
   packageVersion: 2.9
-  assetPath: Assets/Little Heroes Mega Pack/Animations/Base@Walk Backward With Root
-    Motion.FBX
+  assetPath: Assets/Application/Masks/Little Heroes Mega Pack/Animations/Base@Walk
+    Backward With Root Motion.FBX
   uploadId: 409536

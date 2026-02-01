@@ -613,5 +613,6 @@ AssetOrigin:
   productId: 67636
   packageName: Little Heroes Mega Pack
   packageVersion: 2.9
-  assetPath: Assets/Little Heroes Mega Pack/Animations/Base@Crossbow Right Aim.FBX
+  assetPath: Assets/Application/Masks/Little Heroes Mega Pack/Animations/Base@Crossbow
+    Right Aim.FBX
   uploadId: 409536

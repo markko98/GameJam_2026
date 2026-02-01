@@ -594,5 +594,6 @@ AssetOrigin:
   productId: 67636
   packageName: Little Heroes Mega Pack
   packageVersion: 2.9
-  assetPath: Assets/Little Heroes Mega Pack/Animations/Base@Left Throw.FBX
+  assetPath: Assets/Application/Masks/Little Heroes Mega Pack/Animations/Base@Left
+    Throw.FBX
   uploadId: 409536
