@@ -7,10 +7,12 @@ public class GameOverView : UIViewController
 {
     private GameOverViewOutlet outlet;
     private readonly Action onRestartAction;
+    private readonly Action onExitAction;
 
-    public GameOverView(Action onRestartAction, Transform viewport, UIStackNavigationController controller) : base(controller)
+    public GameOverView(Action onRestartAction, Action onExitAction, Transform viewport, UIStackNavigationController controller) : base(controller)
     {
         this.onRestartAction = onRestartAction;
+        this.onExitAction = onExitAction;
 
         var prefab = Resources.Load<GameObject>(Strings.UIViewsResourcesPath + "GameOverView");
         view = Object.Instantiate(prefab, viewport, false);
@@ -31,6 +33,11 @@ public class GameOverView : UIViewController
     {
         onRestartAction?.Invoke();
     }
+    
+    private void Exit()
+    {
+        onExitAction?.Invoke();
+    }
 
 
     public override void ViewWillDisappear()
@@ -43,5 +50,7 @@ public class GameOverView : UIViewController
     {
         base.Cleanup();
         outlet.restartButton.button.onClick.RemoveListener(Restart);
+        outlet.exitButton.button.onClick.RemoveListener(Exit);
+
     }
 }

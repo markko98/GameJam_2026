@@ -82,7 +82,10 @@ public class LocalPersistentStorageManager : IPersistentStorageManager
 
     public List<MaskType> LoadUnlockedMasks()
     {
-        return Serializer.LoadFromPlayerPrefs<List<MaskType>>(StorageKeys.UnlockedMasks) ?? new List<MaskType>();
+        return Serializer.LoadFromPlayerPrefs<List<MaskType>>(StorageKeys.UnlockedMasks) ?? new List<MaskType>()
+            {
+                MaskType.Kane
+            };
     }
 
     public void SaveUnlockedMasks(List<MaskType> masks)

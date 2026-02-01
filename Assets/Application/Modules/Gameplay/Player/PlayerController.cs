@@ -186,6 +186,8 @@ public class PlayerController : MonoBehaviour
         animator.SetBool(die, true);
         ShowParticle(reason);
         
+        UEventBus<PlayerDiedEvent>.Raise( new PlayerDiedEvent());
+        
         if (reason == DeathReason.Trap || reason == DeathReason.Arrow) return;
         
         transform.DOMoveY(transform.position.y - fallDistance, fallDuration)
