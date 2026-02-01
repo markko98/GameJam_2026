@@ -13,6 +13,10 @@ public class GameplayController : USceneController
     private MaskInteractionView maskInteractionView;
     private PauseView pauseView;
     private LoadingView loadingView;
+    private LevelCompleteView levelCompletedView;
+
+    private EventBinding<LevelCompletedEvent> levelCompletedBinding;
+    private LevelSO levelData;
 
     public GameplayController(LevelType levelType) : base(SceneNames.Gameplay)
     {
@@ -22,21 +26,27 @@ public class GameplayController : USceneController
     public override void SceneDidLoad()
     {
         base.SceneDidLoad();
+        levelCompletedBinding = new EventBinding<LevelCompletedEvent>(OnLevelCompletedCallback);
+        UEventBus<LevelCompletedEvent>.Register(levelCompletedBinding);
         outlet = GameObject.Find(OutletNames.Gameplay).GetComponent<GameplayOutlet>();
         navigationController ??= new UIStackNavigationController();
         navigationPauseController ??= new UIStackNavigationController();
+        levelData = LevelDataProvider.GetLevelData(levelType);
+
+        outlet.EndGameManager.Initialize();
+        
         var masks = new List<MaskType>()
         {
             MaskType.Kane, MaskType.Lono, MaskType.Ku, MaskType.Kanaloa
         };
         ServiceProvider.storage.SaveUnlockedMasks(masks);
-
-
+        
         outlet.pauseButton.button.onClick.AddListener(ShowPause);
         SetupGrid();
         SetupSkyBox();
         SetupMaskInteractionView();
     }
+
 
     private void SetupSkyBox()
     {
@@ -46,7 +56,6 @@ public class GameplayController : USceneController
 
     private void SetupGrid()
     {
-        var levelData = LevelDataProvider.GetLevelData(levelType);
         gridManager = new GridManager(levelData, outlet.rightGridRoot, outlet.leftGridRoot);
         gridManager.SpawnAndAnimateGrid();
     }
@@ -63,6 +72,25 @@ public class GameplayController : USceneController
         UEventBus<PauseEvent>.Raise(new PauseEvent(true));
         pauseView ??= new PauseView(OnResumeCallback, OnExitCallback, outlet.canvas.transform, navigationPauseController);
         pauseView?.PresentView(0f, AnimationType.SlideInDown);
+    }
+    
+    
+    private void OnLevelCompletedCallback(LevelCompletedEvent obj)
+    {
+        ShowLevelCompleted();
+    }
+
+    private void ShowLevelCompleted()
+    {
+        var maskSprite = SpriteProvider.GetMaskSprite(levelData.unlockedMask);
+        var description = LevelDataProvider.GetMaskDescription(levelData.unlockedMask);
+        levelCompletedView ??= new LevelCompleteView(OnContinueLevelCompleteCallback, outlet.canvas.transform, navigationPauseController, maskSprite, description);
+        levelCompletedView?.PresentView(0f, AnimationType.SlideInUp);
+    }
+
+    private void OnContinueLevelCompleteCallback()
+    {
+        GoToNextLevel();
     }
 
     private void OnExitCallback()
@@ -95,5 +123,6 @@ public class GameplayController : USceneController
         
         gridManager.CleanUp();
         maskInteractionView.Cleanup();
+        outlet.EndGameManager.Cleanup();
     }
 }
