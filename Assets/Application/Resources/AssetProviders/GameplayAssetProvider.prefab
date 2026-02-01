@@ -54,6 +54,7 @@ MonoBehaviour:
   bridgeBlock: {fileID: 3834396108301582109, guid: 477bb79e1a18c41c6855db7c4fdb0a52, type: 3}
   arrowDispenserBlock: {fileID: 3834396108301582109, guid: 37f506d92e18849788bd1f979c03ba80, type: 3}
   natureBridgeBlock: {fileID: 3834396108301582109, guid: c6b34b5fd376a41418cbf4f6e9352702, type: 3}
+  lavaBlock: {fileID: 3834396108301582109, guid: 4364eae912c384fe5b3ac8d8d0cbd0c3, type: 3}
   player1: {fileID: 8585032940491824722, guid: daf6669f32eec47af92cd540f3417f43, type: 3}
   player2: {fileID: 8585032940491824722, guid: f2eb452cef7b24efc9f4bc1cc5586044, type: 3}
   level1Skybox: {fileID: 2100000, guid: 2a157eb2cc18f449498e1069b534d8b0, type: 2}

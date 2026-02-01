@@ -14,6 +14,7 @@ public class GameplayAssetProvider : MonoBehaviour
     public GameObject bridgeBlock;
     public GameObject arrowDispenserBlock;
     public GameObject natureBridgeBlock;
+    public GameObject lavaBlock;
 
 
     
@@ -70,6 +71,7 @@ public class GameplayAssetProvider : MonoBehaviour
             BlockType.Bridge => Instance.bridgeBlock,
             BlockType.ArrowDispenser => Instance.arrowDispenserBlock,
             BlockType.NatureBridge => Instance.natureBridgeBlock,
+            BlockType.LavaBlock => Instance.lavaBlock,
             _ => throw new ArgumentOutOfRangeException(nameof(blockType), blockType, null)
         };
     }
