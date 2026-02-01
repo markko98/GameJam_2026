@@ -5,7 +5,7 @@ public enum BlockAnimationState
 
 public enum LevelType
 {
-    Level1, Level2, Level3, Level4
+    Level1, Level2, Level3, Level4, Level5
 }
 
 public enum PlayerSide

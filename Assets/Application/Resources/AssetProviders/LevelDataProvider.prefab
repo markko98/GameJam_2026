@@ -53,4 +53,6 @@ MonoBehaviour:
     levelDataSO: {fileID: 11400000, guid: 71cd504a6702e4eeabdd3601a3c67b1c, type: 2}
   - leveType: 3
     levelDataSO: {fileID: 11400000, guid: f1c023faa77294433b7848062c02fd76, type: 2}
+  - leveType: 4
+    levelDataSO: {fileID: 11400000, guid: bfa6cea3a19e64d978f93abfc11f4995, type: 2}
   backupLevelSO: {fileID: 11400000, guid: f1c023faa77294433b7848062c02fd76, type: 2}
