@@ -60,7 +60,7 @@ public class PlayerController : MonoBehaviour
     private void CustomUpdate()
     {
         if(isPaused) return;
-        if(canMove) return;
+        if(!canMove) return;
         if (isMoving || isDead) return;
         
         CheckGround();

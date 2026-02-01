@@ -120,9 +120,16 @@ public class GameplayController : USceneController
     public override void SceneWillDisappear()
     {
         base.SceneWillDisappear();
-        
-        gridManager.CleanUp();
-        maskInteractionView.Cleanup();
+        outlet.pauseButton.button.onClick.RemoveListener(ShowPause);
+        UEventBus<LevelCompletedEvent>.Deregister(levelCompletedBinding);
+        levelCompletedBinding = null;
+        levelCompletedView?.RemoveView();
+        pauseView?.RemoveView();
+        pauseView = null;
+        gridManager?.CleanUp();
+        maskInteractionView?.RemoveView();
+        maskInteractionView?.Cleanup();
         outlet.EndGameManager.Cleanup();
+        levelCompletedView = null;
     }
 }
