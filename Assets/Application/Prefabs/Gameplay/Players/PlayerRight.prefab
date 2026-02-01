@@ -168,6 +168,9 @@ MonoBehaviour:
   animator: {fileID: 1377691688415244715}
   joystickDeadzone: 0.3
   playerType: 1
+  fallDistance: 2
+  fallDuration: 0.5
+  groundCheckDistance: 2
 --- !u!1001 &1377691688405717287
 PrefabInstance:
   m_ObjectHideFlags: 0

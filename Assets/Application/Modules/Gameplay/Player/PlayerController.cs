@@ -115,25 +115,20 @@ public class PlayerController : MonoBehaviour
 
     private void CheckGround()
     {
-        var fallTrap = LayerMask.GetMask("Trap") | LayerMask.GetMask("FallTrap") | LayerMask.GetMask("SpikeTrap");
-        if (!Physics.Raycast(transform.position + Vector3.up, Vector3.down, out var hit, groundCheckDistance, fallTrap)) return;
-
-        DeathReason reason;
-
+        if (!Physics.Raycast(transform.position + Vector3.up, Vector3.down, out var hit, groundCheckDistance)) return;
+        
         if (hit.transform.gameObject.layer == LayerMask.NameToLayer("FallTrap"))
         {
-            reason = DeathReason.Fall;
+            Die(DeathReason.Fall);
         }
         else if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Trap"))
         {
-            reason = DeathReason.Trap;
+            Die(DeathReason.Trap);
         } 
-        else
+        else if (hit.transform.gameObject.layer == LayerMask.NameToLayer("SpikeTrap"))
         {
-            reason = DeathReason.Spike;
+            Die(DeathReason.Spike);
         }
-
-        Die(reason);
     }
 
     private void Move(Vector2 direction)
