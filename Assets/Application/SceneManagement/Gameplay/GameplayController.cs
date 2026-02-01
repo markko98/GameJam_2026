@@ -10,6 +10,13 @@ public class GameplayController : USceneController
     private readonly LevelType levelType;
 
     private UIStackNavigationController navigationController;
+    private UIStackNavigationController navigationController2;
+    private UIStackNavigationController navigationController3;
+    private UIStackNavigationController navigationController4;
+    private UIStackNavigationController navigationController5;
+
+
+
     private MaskInteractionView maskInteractionView;
     private PauseView pauseView;
     private LoadingView loadingView;
@@ -36,6 +43,11 @@ public class GameplayController : USceneController
         UEventBus<LevelCompletedEvent>.Register(levelCompletedBinding);
         outlet = GameObject.Find(OutletNames.Gameplay).GetComponent<GameplayOutlet>();
         navigationController ??= new UIStackNavigationController();
+        navigationController2 ??= new UIStackNavigationController();
+        navigationController3 ??= new UIStackNavigationController();
+        navigationController4 ??= new UIStackNavigationController();
+        navigationController5 ??= new UIStackNavigationController();
+
 
         levelData = LevelDataProvider.GetLevelData(levelType);
 
@@ -73,13 +85,13 @@ public class GameplayController : USceneController
     private void ShowPause()
     {
         UEventBus<PauseEvent>.Raise(new PauseEvent(true));
-        pauseView ??= new PauseView(OnResumeCallback, OnExitCallback, outlet.canvas.transform, navigationController);
+        pauseView ??= new PauseView(OnResumeCallback, OnExitCallback, outlet.canvas.transform, navigationController2);
         pauseView?.PresentView(0f, AnimationType.SlideInDown);
     }
 
     private void ShowGameOverView()
     {
-        gameOverView ??= new GameOverView(RestartGame, OnExitCallback, outlet.canvas.transform, navigationController);
+        gameOverView ??= new GameOverView(RestartGame, OnExitCallback, outlet.canvas.transform, navigationController3);
         gameOverView?.PresentView(0.75f, AnimationType.SlideInUp);
     }
 
@@ -106,7 +118,7 @@ public class GameplayController : USceneController
         }
         var maskSprite = SpriteProvider.GetMaskSprite(levelData.unlockedMask);
         var description = LevelDataProvider.GetMaskDescription(levelData.unlockedMask);
-        levelCompletedView ??= new LevelCompleteView(OnContinueLevelCompleteCallback, outlet.canvas.transform, navigationController, maskSprite, description);
+        levelCompletedView ??= new LevelCompleteView(OnContinueLevelCompleteCallback, outlet.canvas.transform, navigationController4, maskSprite, description);
         levelCompletedView?.PresentView(0f, AnimationType.SlideInUp);
     }
 
@@ -152,7 +164,7 @@ public class GameplayController : USceneController
 
     private void GoToNextLevel()
     {
-        loadingView ??= new LoadingView(OnLoadedCallback, 2f, outlet.canvas.transform, navigationController);
+        loadingView ??= new LoadingView(OnLoadedCallback, 2f, outlet.canvas.transform, navigationController5);
         loadingView?.PresentView(0f, AnimationType.ScaleUpFromMiddle);
     }
 
