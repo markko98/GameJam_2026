@@ -7,6 +7,7 @@ public class ParticleProvider : AssetBaseProvider
     public GameObject fallDeathParticle;
     public GameObject arrowDeathParticle;
     public GameObject obstacleDeathParticle;
+    public GameObject confettiParticles;
 
     private static ParticleProvider _instance;
     public DisposeBag disposeBag;
@@ -61,6 +62,7 @@ public class ParticleProvider : AssetBaseProvider
             ParticleType.FallDeathParticle => Instance.fallDeathParticle,
             ParticleType.ArrowDeathParticle => Instance.arrowDeathParticle,
             ParticleType.ObstacleDeathParticle => Instance.obstacleDeathParticle,
+            ParticleType.ConfettiParticle => Instance.confettiParticles,
             _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
         };
     }
@@ -73,6 +75,7 @@ public class ParticleProvider : AssetBaseProvider
             ParticleType.FallDeathParticle => 3,
             ParticleType.ArrowDeathParticle => 3,
             ParticleType.ObstacleDeathParticle => 3,
+            ParticleType.ConfettiParticle => 3,
             _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
         };
     }
@@ -90,4 +93,5 @@ public enum ParticleType
     FallDeathParticle,
     ArrowDeathParticle,
     ObstacleDeathParticle, 
+    ConfettiParticle, 
 }

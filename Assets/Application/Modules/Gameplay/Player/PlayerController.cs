@@ -33,15 +33,18 @@ public class PlayerController : MonoBehaviour
     private bool isMoving;
     private bool isFrozen;
     private bool isDead;
+    private bool canMove;
     private DisposeBag disposeBag = new DisposeBag();
     private bool isPaused;
     private EventBinding<PauseEvent> pauseBinding;
+    private string victoryParam = "Victory";
 
     private void OnEnable()
     {
         pauseBinding = new EventBinding<PauseEvent>(OnPauseChanged);
         UEventBus<PauseEvent>.Register(pauseBinding);
         GameTicker.SharedInstance.Update += CustomUpdate;
+        canMove = true;
     }
     
     private void OnDisable()
@@ -57,6 +60,7 @@ public class PlayerController : MonoBehaviour
     private void CustomUpdate()
     {
         if(isPaused) return;
+        if(canMove) return;
         if (isMoving || isDead) return;
         
         CheckGround();
@@ -217,6 +221,12 @@ public class PlayerController : MonoBehaviour
         transform.DOScale(0, duration);
     }
 
+    public void TriggerHappyAnimation()
+    {
+        canMove = false;
+        PlayParticle(ParticleType.ConfettiParticle);
+        animator.SetTrigger(victoryParam);
+    }
     private void PlayParticle(ParticleType particleType)
     {
         var particle = ParticleProvider.GetParticle(particleType);

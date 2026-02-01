@@ -8,6 +8,8 @@ public class EndGameManager : MonoBehaviour
     private bool isLeftInPlace;
     
     private DisposeBag disposeBag;
+    private GameObject rightPlayer;
+    private GameObject leftPlayer;
 
     public void Initialize()
     {
@@ -32,28 +34,32 @@ public class EndGameManager : MonoBehaviour
         if (args.playerSide is PlayerSide.Left)
         {
             isLeftInPlace = args.isInGoal;
+            leftPlayer = args.player;
         }
         else if (args.playerSide is PlayerSide.Right)
         {
             isRightInPlace = args.isInGoal;
+            rightPlayer = args.player;
         }
 
         if (isLeftInPlace && isRightInPlace)
         {
             UEventBus<PauseEvent>.Raise(new PauseEvent(true)); // check if okay
-            MovePlayers();
+            HappyPlayers(args);
         }
     }
 
-    private void MovePlayers()
+    private void HappyPlayers(PlayerGoalDetectionEvent args)
     {
-        // TODO: move players
+        leftPlayer.GetComponent<PlayerController>()?.TriggerHappyAnimation();
+        rightPlayer.GetComponent<PlayerController>()?.TriggerHappyAnimation();
+        
+        
         DelayedExecutionManager.ExecuteActionAfterDelay(2000, TriggerLevelCompleted).disposeBy(disposeBag);
     }
 
     private void TriggerLevelCompleted()
     {
         UEventBus<LevelCompletedEvent>.Raise(new LevelCompletedEvent());
-
     }
 }
